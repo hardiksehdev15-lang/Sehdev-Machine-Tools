@@ -13,8 +13,8 @@
 |--------------------------------------------------------------------------
 */
 
-$recipientEmail = 'YOUR-BUSINESS-EMAIL@YOURDOMAIN.COM';
-$fromEmail      = 'YOUR-BUSINESS-EMAIL@YOURDOMAIN.COM';
+$recipientEmail = 'info@sehdevmachinetools.com';
+$fromEmail      = 'info@sehdevmachinetools.com';
 $fromName       = 'Sehdev Machine Tools Website';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
