@@ -1,0 +1,1684 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Products | Sehdev Machine Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+
+      :root {
+        --primary: #0a66c2;
+        --primary-dark: #084d99;
+        --light: #e6f0fa;
+        --white: #ffffff;
+        --dark: #0d1b2a;
+        --muted: #6c757d;
+        --nav-height: 112px;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: #ffffff;
+        color: var(--dark);
+        overflow-x: hidden;
+      }
+
+      /* ============================================================
+   HEADER & NAVIGATION
+   ============================================================ */
+
+
+/* ============================================================
+   01. HEADER — MAIN CONTAINER
+   ============================================================ */
+
+header.site-header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1400;
+
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+
+  background: rgba(255,255,255,0.8);
+
+  border-bottom: 1px solid rgba(13,27,42,0.06);
+
+  transition:
+    background .25s ease,
+    box-shadow .25s ease;
+}
+
+
+/* ------------------------------------------------------------
+   Header — Scrolled State
+   ------------------------------------------------------------ */
+
+header.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.8);
+  color: #000;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+
+/* ============================================================
+   02. NAVIGATION ROW
+   ============================================================ */
+
+.nav-row{
+  height: var(--nav-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* Reduced from 6% so more room is available for navigation */
+  padding: 0 4%;
+
+  gap: 20px;
+
+  overflow: visible;
+}
+
+
+/* ============================================================
+   03. BRAND — LOGO + COMPANY NAME
+   ============================================================ */
+
+.brand{
+  display: flex;
+  align-items: center;
+
+  /* Space between logo and company name */
+  gap: 14px;
+
+  /*
+    Gives the brand enough width so the company name
+    doesn't get squeezed by the navigation.
+  */
+  min-width: 420px;
+
+  /*
+    Prevents the logo/company name from shrinking
+    when the navigation gets wider.
+  */
+  flex-shrink: 0;
+
+  text-decoration: none;
+}
+
+
+/* ------------------------------------------------------------
+   Brand — Logo
+   ------------------------------------------------------------ */
+
+.brand img{
+  width: 155px;
+  height: 150px;
+
+  object-fit: contain;
+
+  border-radius: 6px;
+
+  flex-shrink: 0;
+}
+
+
+/* ------------------------------------------------------------
+   Brand — Company Name
+   ------------------------------------------------------------ */
+
+.title{
+  font-family: 'Inter', sans-serif;
+
+  /*
+    Reduced from 33px.
+    26px gives a much better balance with the logo
+    and leaves enough room for the navigation.
+  */
+  font-size: 26px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+
+  line-height: 1.05;
+
+  text-transform: uppercase;
+
+  color: #000;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+
+/* ------------------------------------------------------------
+   Brand — Subtitle
+   ------------------------------------------------------------ */
+
+.brand .subtitle{
+  font-size: 13px;
+
+  font-weight: 550;
+
+  color: #000;
+}
+/* ===== BRAND TITLE — FORCE BLACK ===== */
+.brand-title {
+    color: #000000 !important;
+}
+
+.brand-subtitle {
+    color: #000000 !important;
+}
+
+/* ------------------------------------------------------------
+   Brand — Scrolled State
+   ------------------------------------------------------------ */
+
+header.site-header.scrolled .brand .title{
+  color: #000;
+}
+
+
+/* ============================================================
+   04. PRIMARY NAVIGATION
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   Navigation List
+   ------------------------------------------------------------ */
+
+nav.primary-nav ul{
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+
+  /*
+    Small gap keeps navigation compact while
+    maintaining separation between items.
+  */
+  gap: 2px;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ------------------------------------------------------------
+   Navigation Links + Dropdown Buttons
+   ------------------------------------------------------------ */
+
+nav.primary-nav a,
+nav.primary-nav .mega-btn{
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  /*
+    Reduced padding prevents Home / About /
+    Products / Services from becoming too wide.
+  */
+  padding: 10px 13px;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  line-height: 1;
+
+  color: var(--dark);
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition:
+    background .25s ease,
+    color .25s ease;
+}
+
+
+/* ------------------------------------------------------------
+   Navigation — Scrolled State
+   ------------------------------------------------------------ */
+
+header.site-header.scrolled nav.primary-nav a,
+header.site-header.scrolled nav.primary-nav .mega-btn{
+  color: #000;
+}
+
+
+/* ------------------------------------------------------------
+   Navigation — Hover
+   ------------------------------------------------------------ */
+
+nav.primary-nav a:hover,
+nav.primary-nav .mega-btn:hover{
+  background: rgba(10,102,194,.08);
+
+  color: var(--primary);
+}
+
+
+/* ------------------------------------------------------------
+   Header / Navigation Overflow
+   ------------------------------------------------------------ */
+
+header.site-header,
+.nav-row,
+nav.primary-nav{
+  overflow: visible;
+}
+
+
+/* ============================================================
+   05. DROPDOWN ARROW
+   ============================================================ */
+
+nav.primary-nav a span,
+nav.primary-nav .mega-btn span{
+  display: inline-flex;
+
+  align-items: center;
+
+  margin-left: 6px;
+
+  font-size: 0.85em;
+
+  line-height: 1;
+}
+
+
+@media (min-width: 901px){
+
+  /* ----------------------------------------------------------
+     Mega Menu Parent
+     ---------------------------------------------------------- */
+
+  nav.primary-nav{
+    position: relative;
+  }
+
+  nav.primary-nav li.mega{
+    position: static;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mega Menu Panel
+     ---------------------------------------------------------- */
+
+  .mega-panel{
+    position: absolute;
+
+    /* Keep dropdown directly below the navbar */
+    top: 100%;
+
+    /*
+      Align both Products and Services dropdowns to the
+      right edge of the navigation area.
+    */
+    right: 0;
+    left: auto;
+
+    /* Remove old center-based positioning */
+    transform: none;
+
+    /* Same dimensions for both dropdowns */
+    width: 900px;
+    max-width: calc(100vw - 40px);
+
+    background: #fff;
+
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 8px;
+
+    padding: 30px;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+
+    z-index: 2500;
+
+    /* Hidden until the menu item is hovered */
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+      opacity .2s ease-in-out,
+      visibility .2s ease-in-out;
+  }
+
+
+  /* ----------------------------------------------------------
+     Show Mega Menu on Hover
+     ---------------------------------------------------------- */
+
+  nav.primary-nav li.mega:hover > .mega-panel{
+    opacity: 1;
+    visibility: visible;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mega Menu — Column Headings
+     ---------------------------------------------------------- */
+
+  .mega-col h4{
+    margin: 0 0 15px 0 !important;
+
+    font-size: 13px !important;
+    font-weight: 700 !important;
+
+    color: #6c757d !important;
+
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+
+    padding-bottom: 10px !important;
+
+    border-bottom: 1px solid #eee !important;
+
+    width: 100%;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mega Menu — Links
+     ---------------------------------------------------------- */
+
+  .mega-col a{
+    display: block !important;
+
+    padding: 8px 0 !important;
+    margin: 0 !important;
+
+    font-size: 15px !important;
+    font-weight: 500 !important;
+
+    color: #333 !important;
+
+    text-decoration: none !important;
+    line-height: 1.4 !important;
+    text-align: left !important;
+
+    transition: color .2s ease !important;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mega Menu — Link Hover
+     ---------------------------------------------------------- */
+
+  .mega-col a:hover{
+    color: var(--primary) !important;
+    background: transparent !important;
+  }
+
+
+  /* ----------------------------------------------------------
+     First Column Reset
+     ---------------------------------------------------------- */
+
+  .mega-panel .mega-col:first-child{
+    display: block;
+  }
+
+  .mega-panel .mega-col:first-child h4{
+    grid-column: auto;
+  }
+
+}
+
+
+/* ============================================================
+   07. MEGA MENU — TOP ARROW REMOVED
+   ============================================================ */
+
+/*
+  No dropdown panel arrow is used.
+
+  Products and Services already have "▾" in the navbar,
+  so the dropdown remains clean and minimal.
+*/
+
+
+/* ============================================================
+   10. MEGA MENU — MOBILE
+   ============================================================ */
+
+@media (max-width: 900px){
+
+  .mega-panel{
+    position: static;
+
+    width: 100%;
+    max-width: none;
+
+    transform: none;
+
+    display: none;
+
+    padding: 10px 0;
+
+    border: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    grid-template-columns: 1fr;
+  }
+
+
+  /* ----------------------------------------------------------
+     Disable Hover Mega Menu on Mobile
+     ---------------------------------------------------------- */
+
+  nav.primary-nav li.mega:hover .mega-panel{
+    display: none;
+  }
+
+
+  /* ----------------------------------------------------------
+     Open Mega Menu on Click
+     ---------------------------------------------------------- */
+
+  nav.primary-nav li.mega.open > .mega-panel{
+    display: block;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mobile Mega Menu Headings
+     ---------------------------------------------------------- */
+
+  .mega-col h4{
+    margin: 6px 10px 12px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: .6px;
+
+    text-transform: uppercase;
+
+    color: #6c757d;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mobile Mega Menu Links
+     ---------------------------------------------------------- */
+
+  .mega-col a{
+    display: flex;
+
+    align-items: center;
+
+    padding: 12px 16px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    color: var(--dark);
+
+    text-decoration: none;
+
+    transition:
+      background .2s ease,
+      color .2s ease;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mobile Mega Menu Hover
+     ---------------------------------------------------------- */
+
+  .mega-col a:hover{
+    background: rgba(10,102,194,.08);
+
+    color: var(--primary);
+  }
+
+}
+
+/* ============================================================
+   PRODUCT SEARCH — NAVBAR
+   ============================================================ */
+
+.nav-search {
+  position: relative;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 210px;
+}
+
+#productSearch {
+  width: 100%;
+  height: 40px;
+  padding: 0 38px 0 14px;
+
+  border: 1px solid rgba(13, 27, 42, 0.15);
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--dark);
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  outline: none;
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+#productSearch::placeholder {
+  color: #6c757d;
+}
+
+#productSearch:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.10);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+
+  transform: translateY(-50%);
+
+  font-size: 20px;
+  line-height: 1;
+
+  color: var(--dark);
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   SEARCH RESULTS DROPDOWN
+   ============================================================ */
+
+.search-results {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  left: 0;
+
+  width: 320px;
+  max-height: 380px;
+
+  overflow-y: auto;
+
+  background: #fff;
+  border: 1px solid rgba(13, 27, 42, 0.08);
+  border-radius: 10px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-5px);
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease,
+    visibility .2s ease;
+
+  z-index: 3000;
+}
+
+.search-results.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   SEARCH RESULT ITEM
+   ============================================================ */
+
+.search-result-item {
+  display: block;
+
+  padding: 12px 15px;
+
+  color: var(--dark);
+  text-decoration: none;
+
+  border-bottom: 1px solid rgba(13, 27, 42, 0.06);
+
+  transition:
+    background .2s ease,
+    color .2s ease;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: rgba(10, 102, 194, 0.07);
+  color: var(--primary);
+}
+
+.search-result-name {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.search-result-category {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+  color: #6c757d;
+}
+
+
+/* ============================================================
+   SEARCH — MOBILE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  .nav-search {
+    width: 100%;
+    padding: 6px 0;
+  }
+
+  .search-wrapper {
+    width: 100%;
+  }
+
+  #productSearch {
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .search-results {
+    position: static;
+
+    width: 100%;
+    max-height: 300px;
+
+    margin-top: 6px;
+
+    box-shadow: none;
+  }
+}
+
+      /* ============================================================
+         03. PAGE HERO SECTION
+         ============================================================ */
+      .page-header {
+        padding: calc(var(--nav-height) + 100px) 8% 100px;
+        background: var(--dark);
+        color: var(--white);
+        position: relative;
+        overflow: hidden;
+        text-align: left;
+      }
+
+      .page-header::after {
+        content: "";
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        background: radial-gradient(circle at top right, rgba(10,102,194,0.3), transparent 60%);
+        pointer-events: none;
+      }
+
+      .page-header h1 {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        margin: 0 0 15px;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+      }
+
+      .page-header p {
+        font-size: 1.15rem;
+        max-width: 700px;
+        color: rgba(255,255,255,0.8);
+        line-height: 1.6;
+      }
+
+      /* ============================================================
+         04. MAIN CONTAINER
+         ============================================================ */
+      main { padding: 80px 8%; }
+
+      .product-group {
+        margin-bottom: 100px;
+        width: 100%;
+      }
+
+      /* ------------------------------------------------------------
+         Product Group Title & Divider
+         ------------------------------------------------------------ */
+      .group-title {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 40px;
+        width: 100%;
+      }
+
+      .group-title h2 {
+        font-size: 1.6rem;
+        color: var(--primary);
+        margin: 0;
+        white-space: nowrap;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        flex-shrink: 0;
+      }
+
+      .group-title .line {
+        height: 2px;
+        flex-grow: 1;
+        background: linear-gradient(90deg, var(--primary) 0%, rgba(10,102,194,0.05) 100%);
+      }
+
+      /* ============================================================
+         05. SUBCATEGORY GRID & CARDS
+         ============================================================ */
+      .subcategory-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+      }
+
+      .subcategory-card {
+        text-decoration: none;
+        background: var(--white);
+        border: 1px solid rgba(13,27,42,0.08);
+        border-radius: 12px;
+        padding: 35px 25px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+      }
+
+      /* Spotlight effect */
+      .spotlight {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(10,102,194,0.08), transparent 60%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        border-radius: 12px;
+      }
+
+      .subcategory-card:hover .spotlight { opacity: 1; }
+
+      .subcategory-card h3 {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.3rem;
+        color: var(--dark);
+        margin: 0 0 12px;
+        transition: color 0.3s ease;
+      }
+
+      .subcategory-card p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin: 0 0 20px;
+      }
+
+      .card-footer {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--primary);
+      }
+
+      .card-footer span {
+        transition: transform 0.3s ease;
+        display: inline-block;
+        margin-left: 5px;
+      }
+
+      .subcategory-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(10,102,194,0.12);
+      }
+
+      .subcategory-card:hover h3 { color: var(--primary); }
+      .subcategory-card:focus-visible { outline: 3px solid rgba(10,102,194,.35); outline-offset: 3px; }
+      .subcategory-card:hover .card-footer span { transform: translateX(5px); }
+
+      /* ============================================================
+         06. REVEAL ANIMATION
+         ============================================================ */
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease-out;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1024px) {
+        .brand-title { font-size: 24px; }
+        .mega-panel { grid-template-columns: 1fr; top: var(--nav-height); }
+      }
+
+      @media (max-width: 768px) {
+        .page-header { padding-top: 160px; }
+        .group-title h2 { font-size: 1.2rem; }
+        .subcategory-grid { grid-template-columns: 1fr; }
+      }
+      .nav-toggle{
+    display: none;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  /* ================= PRODUCTS PAGE MOBILE OVERRIDES ================= */
+ /* ================= PRODUCTS PAGE MOBILE OVERRIDES ================= */
+
+@media (max-width: 900px){
+
+  /* ==========================================================
+     GLOBAL
+     ========================================================== */
+
+  :root{
+    --nav-height: 76px;
+  }
+
+  html,
+  body{
+    overflow-x: hidden;
+  }
+
+
+  /* ==========================================================
+     MOBILE HEADER
+     ========================================================== */
+
+  header.site-header{
+    height: var(--nav-height);
+  }
+
+  .nav-row{
+    height: var(--nav-height);
+    padding: 0 16px;
+    gap: 10px;
+  }
+
+
+  /* ==========================================================
+     BRAND — LOGO + COMPANY NAME
+     ========================================================== */
+
+  .brand{
+    min-width: 0;
+    width: auto;
+    max-width: calc(100% - 52px);
+    flex: 1;
+    gap: 9px;
+    overflow: hidden;
+  }
+
+  .brand img{
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .brand > div{
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .title{
+    display: block;
+    font-size: 17px;
+    line-height: 1.15;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .brand .subtitle{
+    display: block;
+    font-size: 10px;
+    line-height: 1.2;
+
+    white-space: nowrap;
+  }
+
+
+  /* ==========================================================
+     HAMBURGER
+     ========================================================== */
+
+  .nav-toggle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+    margin: 0;
+
+    background: none;
+    border: none;
+
+    font-size: 27px;
+    color: var(--dark);
+
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  header.site-header.scrolled .nav-toggle{
+    color: var(--dark);
+  }
+
+
+  /* ==========================================================
+     MOBILE NAVIGATION
+     ========================================================== */
+
+  nav.primary-nav{
+    position: absolute;
+
+    top: var(--nav-height);
+    left: 0;
+
+    width: 100%;
+
+    background: #fff;
+
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height .3s ease;
+
+    border-bottom: 1px solid rgba(13,27,42,.08);
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+  }
+
+  nav.primary-nav.open{
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  nav.primary-nav ul{
+    width: 100%;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 0;
+
+    margin: 0;
+    padding: 10px 16px 18px;
+  }
+
+  nav.primary-nav li{
+    width: 100%;
+  }
+
+  nav.primary-nav a,
+  nav.primary-nav .mega-btn{
+    width: 100%;
+    min-height: 44px;
+
+    justify-content: flex-start;
+
+    padding: 11px 8px;
+
+    font-size: 15px;
+  }
+
+
+  /* ==========================================================
+     MOBILE MEGA MENU
+     ========================================================== */
+
+  .mega-panel{
+    position: static;
+
+    width: 100%;
+    max-width: none;
+
+    display: none;
+
+    padding: 10px 0;
+
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    grid-template-columns: 1fr;
+  }
+
+  nav.primary-nav li.mega:hover .mega-panel{
+    display: none;
+  }
+
+  nav.primary-nav li.mega.open > .mega-panel{
+    display: block;
+  }
+
+  .mega-col h4{
+    margin: 6px 10px 12px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: .6px;
+    text-transform: uppercase;
+
+    color: #6c757d;
+  }
+
+  .mega-col a{
+    display: flex;
+
+    align-items: center;
+
+    padding: 12px 16px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    color: var(--dark);
+
+    text-decoration: none;
+
+    transition:
+      background .2s ease,
+      color .2s ease;
+  }
+
+  .mega-col a:hover{
+    background: rgba(10,102,194,.08);
+    color: var(--primary);
+  }
+
+
+  /* ==========================================================
+     MOBILE SEARCH
+     ========================================================== */
+
+  .nav-search{
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .search-wrapper{
+    width: 100%;
+  }
+
+  #productSearch{
+    width: 100%;
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .search-results{
+    position: static;
+
+    width: 100%;
+    max-height: 300px;
+
+    margin-top: 6px;
+
+    box-shadow: none;
+  }
+
+
+  /* ==========================================================
+     PAGE HEADER
+     ========================================================== */
+
+  .page-header{
+    padding: calc(var(--nav-height) + 40px) 6% 60px;
+    text-align: left;
+  }
+
+  .page-header h1{
+    font-size: 2.2rem;
+    line-height: 1.15;
+  }
+
+  .page-header p{
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+
+  /* ==========================================================
+     MAIN PRODUCT CONTENT
+     ========================================================== */
+
+  main{
+    padding: 60px 6%;
+  }
+
+
+  /* ==========================================================
+     GROUP TITLES
+     ========================================================== */
+
+  .group-title{
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+  .group-title h2{
+    white-space: normal;
+    font-size: 1.25rem;
+  }
+
+  .group-title .line{
+    width: 100%;
+  }
+
+
+  /* ==========================================================
+     PRODUCT GRID
+     ========================================================== */
+
+  .subcategory-grid{
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .subcategory-card{
+    padding: 26px 22px;
+    transform: none !important;
+  }
+
+  .subcategory-card:hover{
+    transform: none;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+  }
+
+  .subcategory-card h3{
+    font-size: 1.15rem;
+  }
+
+  .subcategory-card p{
+    font-size: 0.95rem;
+  }
+
+
+  /* ==========================================================
+     DISABLE HOVER EFFECTS
+     ========================================================== */
+
+  .spotlight{
+    display: none;
+  }
+
+
+  /* ==========================================================
+     PRODUCT VISUAL DIFFERENTIATION
+     ========================================================== */
+
+  .machine-block{
+    background: #ffffff;
+
+    border: 1px solid rgba(13,27,42,0.08);
+    border-radius: 14px;
+
+    padding: 24px;
+    margin-bottom: 26px;
+
+    position: relative;
+  }
+
+  .machine-block::before{
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 16px;
+    bottom: 16px;
+
+    width: 4px;
+
+    border-radius: 4px;
+
+    background: linear-gradient(
+      180deg,
+      var(--primary),
+      rgba(10,102,194,0.35)
+    );
+  }
+
+  .machine-block > div:last-child{
+    order: -1;
+  }
+
+  .machine-block img{
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+
+  .machine-block h3{
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .machine-meta{
+    font-size: 0.85rem;
+
+    background: #f5f9ff;
+
+    padding: 10px 12px;
+
+    border-radius: 8px;
+
+    margin: 14px 0;
+  }
+
+  .machine-actions a.primary{
+    width: 100%;
+    text-align: center;
+
+    margin-top: 14px;
+  }
+
+}
+
+/* ================= END PRODUCTS PAGE MOBILE OVERRIDES ================= */
+
+      /* Static-hosting fallback */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+      .no-js .reveal { opacity: 1; transform: none; }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- ============================================================
+         PRODUCTS PAGE — HTML
+         Structure only. All styling is above; all interactions are below.
+         ============================================================ -->
+
+    <!--
+         HTML SECTION MAP
+         01. Header / Navigation
+         02. Page Header
+         03. Packaging Machinery
+         04. Precision Change Parts
+         05. Auxiliary Equipment
+         06. JavaScript
+    -->
+
+    <!-- ============================================================
+         HEADER / NAVIGATION
+         ============================================================ -->
+    <header class="site-header">
+      <div class="nav-row">
+        <a href="index.html" class="brand">
+          <img src="assets/logo/SMT-logo.png" alt="Sehdev logo">
+          <div>
+            <span class="title">Sehdev Machine Tools (India)</span><br>
+              <small class="subtitle">Precision | Reliability</small>
+            </div>
+          </a>
+          <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+
+          <nav class="primary-nav">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About Us</a></li>
+
+              <!-- Products Mega Menu -->
+              <li class="mega">
+                <a href="products.html" class="mega-btn">Products ▾</a>
+                <div class="mega-panel">
+                  <div class="mega-col">
+                    <h4>Machines</h4>
+                    <a href="products/labelling-machine.html">Labelling Solutions & Spares</a>
+                    <a href="products/sealing-machine.html">Sealing Solutions & Spares</a>
+                    <a href="products/filling-machine.html">Filling Solutions & Spares</a>
+                    <a href="products/ancillary-units.html">Ancillary Units & Spares</a>
+                    <a href="products/washing-units.html">Washing Units & Spares</a>
+                    <a href="products/conveyor-system.html">Conveying Solutions & Spares</a>
+                  </div>
+                  <div class="mega-col">
+                    <h4>Components</h4>
+                    <a href="products/change-parts.html">Change Parts</a>
+
+                    <a href="products/nozzles-needles.html">Nozzles &amp; Needles</a>
+                    <a href="products/mechanical-seals.html">Mechanical Seals</a>
+                    <a href="products/rubber-components.html">Rubber Components</a>
+                  </div>
+                  <div class="mega-col">
+                    <h4>Miscellaneous</h4>
+                    <a href="products/miscellaneous.html">Miscellaneous Components</a>
+                  </div>
+                </div>
+              </li>
+
+              <!-- Services Mega Menu -->
+              <li class="mega">
+                <a href="../services.html" class="mega-btn">Services ▾</a>
+
+                <div class="mega-panel">
+
+                  <div class="mega-col">
+                    <a href="../services.html#design-customization" class="service">
+                      <h4>Design Customization</h4>
+                    </a>
+                  </div>
+
+                  <div class="mega-col">
+                    <a href="../services.html#reverse-engineering" class="service">
+                      <h4>Reverse Engineering</h4>
+                    </a>
+                  </div>
+
+                  <div class="mega-col">
+                    <a href="../services.html#product-refurbishment" class="service">
+                      <h4>Product Refurbishment</h4>
+                    </a>
+                  </div>
+
+                </div>
+                      </li>
+
+        <!-- Product Search -->
+        <li class="nav-search">
+          <div class="search-wrapper">
+            <input
+              type="search"
+              id="productSearch"
+              placeholder="Search products..."
+              autocomplete="off"
+              aria-label="Search products"
+            >
+            <span class="search-icon">⌕</span>
+
+            <div
+              id="searchResults"
+              class="search-results"
+              aria-live="polite"
+            ></div>
+          </div>
+        </li>
+
+        <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+          </nav>
+
+        </div>
+      </header>
+
+      <!-- ============================================================
+         PAGE HEADER
+         ============================================================ -->
+    <header class="page-header">
+        <div class="reveal">
+          <h1>Industrial Catalog</h1>
+          <p>Precision-engineered solutions for high-performance production lines. Explore our range of automated machinery and high-tolerance change parts.</p>
+        </div>
+      </header>
+
+      <!-- ============================================================
+         MAIN PRODUCT CATALOG
+         ============================================================ -->
+    <main>
+        <!-- ============================================================
+           PACKAGING MACHINERY
+           ============================================================ -->
+      <!-- ============================================================
+     PACKAGING MACHINERY
+     ============================================================ -->
+<section class="product-group reveal">
+  <div class="group-title">
+    <h2>Packaging Machinery</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="subcategory-grid">
+
+    <a href="products/labelling-machine.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Labelling Units</h3>
+      <p>High-precision labelling systems for accurate, consistent application of labels.</p>
+      <div class="card-footer">View All Units <span>→</span></div>
+    </a>
+
+    <a href="products/sealing-machine.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Sealing & Capping Units</h3>
+      <p>Reliable sealing and capping systems engineered for secure closure, consistent torque, and leak-resistant packaging.</p>
+      <div class="card-footer">View All Units <span>→</span></div>
+    </a>
+
+    <a href="products/filling-machine.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Filling Units</h3>
+      <p>Precision filling systems designed for accurate, repeatable dosing across pharmaceutical, food, and industrial applications.</p>
+      <div class="card-footer">View All Units <span>→</span></div>
+    </a>
+
+    <a href="products/ancillary-units.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Ancillary Units</h3>
+      <p>Robust auxiliary equipment engineered for smooth integration, reliable operation, and efficient packaging-line performance.</p>
+      <div class="card-footer">View All Units <span>→</span></div>
+    </a>
+
+    <a href="products/washing-units.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Washing Units</h3>
+      <p>Precision washing systems designed for effective cleaning of glass and plastic containers with consistent process performance.</p>
+      <div class="card-footer">View All Units <span>→</span></div>
+    </a>
+
+    <a href="products/conveyor-systems.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Conveyor Systems</h3>
+      <p>Engineered conveying systems for smooth container transfer, controlled movement, and seamless integration across production lines.</p>
+      <div class="card-footer">View All Units <span>→</span></div>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PRECISION CHANGE PARTS
+     ============================================================ -->
+<section class="product-group reveal">
+  <div class="group-title">
+    <h2>Precision Change Parts</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="subcategory-grid">
+
+    <a href="products/nozzles-needles.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Nozzles & Needles</h3>
+      <p>Precision-machined filling nozzles and needles designed for accurate dispensing, consistent flow, and reliable filling performance.</p>
+      <div class="card-footer">View Components <span>→</span></div>
+    </a>
+
+    <a href="products/mechanical-seals.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Mechanical Seals</h3>
+      <p>Precision-engineered mechanical seals designed to minimize leakage and withstand demanding operating conditions.</p>
+      <div class="card-footer">View Components <span>→</span></div>
+    </a>
+
+    <a href="products/rubber-components.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Rubber Components</h3>
+      <p>Durable rubber components engineered for reliable sealing, cushioning, gripping, and smooth operation in packaging machinery.</p>
+      <div class="card-footer">View Components <span>→</span></div>
+    </a>
+
+    <a href="products/change-parts.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Change Parts</h3>
+      <p>Precision-engineered format parts designed for accurate product handling, quick changeovers, and consistent line performance.</p>
+      <div class="card-footer">View Components <span>→</span></div>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     AUXILIARY EQUIPMENT
+     ============================================================ -->
+<section class="product-group reveal">
+  <div class="group-title">
+    <h2>Auxiliary Equipment</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="subcategory-grid">
+
+    <a href="products/miscellaneous-components.html" class="subcategory-card">
+      <div class="spotlight"></div>
+      <h3>Miscellaneous Components</h3>
+      <p>Custom-engineered machine components designed to support efficient material handling, process integration, and reliable line operation.</p>
+      <div class="card-footer">View Products <span>→</span></div>
+    </a>
+
+  </div>
+</section>
+      <!-- ============================================================
+         PRODUCTS PAGE — JAVASCRIPT
+         ============================================================ -->
+
+    <script>
+      /*
+         JAVASCRIPT SECTION MAP
+         1. Reveal Animation
+         2. Product Card Spotlight
+         3. Mobile Navigation
+      */
+      document.documentElement.classList.remove("no-js");
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+          var windowHeight = window.innerHeight;
+          var elementTop = reveals[i].getBoundingClientRect().top;
+          if (elementTop < windowHeight - 100) {
+            reveals[i].classList.add("active");
+          }
+        }
+      }
+      window.addEventListener("scroll", reveal);
+      reveal();
+
+      document.querySelectorAll('.subcategory-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+          card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+        });
+      });
+    </script>
+      <script>
+    const navToggle = document.querySelector('.nav-toggle');
+    const primaryNav = document.querySelector('nav.primary-nav');
+
+    if(navToggle && primaryNav){
+      navToggle.addEventListener('click', e => {
+        e.stopPropagation();
+        primaryNav.classList.toggle('open');
+      });
+
+      primaryNav.addEventListener('click', e => e.stopPropagation());
+
+      document.addEventListener('click', () => {
+        primaryNav.classList.remove('open');
+      });
+
+      primaryNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          primaryNav.classList.remove('open');
+        });
+      });
+    }
+  </script>
+
+     <script src="js/product-search.js"></script>
+</body>
+  </html>

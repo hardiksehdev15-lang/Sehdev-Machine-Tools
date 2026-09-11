@@ -1,0 +1,1972 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sehdev Machine Tools — Enquiry</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+
+:root{
+--primary: #0a66c2;
+--primary-dark: #084d99;
+--accent: #e63946;
+--light: #e6f0fa;
+--white: #ffffff;
+--dark: #0d1b2a;
+--muted: #6c757d;
+--card: #f8fbff;
+--nav-height: 70px;
+--max-width: 1200px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+margin:0;
+font-family:"Poppins","Segoe UI",Arial,sans-serif;
+background: linear-gradient(180deg, var(--light) 0%, #ffffff 100%);
+color:var(--dark);
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+}
+
+/* ============================================================
+HEADER & NAVIGATION
+============================================================ */
+
+/* ============================================================
+01. HEADER — MAIN CONTAINER
+============================================================ */
+
+header.site-header{
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+z-index: 1400;
+
+backdrop-filter: blur(12px) saturate(160%);
+-webkit-backdrop-filter: blur(12px) saturate(160%);
+
+background: rgba(255,255,255,0.8);
+
+border-bottom: 1px solid rgba(13,27,42,0.06);
+
+transition:
+background .25s ease,
+box-shadow .25s ease;
+}
+
+/* ------------------------------------------------------------
+Header — Scrolled State
+------------------------------------------------------------ */
+
+header.site-header.scrolled {
+background: rgba(255, 255, 255, 0.8);
+color: #000;
+box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+}
+
+/* ============================================================
+02. NAVIGATION ROW
+============================================================ */
+
+.nav-row{
+height: var(--nav-height);
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+/* Reduced from 6% so more room is available for navigation */
+padding: 0 4%;
+
+gap: 20px;
+
+overflow: visible;
+}
+
+/* ============================================================
+03. BRAND — LOGO + COMPANY NAME
+============================================================ */
+
+.brand{
+display: flex;
+align-items: center;
+
+/* Space between logo and company name */
+gap: 14px;
+
+/*
+Gives the brand enough width so the company name
+doesn't get squeezed by the navigation.
+*/
+min-width: 420px;
+
+/*
+Prevents the logo/company name from shrinking
+when the navigation gets wider.
+*/
+flex-shrink: 0;
+
+text-decoration: none;
+}
+
+/* ------------------------------------------------------------
+Brand — Logo
+------------------------------------------------------------ */
+
+.brand img{
+width: 64px;
+height: 64px;
+
+object-fit: contain;
+
+border-radius: 6px;
+
+flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------
+Brand — Company Name
+------------------------------------------------------------ */
+
+.title{
+font-family: 'Inter', sans-serif;
+
+/*
+Reduced from 33px.
+26px gives a much better balance with the logo
+and leaves enough room for the navigation.
+*/
+font-size: 26px;
+
+font-weight: 600;
+
+letter-spacing: 0.2px;
+
+line-height: 1.05;
+
+text-transform: uppercase;
+
+color: #000;
+
+-webkit-font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+
+/* ------------------------------------------------------------
+Brand — Subtitle
+------------------------------------------------------------ */
+
+.brand .subtitle{
+font-size: 13px;
+
+font-weight: 550;
+
+color: #000;
+}
+
+/* ------------------------------------------------------------
+Brand — Scrolled State
+------------------------------------------------------------ */
+
+header.site-header.scrolled .brand .title{
+color: #000;
+}
+
+/* ============================================================
+04. PRIMARY NAVIGATION
+============================================================ */
+
+/* ------------------------------------------------------------
+Navigation List
+------------------------------------------------------------ */
+
+nav.primary-nav ul{
+list-style: none;
+
+display: flex;
+align-items: center;
+
+/*
+Small gap keeps navigation compact while
+maintaining separation between items.
+*/
+gap: 2px;
+
+margin: 0;
+padding: 0;
+}
+
+/* ------------------------------------------------------------
+Navigation Links + Dropdown Buttons
+------------------------------------------------------------ */
+
+nav.primary-nav a,
+nav.primary-nav .mega-btn{
+display: inline-flex;
+
+align-items: center;
+justify-content: center;
+
+/*
+Reduced padding prevents Home / About /
+Products / Services from becoming too wide.
+*/
+padding: 10px 13px;
+
+border-radius: 8px;
+
+font-size: 15px;
+
+font-weight: 500;
+
+line-height: 1;
+
+color: var(--dark);
+
+text-decoration: none;
+
+white-space: nowrap;
+
+transition:
+background .25s ease,
+color .25s ease;
+}
+
+/* ------------------------------------------------------------
+Navigation — Scrolled State
+------------------------------------------------------------ */
+
+header.site-header.scrolled nav.primary-nav a,
+header.site-header.scrolled nav.primary-nav .mega-btn{
+color: #000;
+}
+
+/* ------------------------------------------------------------
+Navigation — Hover
+------------------------------------------------------------ */
+
+nav.primary-nav a:hover,
+nav.primary-nav .mega-btn:hover{
+background: rgba(10,102,194,.08);
+
+color: var(--primary);
+}
+
+/* ------------------------------------------------------------
+Header / Navigation Overflow
+------------------------------------------------------------ */
+
+header.site-header,
+.nav-row,
+nav.primary-nav{
+overflow: visible;
+}
+
+/* ============================================================
+05. DROPDOWN ARROW
+============================================================ */
+
+nav.primary-nav a span,
+nav.primary-nav .mega-btn span{
+display: inline-flex;
+
+align-items: center;
+
+margin-left: 6px;
+
+font-size: 0.85em;
+
+line-height: 1;
+}
+
+/* ============================================================
+06. PRODUCTS / SERVICES MEGA MENU — DESKTOP
+============================================================ */
+
+@media (min-width: 901px){
+
+/* ----------------------------------------------------------
+Mega Menu Parent
+---------------------------------------------------------- */
+
+nav.primary-nav{
+position: relative;
+}
+
+nav.primary-nav li.mega{
+position: static;
+}
+
+/* ----------------------------------------------------------
+Mega Menu Panel
+---------------------------------------------------------- */
+
+.mega-panel{
+position: absolute;
+
+/* Keep dropdown directly below the navbar */
+top: 100%;
+
+/*
+Align both Products and Services dropdowns to the
+right edge of the navigation area.
+*/
+right: 0;
+left: auto;
+
+/* Remove old center-based positioning */
+transform: none;
+
+/* Same dimensions for both dropdowns */
+width: 900px;
+max-width: calc(100vw - 40px);
+
+background: #fff;
+
+border: 1px solid rgba(0,0,0,0.05);
+border-radius: 8px;
+
+padding: 30px;
+
+box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 40px;
+
+z-index: 2500;
+
+/* Hidden until the menu item is hovered */
+opacity: 0;
+visibility: hidden;
+
+transition:
+opacity .2s ease-in-out,
+visibility .2s ease-in-out;
+}
+
+/* ----------------------------------------------------------
+Show Mega Menu on Hover
+---------------------------------------------------------- */
+
+nav.primary-nav li.mega:hover > .mega-panel{
+opacity: 1;
+visibility: visible;
+}
+
+/* ----------------------------------------------------------
+Mega Menu — Column Headings
+---------------------------------------------------------- */
+
+.mega-col h4{
+margin: 0 0 15px 0 !important;
+
+font-size: 13px !important;
+font-weight: 700 !important;
+
+color: #6c757d !important;
+
+text-transform: uppercase !important;
+letter-spacing: 0.5px !important;
+
+padding-bottom: 10px !important;
+
+border-bottom: 1px solid #eee !important;
+
+width: 100%;
+}
+
+/* ----------------------------------------------------------
+Mega Menu — Links
+---------------------------------------------------------- */
+
+.mega-col a{
+display: block !important;
+
+padding: 8px 0 !important;
+margin: 0 !important;
+
+font-size: 15px !important;
+font-weight: 500 !important;
+
+color: #333 !important;
+
+text-decoration: none !important;
+line-height: 1.4 !important;
+text-align: left !important;
+
+transition: color .2s ease !important;
+}
+
+/* ----------------------------------------------------------
+Mega Menu — Link Hover
+---------------------------------------------------------- */
+
+.mega-col a:hover{
+color: var(--primary) !important;
+background: transparent !important;
+}
+
+/* ----------------------------------------------------------
+First Column Reset
+---------------------------------------------------------- */
+
+.mega-panel .mega-col:first-child{
+display: block;
+}
+
+.mega-panel .mega-col:first-child h4{
+grid-column: auto;
+}
+
+}
+
+/* ============================================================
+07. MEGA MENU — TOP ARROW REMOVED
+============================================================ */
+
+/*
+No dropdown panel arrow is used.
+
+Products and Services already have "▾" in the navbar,
+so the dropdown remains clean and minimal.
+*/
+
+/* ============================================================
+10. MEGA MENU — MOBILE
+============================================================ */
+
+@media (max-width: 900px){
+
+.mega-panel{
+position: static;
+
+width: 100%;
+max-width: none;
+
+transform: none;
+
+display: none;
+
+padding: 10px 0;
+
+border: none;
+
+border-radius: 0;
+
+box-shadow: none;
+
+grid-template-columns: 1fr;
+}
+
+/* ----------------------------------------------------------
+Disable Hover Mega Menu on Mobile
+---------------------------------------------------------- */
+
+nav.primary-nav li.mega:hover .mega-panel{
+display: none;
+}
+
+/* ----------------------------------------------------------
+Open Mega Menu on Click
+---------------------------------------------------------- */
+
+nav.primary-nav li.mega.open > .mega-panel{
+display: block;
+}
+
+/* ----------------------------------------------------------
+Mobile Mega Menu Headings
+---------------------------------------------------------- */
+
+.mega-col h4{
+margin: 6px 10px 12px;
+
+font-size: 13px;
+
+font-weight: 700;
+
+letter-spacing: .6px;
+
+text-transform: uppercase;
+
+color: #6c757d;
+}
+
+/* ----------------------------------------------------------
+Mobile Mega Menu Links
+---------------------------------------------------------- */
+
+.mega-col a{
+display: flex;
+
+align-items: center;
+
+padding: 12px 16px;
+
+border-radius: 10px;
+
+font-size: 15px;
+
+font-weight: 600;
+
+line-height: 1.2;
+
+color: var(--dark);
+
+text-decoration: none;
+
+transition:
+background .2s ease,
+color .2s ease;
+}
+
+/* ----------------------------------------------------------
+Mobile Mega Menu Hover
+---------------------------------------------------------- */
+
+.mega-col a:hover{
+background: rgba(10,102,194,.08);
+
+color: var(--primary);
+}
+
+}
+
+/* ============================================================
+DESKTOP — FIXED NAVBAR CONTENT OFFSET
+============================================================ */
+
+main.wrapper{
+padding-top: 130px;
+max-width: var(--max-width);
+margin: 0 auto;
+}
+
+/* ============================================================
+   PRODUCT SEARCH — NAVBAR
+   ============================================================ */
+
+.nav-search {
+  position: relative;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 210px;
+}
+
+#productSearch {
+  width: 100%;
+  height: 40px;
+  padding: 0 38px 0 14px;
+
+  border: 1px solid rgba(13, 27, 42, 0.15);
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--dark);
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  outline: none;
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+#productSearch::placeholder {
+  color: #6c757d;
+}
+
+#productSearch:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.10);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+
+  transform: translateY(-50%);
+
+  font-size: 20px;
+  line-height: 1;
+
+  color: var(--dark);
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   SEARCH RESULTS DROPDOWN
+   ============================================================ */
+
+.search-results {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  left: 0;
+
+  width: 320px;
+  max-height: 380px;
+
+  overflow-y: auto;
+
+  background: #fff;
+  border: 1px solid rgba(13, 27, 42, 0.08);
+  border-radius: 10px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-5px);
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease,
+    visibility .2s ease;
+
+  z-index: 3000;
+}
+
+.search-results.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   SEARCH RESULT ITEM
+   ============================================================ */
+
+.search-result-item {
+  display: block;
+
+  padding: 12px 15px;
+
+  color: var(--dark);
+  text-decoration: none;
+
+  border-bottom: 1px solid rgba(13, 27, 42, 0.06);
+
+  transition:
+    background .2s ease,
+    color .2s ease;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: rgba(10, 102, 194, 0.07);
+  color: var(--primary);
+}
+
+.search-result-name {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.search-result-category {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+  color: #6c757d;
+}
+
+/* Keep hero content above the background overlay */
+.hero-content{
+position: relative;
+z-index: 2;
+}
+
+.hero::before{
+z-index: 1;
+}
+
+/* ===== HERO (themed) ===== */
+.hero {
+position: relative;
+height: 52vh;
+width: min(var(--max-width), 100%);
+background: url("assets/enquiry bg.png") center / cover no-repeat;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+overflow: hidden;
+border-radius: 12px;
+margin-top: 16px;
+}
+.hero::before {
+content: "";
+position: absolute;
+inset: 0;
+background: linear-gradient(
+90deg,
+rgba(5, 10, 15, 0.78) 0%,
+rgba(5, 10, 15, 0.58) 35%,
+rgba(5, 10, 15, 0.28) 100%
+);
+z-index: 0;
+pointer-events: none;
+}
+.hero-content {
+position: relative;
+z-index: 2;
+max-width: 920px;
+padding: 28px 20px;
+color: #fff;
+}
+.hero-content h1 {
+margin: 0 0 10px;
+font-size: 2.6rem;
+color: var(--primary);
+font-weight: 800;
+font-family: 'Exo 2', sans-serif;
+text-shadow: 0 6px 18px rgba(0,0,0,0.75);
+}
+.hero-content p {
+margin: 0;
+color: rgba(255,255,255,0.95);
+font-size: 1.05rem;
+line-height: 1.6;
+text-shadow: 0 3px 10px rgba(0,0,0,0.6);
+max-width: 760px;
+margin-left: auto;
+margin-right: auto;
+}
+
+/* cursor blink animation */
+.cursor {
+display: inline-block;
+margin-left: 3px;
+font-weight: 300;
+animation: blink 0.8s infinite;
+}
+@keyframes blink {
+0%, 50% { opacity: 1; }
+50.01%,100% { opacity: 0; }
+}
+
+.enquiry-wrap{
+display: grid;
+grid-template-columns: 1.1fr 1.6fr; /* left | right */
+gap: 28px;
+align-items: start;
+max-width: 1200px;
+margin: 20px auto;
+padding: 0 6%;
+}
+
+.enquiry-left, .enquiry-right{
+background: #f8fbff;
+border: 1px solid rgba(13,27,42,0.06);
+border-radius: 12px;
+padding: 24px;
+box-shadow: 0 6px 18px rgba(13,27,42,0.06);
+}
+
+/* responsive */
+@media (max-width: 980px){
+.enquiry-wrap{ grid-template-columns: 1fr; }
+}
+
+/* ===== CARDS ===== */
+.card {
+background: #fff;
+border-radius: 12px;
+padding: 26px;
+border: 1px solid rgba(13,27,42,0.06);
+box-shadow: 0 10px 30px rgba(13,27,42,0.04);
+}
+.card h2{margin-top:0;color:var(--primary);font-size:1.3rem}
+.card p{color:var(--muted);line-height:1.6}
+
+/* info list */
+.info-list{margin-top:18px;padding:0;list-style:none}
+.info-list li{display:flex;gap:14px;margin-bottom:18px;align-items:flex-start}
+.info-icon{flex-shrink:0;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.green{background:#28a745}.blue{background:#007bff}.orange{background:#ff6600}
+
+.contact-box{margin-top:18px;padding:14px;border-radius:8px;background:linear-gradient(180deg,#f8fbff,#ffffff);border:1px solid rgba(13,27,42,0.04)}
+.contact-box p{margin:0;color:var(--muted)}
+.contact-box a{display:inline-block;margin-top:8px;color:var(--primary);font-weight:600;text-decoration:none}
+
+/* ===== FORM STYLING (themed) ===== */
+form label{display:block;font-size:14px;margin-bottom:8px;color:var(--dark);font-weight:600}
+form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+form .full{grid-column:1 / -1}
+input[type="text"], input[type="email"], input[type="tel"], textarea {
+width:100%;padding:12px;border-radius:8px;border:1px solid rgba(13,27,42,0.06);background:#fbfdff;color:var(--dark);font-size:14px;
+box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+textarea{min-height:120px;resize:vertical}
+input::placeholder, textarea::placeholder{color:#9aa3b2}
+
+/* Checkbox group (styled cards) */
+.checkbox-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px}
+.checkbox-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid rgba(13,27,42,0.04);background:#fbfdff;cursor:pointer}
+.checkbox-item input{width:18px;height:18px}
+
+/* Consent checkbox */
+.consent{display:flex;align-items:center;gap:10px;color:var(--muted);margin-top:10px}
+
+/* Buttons */
+.btn-row{display:flex;gap:12px;margin-top:16px}
+.btn-primary{background:linear-gradient(180deg,var(--primary),var(--primary-dark));color:#fff;padding:10px 18px;border-radius:10px;border:none;font-weight:700;cursor:pointer;box-shadow:0 10px 28px rgba(10,102,194,0.12)}
+.btn-secondary{background:#ffffff;border:1px solid rgba(13,27,42,0.06);padding:10px 18px;border-radius:10px;color:var(--primary);cursor:pointer;font-weight:700}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-secondary:hover{background:#f4f7fb}
+
+/* small helpers */
+.muted{color:var(--muted);font-size:0.95rem}
+.small{font-size:0.9rem;color:var(--muted)}
+.hidden{display:none;}
+
+/* footer */
+footer.site-footer{margin-top:40px;padding:30px 6%;background:var(--dark);color:#fff;border-top:1px solid rgba(255,255,255,0.03)}
+footer.site-footer p{margin:0}
+.nav-toggle{
+display: none;
+background: none;
+border: none;
+font-size: 28px;
+cursor: pointer;
+}
+/* ============================================================
+   ENQUIRY PAGE — MOBILE OVERRIDES
+   ============================================================ */
+
+@media (max-width:900px){
+
+  :root{
+    --nav-height:76px;
+  }
+
+  html,body{
+    overflow-x:hidden;
+  }
+
+  /* ---------- HEADER ---------- */
+
+  header.site-header{
+    height:var(--nav-height);
+  }
+
+  .nav-row{
+    height:var(--nav-height);
+    padding:0 16px;
+    gap:10px;
+  }
+
+  .brand{
+    min-width:0;
+    width:auto;
+    max-width:calc(100% - 52px);
+    flex:1;
+    gap:9px;
+    overflow:hidden;
+  }
+
+  .brand img{
+    width:58px;
+    height:58px;
+    object-fit:contain;
+    flex-shrink:0;
+  }
+
+  .brand > div{
+    min-width:0;
+    overflow:hidden;
+  }
+
+  .title{
+    display:block;
+    font-size:17px;
+    line-height:1.15;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .brand .subtitle{
+    display:block;
+    font-size:10px;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+
+  /* ---------- HAMBURGER ---------- */
+
+  .nav-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:42px;
+    padding:0;
+    margin:0;
+    background:none;
+    border:none;
+    font-size:27px;
+    color:var(--dark);
+    cursor:pointer;
+    flex-shrink:0;
+  }
+
+  header.site-header.scrolled .nav-toggle{
+    color:var(--dark);
+  }
+
+  /* ---------- MOBILE NAV ---------- */
+
+  nav.primary-nav{
+    position:absolute;
+    top:var(--nav-height);
+    left:0;
+    width:100%;
+    background:#fff;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+    border-bottom:1px solid rgba(13,27,42,.08);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+  }
+
+  nav.primary-nav.open{
+    max-height:90vh;
+    overflow-y:auto;
+  }
+
+  nav.primary-nav ul{
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    margin:0;
+    padding:10px 16px 18px;
+  }
+
+  nav.primary-nav li{
+    width:100%;
+  }
+
+  nav.primary-nav a,
+  nav.primary-nav .mega-btn{
+    width:100%;
+    min-height:44px;
+    justify-content:flex-start;
+    padding:11px 8px;
+    font-size:15px;
+  }
+
+  /* ---------- MOBILE MEGA MENU ---------- */
+
+  .mega-panel{
+    position:static;
+    width:100%;
+    max-width:none;
+    display:none;
+    padding:10px 0;
+    border:none;
+    border-radius:0;
+    box-shadow:none;
+    grid-template-columns:1fr;
+  }
+
+  nav.primary-nav li.mega:hover .mega-panel{
+    display:none;
+  }
+
+  nav.primary-nav li.mega.open > .mega-panel{
+    display:block;
+  }
+
+  .mega-col h4{
+    margin:6px 10px 12px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+    color:#6c757d;
+  }
+
+  .mega-col a{
+    display:flex;
+    align-items:center;
+    padding:12px 16px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    line-height:1.2;
+    color:var(--dark);
+    text-decoration:none;
+    transition:background .2s ease,color .2s ease;
+  }
+
+  .mega-col a:hover{
+    background:rgba(10,102,194,.08);
+    color:var(--primary);
+  }
+
+  /* ---------- SEARCH ---------- */
+
+  .nav-search{
+    width:100%;
+    padding:8px 0;
+  }
+
+  .search-wrapper{
+    width:100%;
+  }
+
+  #productSearch{
+    width:100%;
+    height:44px;
+    font-size:14px;
+  }
+
+  .search-results{
+    position:static;
+    width:100%;
+    max-height:300px;
+    margin-top:6px;
+    box-shadow:none;
+  }
+
+  /* ---------- MAIN ---------- */
+
+  main.wrapper{
+    padding-top:calc(var(--nav-height) + 16px);
+  }
+
+  /* ---------- HERO ---------- */
+
+  .hero{
+    height:auto;
+    min-height:320px;
+    width:100%;
+    border-radius:0;
+    margin-top:0;
+    padding:50px 6% 40px;
+  }
+
+  .hero-content{
+    max-width:100%;
+    padding:20px 0;
+  }
+
+  .hero-content h1{
+    font-size:2.1rem;
+    line-height:1.2;
+  }
+
+  .hero-content p{
+    font-size:.95rem;
+    line-height:1.6;
+  }
+
+  /* ---------- ENQUIRY CONTENT ---------- */
+
+  .enquiry-wrap{
+    grid-template-columns:1fr;
+    gap:20px;
+    padding:0 6%;
+    margin:20px auto;
+  }
+
+  .enquiry-left,
+  .enquiry-right{
+    padding:20px;
+  }
+
+  .card{
+    padding:20px;
+  }
+
+  .card h2{
+    font-size:1.3rem;
+  }
+
+  /* ---------- FORM ---------- */
+
+  form .form-row{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .checkbox-group{
+    grid-template-columns:1fr;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea,
+  select{
+    width:100%;
+    max-width:100%;
+    font-size:14px;
+  }
+
+  textarea{
+    min-height:110px;
+  }
+
+  /* ---------- BUTTONS ---------- */
+
+  .btn-row{
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .btn-row button{
+    width:100%;
+  }
+
+  /* ---------- SERVICE FIELDSETS ---------- */
+
+  fieldset{
+    padding:12px;
+  }
+
+  fieldset input,
+  fieldset textarea,
+  fieldset select{
+    width:100%;
+  }
+
+  /* ---------- FOOTER ---------- */
+
+  footer.site-footer{
+    padding:30px 6% !important;
+  }
+
+  footer.site-footer > div{
+    flex-direction:column;
+    text-align:center;
+    gap:6px;
+  }
+
+}
+/* ============================================================
+ENQUIRY PAGE — MATCH SERVICES PAGE HEADER + HERO
+============================================================ */
+
+:root{
+--nav-height: 112px;
+}
+
+/* Same navbar proportions as Services page */
+header.site-header{
+background: rgba(255,255,255,0.8);
+backdrop-filter: blur(12px) saturate(160%);
+-webkit-backdrop-filter: blur(12px) saturate(160%);
+border-bottom: 1px solid rgba(13,27,42,0.06);
+}
+
+header.site-header.scrolled{
+background: rgba(255,255,255,0.8);
+color: #000;
+box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+}
+
+.nav-row{
+height: var(--nav-height);
+padding: 0 4%;
+gap: 20px;
+overflow: visible;
+}
+
+.brand{
+gap: 14px;
+min-width: 420px;
+flex-shrink: 0;
+}
+
+.brand img{
+width: 155px;
+height: 150px;
+object-fit: contain;
+border-radius: 6px;
+flex-shrink: 0;
+}
+
+.title{
+font-family: 'Inter', 'Poppins', sans-serif;
+font-size: 26px;
+font-weight: 600;
+letter-spacing: 0.2px;
+line-height: 1.05;
+text-transform: uppercase;
+color: #000;
+}
+
+.brand .subtitle{
+font-size: 13px;
+font-weight: 550;
+color: #000;
+}
+
+nav.primary-nav ul{
+gap: 2px;
+}
+
+nav.primary-nav a,
+nav.primary-nav .mega-btn{
+padding: 10px 13px;
+border-radius: 8px;
+font-size: 15px;
+font-weight: 500;
+line-height: 1;
+color: var(--dark);
+text-decoration: none;
+white-space: nowrap;
+}
+
+header.site-header.scrolled nav.primary-nav a,
+header.site-header.scrolled nav.primary-nav .mega-btn,
+header.site-header.scrolled .title,
+header.site-header.scrolled .brand .subtitle{
+color: #000;
+}
+
+/* Same desktop mega-menu geometry as Services page */
+@media (min-width: 901px){
+nav.primary-nav{
+position: relative;
+}
+
+nav.primary-nav li.mega{
+position: static;
+}
+
+.mega-panel{
+position: absolute;
+top: 100%;
+right: 0;
+left: auto;
+transform: none;
+width: 900px;
+max-width: calc(100vw - 40px);
+background: #fff;
+border: 1px solid rgba(0,0,0,0.05);
+border-radius: 8px;
+padding: 30px;
+box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 40px;
+z-index: 2500;
+opacity: 0;
+visibility: hidden;
+}
+
+nav.primary-nav li.mega:hover > .mega-panel{
+opacity: 1;
+visibility: visible;
+}
+
+.mega-col h4{
+margin: 0 0 15px 0 !important;
+font-size: 13px !important;
+font-weight: 700 !important;
+color: #6c757d !important;
+text-transform: uppercase !important;
+letter-spacing: 0.5px !important;
+padding-bottom: 10px !important;
+border-bottom: 1px solid #eee !important;
+width: 100%;
+}
+
+.mega-col a{
+display: block !important;
+padding: 8px 0 !important;
+margin: 0 !important;
+font-size: 15px !important;
+font-weight: 500 !important;
+color: #333 !important;
+text-decoration: none !important;
+line-height: 1.4 !important;
+text-align: left !important;
+}
+
+.mega-col a:hover{
+color: var(--primary) !important;
+background: transparent !important;
+}
+}
+
+</style>
+</head>
+<!-- ============================================================
+     SMT ENQUIRY PAGE — HTML
+     Structure only. All styling is above; all interactions are below.
+     ============================================================ -->
+<!--
+     HTML SECTION MAP
+     01. Header / Navigation
+     02. Main Wrapper
+     03. Hero Section
+     04. Enquiry Content
+     05. Footer
+-->
+<body>
+
+  <header class="site-header" id="siteHeader">
+    <div class="nav-row">
+
+      <!-- Brand / Logo -->
+      <a href="index.html" class="brand">
+        <img src="assets/logo/SMT-logo.png" alt="Sehdev logo">
+        <div>
+          <span class="title">Sehdev Machine Tools (India)</span><br>
+            <small class="subtitle">Precision | Reliability</small>
+          </div>
+        </a>
+        <!-- Mobile Menu Toggle -->
+        <button class="nav-toggle" aria-label="Toggle menu">
+          ☰
+        </button>
+
+        <!-- Primary Navigation -->
+        <nav class="primary-nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+
+            <!-- Products Mega Menu -->
+            <li class="mega">
+              <a href="products.html" class="mega-btn">Products ▾</a>
+              <div class="mega-panel">
+                <div class="mega-col">
+                  <h4>Machines</h4>
+                  <a href="products/labelling-machine.html">Labelling Solutions & Spares</a>
+                  <a href="products/sealing-machine.html">Sealing Solutions & Spares</a>
+                  <a href="products/filling-machine.html">Filling Solutions & Spares</a>
+                  <a href="products/ancillary-units.html">Ancillary Units & Spares</a>
+                  <a href="products/washing-units.html">Washing Units & Spares</a>
+                  <a href="products/conveyor-system.html">Conveying Solutions & Spares</a>
+                </div>
+                <div class="mega-col">
+                  <h4>Components</h4>
+                  <a href="products/change-parts.html">Change Parts</a>
+                  <a href="products/nozzles-needles.html">Nozzles &amp; Needles</a>
+                  <a href="products/mechanical-seals.html">Mechanical Seals</a>
+                  <a href="products/rubber-components.html">Rubber Components</a>
+                </div>
+                <div class="mega-col">
+                  <h4>Miscellaneous</h4>
+                  <a href="products/miscellaneous.html">Miscellaneous Components</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- Services Mega Menu -->
+            <li class="mega">
+              <a href="../services.html" class="mega-btn">Services ▾</a>
+
+              <div class="mega-panel">
+
+                <div class="mega-col">
+                  <a href="../services.html#design-customization" class="service">
+                    <h4>Design Customization</h4>
+                  </a>
+                </div>
+
+                <div class="mega-col">
+                  <a href="../services.html#reverse-engineering" class="service">
+                    <h4>Reverse Engineering</h4>
+                  </a>
+                </div>
+
+                <div class="mega-col">
+                  <a href="../services.html#product-refurbishment" class="service">
+                    <h4>Product Refurbishment</h4>
+                  </a>
+                </div>
+
+              </div>
+                    </li>
+
+        <!-- Product Search -->
+        <li class="nav-search">
+          <div class="search-wrapper">
+            <input
+              type="search"
+              id="productSearch"
+              placeholder="Search products..."
+              autocomplete="off"
+              aria-label="Search products"
+            >
+            <span class="search-icon">⌕</span>
+
+            <div
+              id="searchResults"
+              class="search-results"
+              aria-live="polite"
+            ></div>
+          </div>
+        </li>
+
+        <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </nav>
+
+      </div>
+    </header>
+
+    <main class="wrapper">
+      <!-- HERO -->
+      <section class="hero" role="region" aria-label="Get a quote">
+        <div class="hero-content">
+          <h1>
+            <span id="typed-text"></span><span class="cursor">|</span>
+          </h1>
+          <p>Share your requirements and we’ll propose the best Products, configurations and pricing for your needs.</p>
+        </div>
+      </section>
+
+      <!-- TWO COLUMN CONTENT -->
+      <div class="enquiry-wrap">
+
+        <!-- LEFT: Info -->
+        <section class="card" aria-labelledby="info-heading">
+          <h2 id="info-heading">Tell us what you need</h2>
+          <p>Request quotations for labelling, sealing, filling, capping, packaging lines and more. Share a few details and we'll follow up with tailored options and pricing.</p>
+
+          <ul class="info-list" role="list">
+            <li>
+              <div class="info-icon green">✓</div>
+              <div>
+                <p><strong>Fast, friendly quotes</strong><br><span class="small">Clear lead times, shipping, and after-sales support.</span></p>
+              </div>
+            </li>
+
+            <li>
+              <div class="info-icon blue">ⓘ</div>
+              <div>
+                <p><strong>Custom configurations</strong><br><span class="small">Share your product, speed and packaging specs.</span></p>
+              </div>
+            </li>
+
+            <li>
+              <div class="info-icon orange">⚑</div>
+              <div>
+                <p><strong>Ensuring best quality</strong><br><span class="small">Top-quality products that meet the highest standards.</span></p>
+              </div>
+            </li>
+          </ul>
+
+          <div class="contact-box" aria-label="Contact details">
+            <p class="muted">Prefer speaking to us? Call:</p>
+            <a href="tel:+919872894141">+91 98728 94141</a><br>
+              <a href="tel:+919878010962">+91 98780 10962</a>
+              <p class="muted" style="margin-top:8px">Email: <a href="mailto:Sehdev02@yahoo.com">Sehdev02@yahoo.com</a></p>
+            </div>
+          </section>
+
+          <!-- RIGHT: Form -->
+          <section class="enquiry-right" id="enquiry-form">
+            <form method="POST" action="send-enquiry.php" enctype="multipart/form-data">
+              <div class="form-row">
+                <div>
+                  <label for="full_name">Full name *</label>
+                  <input id="full_name" name="full_name" type="text" placeholder="Jane Doe" required>
+                </div>
+
+                <div>
+                  <label for="company">Company</label>
+                  <input id="company" name="company" type="text" placeholder="Your company">
+                </div>
+
+                <div>
+                  <label for="email">Email *</label>
+                  <input id="email" name="email" type="email" placeholder="name@email.com" required>
+                </div>
+
+                <div>
+                  <label for="phone">Phone</label>
+                  <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210">
+                </div>
+              </div>
+
+              <div class="form-row" style="margin-top:12px">
+                <div>
+                  <label for="city">City</label>
+                  <input id="city" name="city" type="text" placeholder="City">
+                </div>
+                <div>
+                  <label for="country">Country</label>
+                  <input id="country" name="country" type="text" placeholder="Country">
+                </div>
+              </div>
+
+              <label style="margin-top:18px;display:block;font-weight:700">Machinery interested in *</label>
+              <div class="checkbox-group" role="group" aria-label="Select machinery">
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Labelling Machines"><span>Labelling Machines</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Sealing Machines"><span>Sealing Machines</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Filling Machines"><span>Filling Machines</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Capping Machines"><span>Capping Machines</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Packaging Lines"><span>Packaging Lines</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Ancillary Units"><span>Ancillary Units</span></label>
+
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Conveyors"><span>Conveyors</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Spare Parts"><span>Spare Parts</span></label>
+
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Nozzles & Needles"><span>Nozzles & Needles</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Mechanical Seals"><span>Mechanical Seals</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Change Parts"><span>Change Parts</span></label>
+
+                <label class="checkbox-item"><input type="checkbox" name="machinery" value="Misc"><span>Misc</span></label>
+              </div>
+              <div style="margin-top:16px">
+                <label for="project_details">Project details</label>
+                <textarea id="project_details" name="project_details" placeholder="Tell us about your project, product, speeds, container size, required output..."></textarea>
+              </div>
+
+              <label class="consent">
+                <input type="checkbox" id="consent" name="consent" value="yes" required>
+                <span>I agree to be contacted about my enquiry.</span>
+              </label>
+
+              <!-- Show detected intent -->
+              <div id="serviceBadge" style="display:none;margin:0 0 10px 0;
+                font-weight:700;color:#0a66c2;background:#eaf3ff;border:1px solid rgba(10,102,194,.2);
+                padding:8px 12px;border-radius:8px;"></div>
+
+                <label for="serviceType">Service type</label>
+                <select id="serviceType" name="service_type" >
+                  <option value="">Select…</option>
+                  <option value="customization">Design Customization</option>
+                  <option value="reverse">Reverse Engineering</option>
+                  <option value="refurbishment">Product Refurbishment</option>
+                </select>
+
+                <input type="hidden" id="sourceService" name="source_service" value="">
+
+                <!-- Customization details -->
+                <fieldset id="fsCustomization" class="svc-fs hidden" style="margin-top:12px">
+                  <legend>Customization details</legend>
+                  <label>Machine/Line type <input name="cust_line_type" type="text"></label>
+                  <label>Target throughput (BPM/UPM) <input name="cust_throughput" type="text"></label>
+                  <label>Container/Format <input name="cust_format" type="text"></label>
+                  <label>Pain points / change parts needed <textarea name="cust_pain_points"></textarea></label>
+                  <label>PLC/HMI brand <input name="cust_plc" type="text" placeholder="Siemens / Allen-Bradley …"></label>
+                  <label>Integration needed <input name="cust_integration" type="text" placeholder="Conveyor, Filler, Labeller…"></label>
+                  <label>Timeline / Deadline <input name="cust_deadline" type="text"></label>
+                </fieldset>
+
+                <!-- Reverse engineering details -->
+                <fieldset id="fsReverse" class="svc-fs hidden" style="margin-top:12px">
+                  <legend>Reverse engineering details</legend>
+                  <label>Part name / function <input name="rev_part" type="text"></label>
+                  <label>Quantity needed <input name="rev_qty" type="number" min="1"></label>
+                  <label>Sample available?
+                    <select name="rev_sample"><option>Yes</option><option>No</option></select>
+                  </label>
+                  <label>Material (current/desired) <input name="rev_material" type="text" placeholder="SS316L, UHMW-PE, PTFE, Viton…"></label>
+                  <label>Operating conditions <input name="rev_conditions" type="text" placeholder="Temp, chemicals, load…"></label>
+                  <label>Dimensions/drawings available?
+                    <select name="rev_docs"><option>Yes</option><option>No</option></select>
+                  </label>
+                  <label>Tolerance / critical fits <input name="rev_tolerance" type="text"></label>
+                  <label>Urgency <input name="rev_urgency" type="text"></label>
+                </fieldset>
+
+                <!-- Product Refurbishment details -->
+
+                <fieldset id="fsRefurbishment" class="svc-fs hidden" style="margin-top:12px">
+                  <legend>Product Refurbishment details</legend>
+                  <label>Machine to be refurbished <input name="refurb_machine_name" type="text"></label>
+                  <label>Current Condition
+                    <select name="refurb_condition">
+                      <option value="working">Working (Needs Tuning)</option>
+                      <option value="partial">Partially Working</option>
+                      <option value="non_functional">Non-Functional</option>
+                    </select>
+                  </label>
+                  <label>Year of Manufacture <input name="refurb_year" type="text"></label>
+                  <label>Specific issues or upgrades required <textarea name="refurb_notes"></textarea></label>
+                </fieldset>
+                <!-- Common attachments -->
+                <label style="margin-top:12px">Attach files (photos/drawings/video)
+                  <input type="file" name="attachments" multiple>
+                </label>
+
+                <div class="btn-row">
+                  <button type="submit" class="btn-primary">Submit Enquiry</button>
+                  <button type="reset" class="btn-secondary">Reset</button>
+                </div>
+              </form>
+            </section>
+
+          </div>
+
+          <footer class="site-footer" role="contentinfo">
+            <div style="max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0">
+              <p>©️ 2026 Sehdev Machine Tools. All rights reserved.</p>
+              <p class="small">IEC No. 1210002485 • GSTIN: 03AAXPK7104N1ZA</p>
+            </div>
+          </footer>
+
+        </main>
+
+        <!-- small JS: focus first input on load -->
+<script>
+/* ============================================================
+   SMT ENQUIRY PAGE — JAVASCRIPT
+   ============================================================ */
+
+/*
+   JAVASCRIPT SECTION MAP
+   1. Header Scroll Behavior
+   2. First Input Focus
+   3. Typing Animation
+   4. Service Type + URL Prefill
+   5. Product Prefill
+   6. Multiple Machinery Prefill
+   7. Manual Service Selection
+   8. Mobile Navigation
+*/
+
+document.addEventListener('DOMContentLoaded', function() {
+// Header scroll behavior
+const siteHeader = document.getElementById('siteHeader');
+if (siteHeader) {
+const updateHeader = () => {
+if (window.scrollY > 20) siteHeader.classList.add('scrolled');
+else siteHeader.classList.remove('scrolled');
+};
+window.addEventListener('scroll', updateHeader);
+updateHeader();
+}
+
+// 1. Focus first input
+const first = document.getElementById('full_name');
+if (first) first.focus();
+
+// 2. Typing Animation Logic
+const texts = ["Get a Quote Today!", "Request a Custom Solution"];
+const typed = document.getElementById("typed-text");
+let textIndex = 0, charIndex = 0, isDeleting = false;
+
+function type() {
+if (!typed) return;
+const current = texts[textIndex];
+if (!isDeleting && charIndex <= current.length) {
+typed.textContent = current.substring(0, charIndex++);
+setTimeout(type, 60);
+} else if (isDeleting && charIndex >= 0) {
+typed.textContent = current.substring(0, charIndex--);
+setTimeout(type, 30);
+} else {
+if (!isDeleting && charIndex > current.length) {
+setTimeout(() => { isDeleting = true; type(); }, 1500);
+} else if (isDeleting && charIndex < 0) {
+isDeleting = false;
+textIndex = (textIndex + 1) % texts.length;
+setTimeout(type, 200);
+}
+}
+}
+type();
+
+/* ============================================================
+03. SERVICE TYPE + URL PREFILL
+============================================================ */
+
+const serviceSelect = document.getElementById('serviceType');
+const fsCust = document.getElementById('fsCustomization');
+const fsRev = document.getElementById('fsReverse');
+const fsRefurb = document.getElementById('fsRefurbishment');
+const badge = document.getElementById('serviceBadge');
+const source = document.getElementById('sourceService');
+
+/* ------------------------------------------------------------
+Show / Hide Service-Specific Fields
+------------------------------------------------------------ */
+
+function updateFields(type) {
+
+if (!fsCust || !fsRev || !fsRefurb) return;
+
+fsCust.classList.add('hidden');
+fsRev.classList.add('hidden');
+fsRefurb.classList.add('hidden');
+
+if (type === 'customization') {
+fsCust.classList.remove('hidden');
+}
+
+if (type === 'reverse') {
+fsRev.classList.remove('hidden');
+}
+
+if (type === 'refurbishment') {
+fsRefurb.classList.remove('hidden');
+}
+}
+
+/* ============================================================
+READ URL PARAMETERS
+============================================================ */
+
+const urlParams = new URLSearchParams(window.location.search);
+
+const prefillService =
+(urlParams.get('service') || '').trim().toLowerCase();
+
+const prefillMach =
+urlParams.getAll('machinery');
+
+const productName =
+urlParams.get('product');
+
+const categoryName =
+urlParams.get('cat');
+
+/* ============================================================
+SERVICE PREFILL
+============================================================ */
+
+if (prefillService) {
+
+let normalized = prefillService;
+
+/* Support old URL format */
+if (normalized === 'reverse-engineering') {
+normalized = 'reverse';
+}
+
+/* ----------------------------------------------------------
+Select Service Automatically
+---------------------------------------------------------- */
+
+if (serviceSelect) {
+
+serviceSelect.value = normalized;
+
+/*
+Fire the normal change event as well.
+This makes the automatic selection behave exactly
+like a user manually selecting the service.
+*/
+serviceSelect.dispatchEvent(
+new Event('change', { bubbles: true })
+);
+}
+
+/* ----------------------------------------------------------
+Store Source Service
+---------------------------------------------------------- */
+
+if (source) {
+source.value = normalized;
+}
+
+/* ----------------------------------------------------------
+Show Correct Fields
+---------------------------------------------------------- */
+
+updateFields(normalized);
+
+/* ----------------------------------------------------------
+Show Enquiry Badge
+---------------------------------------------------------- */
+
+if (badge) {
+
+const labels = {
+customization: 'Design Customization',
+reverse: 'Reverse Engineering',
+refurbishment: 'Product Refurbishment'
+};
+
+badge.textContent =
+'You are enquiring about: ' +
+(labels[normalized] || 'General / Product');
+
+badge.style.display = 'inline-block';
+}
+
+/* ----------------------------------------------------------
+Scroll Directly To Enquiry Form
+---------------------------------------------------------- */
+
+setTimeout(function () {
+
+const formSection =
+document.getElementById('enquiry-form');
+
+if (formSection) {
+
+formSection.scrollIntoView({
+behavior: 'smooth',
+block: 'start'
+});
+
+}
+
+}, 500);
+
+}
+
+/* ============================================================
+PRODUCT PREFILL
+============================================================ */
+
+if (productName) {
+
+const projectDetails =
+document.getElementById('project_details');
+
+if (projectDetails) {
+
+projectDetails.value =
+`I am interested in the "${productName}". Please provide a formal quotation and technical specifications for this unit.
+
+Additional Requirements:
+- `;
+}
+
+/* Auto-select machinery category */
+if (categoryName) {
+
+const target =
+decodeURIComponent(categoryName)
+.toLowerCase()
+.trim();
+
+const checkboxes =
+document.querySelectorAll(
+'input[name="machinery"]'
+);
+
+checkboxes.forEach(function (cb) {
+
+const value =
+cb.value.toLowerCase();
+
+if (value.includes(target)) {
+
+cb.checked = true;
+
+console.log(
+'Auto-ticked:',
+cb.value
+);
+}
+
+});
+}
+}
+
+/* ============================================================
+MULTIPLE MACHINERY PREFILL
+============================================================ */
+
+if (prefillMach.length > 0) {
+
+prefillMach.forEach(function (value) {
+
+const checkbox =
+document.querySelector(
+`input[name="machinery"][value="${value}"]`
+);
+
+if (checkbox) {
+checkbox.checked = true;
+}
+
+});
+}
+
+/* ============================================================
+MANUAL SERVICE SELECTION
+============================================================ */
+
+if (serviceSelect) {
+
+serviceSelect.addEventListener(
+'change',
+function (e) {
+
+const selected =
+e.target.value;
+
+updateFields(selected);
+
+if (source) {
+source.value = selected;
+}
+
+/*
+Hide the automatic badge when the user manually
+changes the service.
+*/
+if (badge) {
+badge.style.display = 'none';
+}
+
+}
+);
+}
+
+// 4. Listeners
+if (serviceSelect) {
+serviceSelect.addEventListener('change', e => {
+updateFields(e.target.value);
+if (badge) badge.style.display = "none";
+});
+}
+
+// 5. Mobile Nav Toggle
+const navToggle = document.querySelector('.nav-toggle');
+const primaryNav = document.querySelector('nav.primary-nav');
+if (navToggle && primaryNav) {
+navToggle.addEventListener('click', e => {
+e.stopPropagation();
+primaryNav.classList.toggle('open');
+});
+
+primaryNav.querySelectorAll('.mega-btn').forEach(btn => {
+btn.addEventListener('click', e => {
+if (window.innerWidth <= 900) {
+e.preventDefault();
+btn.parentElement.classList.toggle('open');
+}
+});
+});
+
+document.addEventListener('click', () => primaryNav.classList.remove('open'));
+}
+});
+</script>
+ <script src="js/product-search.js"></script>
+</body>
+</html>

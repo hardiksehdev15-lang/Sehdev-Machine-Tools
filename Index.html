@@ -1,0 +1,2530 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sehdev Machine Tools</title>
+
+  <!-- Google Fonts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fugaz+One&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+
+
+  /* ============================================================
+     GLOBAL / FOUNDATION
+     ============================================================ */
+:root{
+      --primary: #0a66c2;
+      --primary-dark: #084d99;
+      --light: #e6f0fa;
+      --white: #ffffff;
+      --dark: #0d1b2a;
+      --muted: #6c757d;
+      --card: #f8fbff;
+      --nav-height: 112px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Poppins","Segoe UI",Arial,sans-serif;
+      background: linear-gradient(180deg, var(--light) 0%, #ffffff 100%);
+      color:var(--dark);
+    }
+
+  /* ============================================================
+   HEADER & NAVIGATION
+   ============================================================ */
+
+
+/* ============================================================
+   01. HEADER — MAIN CONTAINER
+   ============================================================ */
+
+header.site-header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1400;
+
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+
+  background: rgba(255,255,255,0.8);
+
+  border-bottom: 1px solid rgba(13,27,42,0.06);
+
+  transition:
+    background .25s ease,
+    box-shadow .25s ease;
+}
+
+
+/* ------------------------------------------------------------
+   Header — Scrolled State
+   ------------------------------------------------------------ */
+
+header.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.827);
+  color: #000;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+
+/* ============================================================
+   02. NAVIGATION ROW
+   ============================================================ */
+
+.nav-row{
+  height: var(--nav-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* Reduced from 6% so more room is available for navigation */
+  padding: 0 4%;
+
+  gap: 20px;
+
+  overflow: visible;
+}
+
+
+/* ============================================================
+   03. BRAND — LOGO + COMPANY NAME
+   ============================================================ */
+
+.brand{
+  display: flex;
+  align-items: center;
+
+  /* Space between logo and company name */
+  gap: 5px;
+
+  /*
+    Gives the brand enough width so the company name
+    doesn't get squeezed by the navigation.
+  */
+  min-width: 420px;
+
+  /*
+    Prevents the logo/company name from shrinking
+    when the navigation gets wider.
+  */
+  flex-shrink: 0;
+
+  text-decoration: none;
+}
+
+
+/* ------------------------------------------------------------
+   Brand — Logo
+   ------------------------------------------------------------ */
+
+.brand img{
+  width: 155px;
+  height: 150px;
+
+  object-fit: contain;
+
+  border-radius: 5px;
+
+  flex-shrink: 0;
+}
+
+
+/* ------------------------------------------------------------
+   Brand — Company Name
+   ------------------------------------------------------------ */
+
+.title{
+  font-family: 'Inter', sans-serif;
+
+  /*
+    Reduced from 33px.
+    26px gives a much better balance with the logo
+    and leaves enough room for the navigation.
+  */
+  font-size: 26px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+
+  line-height: 1.05;
+
+  text-transform: uppercase;
+
+  color: #000;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+
+/* ------------------------------------------------------------
+   Brand — Subtitle
+   ------------------------------------------------------------ */
+
+.brand .subtitle{
+  font-size: 13px;
+
+  font-weight: 550;
+
+  color: #000;
+}
+
+
+/* ------------------------------------------------------------
+   Brand — Scrolled State
+   ------------------------------------------------------------ */
+
+header.site-header.scrolled .brand .title{
+  color: #000;
+}
+
+
+/* ============================================================
+   04. PRIMARY NAVIGATION
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   Navigation List
+   ------------------------------------------------------------ */
+
+nav.primary-nav ul{
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+
+  /*
+    Small gap keeps navigation compact while
+    maintaining separation between items.
+  */
+  gap: 2px;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ------------------------------------------------------------
+   Navigation Links + Dropdown Buttons
+   ------------------------------------------------------------ */
+
+nav.primary-nav a,
+nav.primary-nav .mega-btn{
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  /*
+    Reduced padding prevents Home / About /
+    Products / Services from becoming too wide.
+  */
+  padding: 10px 13px;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  line-height: 1;
+
+  color: var(--dark);
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition:
+    background .25s ease,
+    color .25s ease;
+}
+
+
+/* ------------------------------------------------------------
+   Navigation — Scrolled State
+   ------------------------------------------------------------ */
+
+header.site-header.scrolled nav.primary-nav a,
+header.site-header.scrolled nav.primary-nav .mega-btn{
+  color: #000;
+}
+
+
+/* ------------------------------------------------------------
+   Navigation — Hover
+   ------------------------------------------------------------ */
+
+nav.primary-nav a:hover,
+nav.primary-nav .mega-btn:hover{
+  background: rgba(10,102,194,.08);
+
+  color: var(--primary);
+}
+
+
+/* ------------------------------------------------------------
+   Header / Navigation Overflow
+   ------------------------------------------------------------ */
+
+header.site-header,
+.nav-row,
+nav.primary-nav{
+  overflow: visible;
+}
+
+
+/* ============================================================
+   05. DROPDOWN ARROW
+   ============================================================ */
+
+nav.primary-nav a span,
+nav.primary-nav .mega-btn span{
+  display: inline-flex;
+
+  align-items: center;
+
+  margin-left: 6px;
+
+  font-size: 0.85em;
+
+  line-height: 1;
+}
+
+
+/* ============================================================
+   06. PRODUCTS / SERVICES MEGA MENU — DESKTOP
+   ============================================================ */
+
+@media (min-width: 901px){
+
+  /* ----------------------------------------------------------
+     Mega Menu Parent
+     ---------------------------------------------------------- */
+
+  nav.primary-nav{
+    position: relative;
+  }
+
+  nav.primary-nav li.mega{
+    position: static;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mega Menu Panel
+     ---------------------------------------------------------- */
+
+  .mega-panel{
+    position: absolute;
+
+    /* Keep dropdown directly below the navbar */
+    top: 100%;
+
+    /*
+      Align both Products and Services dropdowns to the
+      right edge of the navigation area.
+    */
+    right: 0;
+    left: auto;
+
+    /* Remove old center-based positioning */
+    transform: none;
+
+    /* Same dimensions for both dropdowns */
+    width: 900px;
+    max-width: calc(100vw - 40px);
+
+    background: #fff;
+
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 8px;
+
+    padding: 30px;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+
+    z-index: 2500;
+
+    /* Hidden until the menu item is hovered */
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+      opacity .2s ease-in-out,
+      visibility .2s ease-in-out;
+  }
+
+
+  /* ----------------------------------------------------------
+     Show Mega Menu on Hover
+     ---------------------------------------------------------- */
+
+  nav.primary-nav li.mega:hover > .mega-panel{
+    opacity: 1;
+    visibility: visible;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mega Menu — Column Headings
+     ---------------------------------------------------------- */
+
+  .mega-col h4{
+    margin: 0 0 15px 0 !important;
+
+    font-size: 13px !important;
+    font-weight: 700 !important;
+
+    color: #6c757d !important;
+
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+
+    padding-bottom: 10px !important;
+
+    border-bottom: 1px solid #eee !important;
+
+    width: 100%;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mega Menu — Links
+     ---------------------------------------------------------- */
+
+  .mega-col a{
+    display: block !important;
+
+    padding: 8px 0 !important;
+    margin: 0 !important;
+
+    font-size: 15px !important;
+    font-weight: 500 !important;
+
+    color: #333 !important;
+
+    text-decoration: none !important;
+    line-height: 1.4 !important;
+    text-align: left !important;
+
+    transition: color .2s ease !important;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mega Menu — Link Hover
+     ---------------------------------------------------------- */
+
+  .mega-col a:hover{
+    color: var(--primary) !important;
+    background: transparent !important;
+  }
+
+
+  /* ----------------------------------------------------------
+     First Column Reset
+     ---------------------------------------------------------- */
+
+  .mega-panel .mega-col:first-child{
+    display: block;
+  }
+
+  .mega-panel .mega-col:first-child h4{
+    grid-column: auto;
+  }
+
+}
+
+
+/* ============================================================
+   07. MEGA MENU — TOP ARROW REMOVED
+   ============================================================ */
+
+/*
+  No dropdown panel arrow is used.
+
+  Products and Services already have "▾" in the navbar,
+  so the dropdown remains clean and minimal.
+*/
+
+
+/* ============================================================
+   10. MEGA MENU — MOBILE
+   ============================================================ */
+
+@media (max-width: 900px){
+
+  .mega-panel{
+    position: static;
+
+    width: 100%;
+    max-width: none;
+
+    transform: none;
+
+    display: none;
+
+    padding: 10px 0;
+
+    border: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    grid-template-columns: 1fr;
+  }
+
+
+  /* ----------------------------------------------------------
+     Disable Hover Mega Menu on Mobile
+     ---------------------------------------------------------- */
+
+  nav.primary-nav li.mega:hover .mega-panel{
+    display: none;
+  }
+
+
+  /* ----------------------------------------------------------
+     Open Mega Menu on Click
+     ---------------------------------------------------------- */
+
+  nav.primary-nav li.mega.open > .mega-panel{
+    display: block;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mobile Mega Menu Headings
+     ---------------------------------------------------------- */
+
+  .mega-col h4{
+    margin: 6px 10px 12px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: .6px;
+
+    text-transform: uppercase;
+
+    color: #6c757d;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mobile Mega Menu Links
+     ---------------------------------------------------------- */
+
+  .mega-col a{
+    display: flex;
+
+    align-items: center;
+
+    padding: 12px 16px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    color: var(--dark);
+
+    text-decoration: none;
+
+    transition:
+      background .2s ease,
+      color .2s ease;
+  }
+
+
+  /* ----------------------------------------------------------
+     Mobile Mega Menu Hover
+     ---------------------------------------------------------- */
+
+  .mega-col a:hover{
+    background: rgba(10,102,194,.08);
+
+    color: var(--primary);
+  }
+
+}
+
+/* ============================================================
+   PRODUCT SEARCH — NAVBAR
+   ============================================================ */
+
+.nav-search {
+  position: relative;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 210px;
+}
+
+#productSearch {
+  width: 100%;
+  height: 40px;
+  padding: 0 38px 0 14px;
+
+  border: 1px solid rgba(13, 27, 42, 0.15);
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--dark);
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  outline: none;
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+#productSearch::placeholder {
+  color: #6c757d;
+}
+
+#productSearch:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.10);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+
+  transform: translateY(-50%);
+
+  font-size: 20px;
+  line-height: 1;
+
+  color: var(--dark);
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   SEARCH RESULTS DROPDOWN
+   ============================================================ */
+
+.search-results {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  left: 0;
+
+  width: 320px;
+  max-height: 380px;
+
+  overflow-y: auto;
+
+  background: #fff;
+  border: 1px solid rgba(13, 27, 42, 0.08);
+  border-radius: 10px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-5px);
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease,
+    visibility .2s ease;
+
+  z-index: 3000;
+}
+
+.search-results.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   SEARCH RESULT ITEM
+   ============================================================ */
+
+.search-result-item {
+  display: block;
+
+  padding: 12px 15px;
+
+  color: var(--dark);
+  text-decoration: none;
+
+  border-bottom: 1px solid rgba(13, 27, 42, 0.06);
+
+  transition:
+    background .2s ease,
+    color .2s ease;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: rgba(10, 102, 194, 0.07);
+  color: var(--primary);
+}
+
+.search-result-name {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.search-result-category {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+  color: #6c757d;
+}
+
+
+/* ============================================================
+   SEARCH — MOBILE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  .nav-search {
+    width: 100%;
+    padding: 6px 0;
+  }
+
+  .search-wrapper {
+    width: 100%;
+  }
+
+  #productSearch {
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .search-results {
+    position: static;
+
+    width: 100%;
+    max-height: 300px;
+
+    margin-top: 6px;
+
+    box-shadow: none;
+  }
+}
+
+  /* ============================================================
+     HERO SECTION
+     ============================================================ */
+
+.hero{
+
+  position:relative;
+  min-height: calc(100vh - var(--nav-height));
+  width:100%;
+  overflow:hidden;
+}
+
+/* Video layer */
+.hero-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+}
+
+
+/* Video fills entire hero */
+.hero-bg-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+}
+
+/* Overlay for contrast */
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    90deg,
+    rgba(13,27,42,.85) 0%,
+    rgba(13,27,42,.65) 40%,
+    rgba(13,27,42,.35) 65%,
+    rgba(13,27,42,.15) 100%
+  );
+  z-index:2;
+}
+
+/* Text layer */
+/* ===== HERO BASE SAFETY ===== */
+.hero{
+  position:relative;
+}
+
+/* ===== FLOATING CONTENT ===== */
+.hero-content--floating{
+  position:relative;
+  z-index:3;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:0 8%;
+  transform: translateY(200px);
+  color:#fff;
+}
+
+/* ===== TITLE ===== */
+.hero-title{
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+
+  font-size: 4.4rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin: 0 auto;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 3px 6px rgba(0,0,0,.6), 0 10px 26px rgba(0,0,0,.5), 0 22px 48px rgba(0,0,0,.4);
+}
+
+
+/* ===== DESCRIPTION ===== */
+.hero-desc{
+  margin-top: 40px;
+  font-size:1.5rem;
+  line-height:1;
+  color:rgba(255,255,255,.88);
+
+  text-shadow:
+    0 1px 3px rgba(0,0,0,.6),
+    0 6px 16px rgba(0,0,0,.45);
+}
+
+
+/* ===== CTA (PRIMARY – INDUSTRIAL PREMIUM) ===== */
+.hero-btn--primary{
+  margin-top: 20px;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  /* Slightly deeper, richer blue */
+  background:#000; /* refined primary */
+  color:#ffffff;
+
+  padding:15px 40px;
+  border-radius:6px;
+
+  font-weight:600;
+  letter-spacing:.02em;
+  text-decoration:none;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
+}
+
+.hero-btn--primary:hover{
+  background:#084d99; /* darker steel-blue */
+
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.22) inset,
+    0 22px 48px rgba(11,93,179,.55);
+}
+
+.hero-btn--primary:active{
+  transform:translateY(0);
+
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.12) inset,
+    0 10px 22px rgba(11,93,179,.35);
+}
+
+  /* ============================================================
+     CLIENT / CUSTOMER STRIP
+     ============================================================ */
+
+.customer-strip{
+  width:100%;
+  overflow:hidden;
+  background:#0d1b2a;
+  padding:22px 0;
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.customer-track{
+  display:flex;
+  width:max-content;
+  animation: customer-scroll 45s linear infinite;
+}
+
+.customer-strip:hover .customer-track{
+  animation-play-state: paused;
+}
+
+.customer-track span{
+  flex:0 0 auto;
+  margin:0 34px;
+  font-size:1rem;
+  font-weight:600;
+  color:#ffffff;
+  opacity:.85;
+  letter-spacing:.4px;
+  white-space:nowrap;
+}
+
+.customer-track span:hover{
+  opacity:1;
+  color:#0a66c2;
+}
+
+@keyframes customer-scroll{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+
+/* Mobile */
+@media(max-width:768px){
+  .customer-track span{
+    margin:0 22px;
+    font-size:.9rem;
+  }
+}
+
+  /* ============================================================
+     OUR PRODUCTS — BASE STYLES
+     ============================================================ */
+    .our-machinery{ background: var(--white); color: var(--dark); padding: 60px 10%; text-align: center; margin-bottom: 90px; }
+    .our-machinery h2{ font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
+    .our-machinery .subtitle{ color: var(--muted); margin-bottom: 40px; }
+
+    .machinery-card{ display:block;background:#f4f8fc;border:1px solid rgba(13,27,42,0.06);border-radius:12px;padding:20px;text-align:center;transform-style:preserve-3d;transition:transform .15s ease, box-shadow .15s ease;cursor:pointer;text-decoration:none;color:inherit;will-change:transform;}
+    .machinery-card img{width:100%;height:180px;object-fit:cover;border-radius:10px;margin-bottom:15px;pointer-events:none;}
+    .machinery-card h3{font-size:1.2rem;color:var(--primary);margin-bottom:12px;}
+    .machinery-card ul{list-style:none;padding:0;margin:0;}
+    .machinery-card ul li{font-size:.95rem;color:var(--muted);margin:6px 0;}
+    .machinery-card:hover{box-shadow:0 10px 28px rgba(13,27,42,0.1);}
+
+    .our-machinery .swiper{ padding: 10px 60px 46px; overflow: hidden; }
+    .our-machinery .swiper-button-prev,
+    .our-machinery .swiper-button-next{ color: var(--primary); filter: drop-shadow(0 6px 14px rgba(10,102,194,.15)); width:56px; height:56px; z-index:5; }
+    .our-machinery .swiper-button-prev{ left:12px; } .our-machinery .swiper-button-next{ right:12px; }
+    @media (max-width:980px){
+      .our-machinery .swiper{ padding:10px 44px 40px; }
+      .our-machinery .swiper-button-prev,.our-machinery .swiper-button-next{ width:44px;height:44px; }
+    }
+    .our-machinery .swiper-pagination-bullet-active{ background: var(--primary); }
+
+  /* ============================================================
+     OUR SERVICES — BASE STYLES
+     ============================================================ */
+    .services{
+      padding:80px 6%;
+      background:#f9fbff;
+      display:grid;
+      grid-template-columns: 1.1fr 1fr; 
+      gap:48px;
+      align-items:center;
+    }
+    .services-copy h2{font-size:2.6rem;color:#0a66c2;margin:0 0 10px;}
+    .services-copy .subtitle{color:#6c757d;margin:0 0 22px;font-size:1.12rem;}
+    .services-points{margin:0 0 22px 0;padding:0;list-style:none}
+    .services-points li{margin:10px 0;padding-left:26px;position:relative;color:#0d1b2a}
+    .services-points li::before{
+      content:""; position:absolute; left:0; top:.55em;
+      width:12px; height:12px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #0a66c2, #084d99);
+      box-shadow:0 0 0 4px rgba(10,102,194,.12);
+    }
+    .svc-cta{
+      display:inline-block; background:#0a66c2; color:#fff; text-decoration:none;
+      padding:12px 20px; border-radius:28px; font-weight:700;
+      box-shadow:0 8px 18px rgba(10,102,194,.18);
+    }
+    .svc-cta:hover{background:#084d99; transform:translateY(-2px)}
+
+    /* Right stack area */
+    .services-stack{display:flex; justify-content:center}
+    .card-swap-container{
+      position:relative;
+      width:400px; height:300px;
+      perspective:1000px;
+    }
+
+    /* Cards (same look) */
+    .card{
+      position:absolute; top:50%; left:50%;
+      width:500px; height:380px;
+      padding:30px 24px; border-radius:16px; color:#fff;
+      transform-style:preserve-3d; backface-visibility:hidden; overflow:hidden;
+      display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;
+      box-shadow:0 20px 50px rgba(0,0,0,.28);
+    }
+    .card h3{font-size:1.8rem;margin:0 0 12px}
+    .card p{font-size:1.05rem;line-height:1.55;max-width:380px;margin:0}
+
+    .c1{background:linear-gradient(135deg,#0a66c2,#084d99);}
+    .c2{background:linear-gradient(135deg,#0d1b2a,#0a66c2);}
+    .c3{background:linear-gradient(135deg,#084d99,#0a66c2);}
+    .c4{background:linear-gradient(135deg,#0a66c2,#0d1b2a);}
+
+    /* Spotlight */
+    .spotlight{
+      position:absolute; inset:0;
+      background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.25),transparent 60%);
+      opacity:0; transition:opacity .25s;
+    }
+    .card:hover .spotlight{opacity:1;}
+    .card:hover{transform:scale(1.02) rotateX(2deg) rotateY(-2deg);}
+
+    /* Responsive */
+    @media (max-width: 1100px){
+      .services{grid-template-columns:1fr; text-align:center}
+      .services-stack{justify-content:center}
+    }
+    @media(max-width:768px){
+      .card-swap-container{transform:scale(.86)}
+      .card{width:92vw; height:340px;}
+    }
+
+  /* ============================================================
+     FOLLOW US & FOOTER
+     ============================================================ */
+    .follow-us{position: relative;display: flex;align-items: center;justify-content: flex-start;height: 60vh;padding: 40px 6%;
+      color: var(--white);overflow: hidden;background: url('assets/images/hero.jpg') center right/cover no-repeat;background-color: #0b0f12;}
+    .follow-us::before{content: "";position: absolute;inset: 0;background: linear-gradient(90deg, rgba(5,10,15,0.65) 0%, rgba(5,10,15,0.50) 35%, rgba(5,10,15,0.20) 100%);z-index: 0;pointer-events: none;}
+    .follow-content{position: relative;z-index: 1;max-width: 640px;color: var(--white);}
+    .follow-content h4{margin: 0 0 6px 0;color: rgba(255,255,255,0.92);font-weight: 500;text-shadow: 0 2px 6px rgba(0,0,0,0.6);}
+    .follow-content h2{margin: 0 0 12px 0;font-size: 2.2rem;color: var(--primary);font-weight: 700;text-shadow: 0 6px 18px rgba(0,0,0,0.6);line-height: 1.05;}
+    .follow-content p{margin: 0 0 16px 0;color: rgba(255,255,255,0.92);max-width: 520px;font-size: 1rem;text-shadow: 0 3px 10px rgba(0,0,0,0.45);}
+    .follow-btn{display: inline-block;background: var(--primary);color: var(--white);padding: 12px 22px;border-radius: 30px;text-decoration: none;font-weight: 700;box-shadow: 0 6px 16px rgba(10,102,194,0.18);transition: transform .2s ease, box-shadow .2s ease;}
+    .follow-btn:hover{background: var(--primary-dark);transform: translateY(-3px);box-shadow: 0 10px 28px rgba(10,102,194,0.22);}
+    .social-links{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.social-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 18px;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 30px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+}
+
+.social-link i{
+  font-size: 1.15rem;
+}
+
+.social-link:hover{
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+}
+
+.social-link.linkedin:hover{
+  background: rgba(10,102,194,0.25);
+  border-color: rgba(10,102,194,0.65);
+}
+
+.social-link.whatsapp:hover{
+  background: rgba(37,211,102,0.20);
+  border-color: rgba(37,211,102,0.6);
+}
+
+@media (max-width: 600px){
+  .social-links{
+    gap: 10px;
+  }
+
+  .social-link{
+    padding: 10px 15px;
+    font-size: 0.85rem;
+  }
+}
+    .footer{background:var(--dark);color:#fff;padding:50px 6% 30px;}
+
+.nav-toggle{
+  display:none;
+}
+
+/* ============================================================
+   MOBILE HEADER / NAVBAR FIX
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  /* Prevent horizontal overflow */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Mobile header height */
+  :root {
+    --nav-height: 76px;
+  }
+
+  /* Header */
+  header.site-header {
+    height: var(--nav-height);
+  }
+
+  /* Navigation row */
+  .nav-row {
+    height: var(--nav-height);
+    padding: 0 16px;
+    gap: 10px;
+  }
+
+  /* ==========================================================
+     BRAND
+     ========================================================== */
+
+  .brand {
+    min-width: 0;
+    width: auto;
+    max-width: calc(100% - 52px);
+    flex: 1;
+    gap: 9px;
+    overflow: hidden;
+  }
+
+  .brand img {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .brand > div {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .title {
+    display: block;
+    font-size: 17px;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .brand .subtitle {
+    display: block;
+    font-size: 10px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  /* ==========================================================
+     HAMBURGER
+     ========================================================== */
+
+  .nav-toggle {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+    margin: 0;
+
+    background: none;
+    border: none;
+
+    font-size: 27px;
+    color: var(--dark);
+
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* ==========================================================
+     MOBILE NAVIGATION
+     ========================================================== */
+
+  nav.primary-nav {
+    position: absolute;
+
+    top: var(--nav-height);
+    left: 0;
+
+    width: 100%;
+
+    background: #fff;
+
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height .3s ease;
+
+    border-bottom: 1px solid rgba(13, 27, 42, .08);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+  }
+
+  nav.primary-nav.open {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  nav.primary-nav ul {
+    width: 100%;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 0;
+
+    margin: 0;
+    padding: 10px 16px 18px;
+  }
+
+  nav.primary-nav li {
+    width: 100%;
+  }
+
+  nav.primary-nav a,
+  nav.primary-nav .mega-btn {
+    width: 100%;
+    min-height: 44px;
+
+    justify-content: flex-start;
+
+    padding: 11px 8px;
+
+    font-size: 15px;
+  }
+
+  /* ==========================================================
+     MOBILE SEARCH
+     ========================================================== */
+
+  .nav-search {
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .search-wrapper {
+    width: 100%;
+  }
+
+  #productSearch {
+    width: 100%;
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .search-results {
+    position: static;
+
+    width: 100%;
+    max-height: 300px;
+
+    margin-top: 6px;
+
+    box-shadow: none;
+  }
+
+}
+
+
+  /* Hero control */
+  .hero{
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .hero-content--floating{
+    padding: 90px 18px 48px;
+  }
+
+
+  .hero-desc{
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  /* Heavy tilt effects off on mobile */
+  .machinery-card{
+    transform: none !important;
+    box-shadow: 0 10px 22px rgba(13,27,42,.08);
+  }
+
+  /* Services stack vertically */
+  @media (max-width: 900px){
+
+  .services{
+    display: block;
+    padding: 40px 5%;
+    gap: 28px;
+     width: 100%;
+  overflow: visible;
+  overflow-x: visible;
+  }
+.services-copy{
+  width: 100%;
+  max-width: 100%;
+  padding-right: 0;
+  box-sizing: border-box;
+
+}
+
+  /* Keep stack centered */
+  .services-stack{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 220px;
+  }
+
+  /* Reduce visual size, don’t restructure */
+  .card-swap-container{
+    transform: scale(0.75) translateX(0);
+      margin-left: auto;
+      margin-right: auto;
+      height: 260px;
+  }
+.card-swap-container > .card{
+  transform: scale(0.75);
+  transform-origin: center top;
+}
+  /* Freeze 3D motion */
+  .card{
+    pointer-events: none;
+  }
+
+}
+
+
+  /* ============================================================
+     PRODUCT SLIDER — STANDALONE / VANILLA CSS
+     ============================================================ */
+.our-machinery .swiper{
+  position:relative;
+  padding:10px 60px 46px;
+  overflow:hidden;
+}
+.our-machinery .swiper-wrapper{
+  display:flex;
+  align-items:stretch;
+  transition:transform .65s cubic-bezier(.22,.61,.36,1);
+  will-change:transform;
+}
+.our-machinery .swiper-slide{
+  flex:0 0 calc((100% - 90px) / 4);
+  margin-right:30px;
+  box-sizing:border-box;
+}
+.our-machinery .swiper-button-prev,
+.our-machinery .swiper-button-next{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--primary);
+  width:56px;
+  height:56px;
+  z-index:5;
+  cursor:pointer;
+  border:0;
+  background:transparent;
+  filter:drop-shadow(0 6px 14px rgba(10,102,194,.15));
+}
+.our-machinery .swiper-button-prev{left:12px}
+.our-machinery .swiper-button-next{right:12px}
+.our-machinery .swiper-button-prev::before,
+.our-machinery .swiper-button-next::before{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  font-size:46px;
+  line-height:1;
+  font-family:Arial,sans-serif;
+}
+.our-machinery .swiper-button-prev::before{content:"‹"}
+.our-machinery .swiper-button-next::before{content:"›"}
+.our-machinery .swiper-button-prev:hover,
+.our-machinery .swiper-button-next:hover{
+  transform:translateY(-50%) scale(1.08);
+}
+.our-machinery .swiper-pagination{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:8px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+}
+.our-machinery .swiper-pagination-bullet{
+  width:9px;
+  height:9px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:rgba(10,102,194,.25);
+  cursor:pointer;
+  transition:transform .2s,background .2s;
+}
+.our-machinery .swiper-pagination-bullet-active{
+  background:var(--primary);
+  transform:scale(1.25);
+}
+@media(max-width:1279px){
+  .our-machinery .swiper-slide{
+    flex-basis:calc((100% - 48px) / 3);
+    margin-right:24px;
+  }
+}
+@media(max-width:979px){
+  .our-machinery .swiper{padding:10px 44px 40px}
+  .our-machinery .swiper-slide{
+    flex-basis:calc((100% - 20px) / 2);
+    margin-right:20px;
+  }
+  .our-machinery .swiper-button-prev,
+  .our-machinery .swiper-button-next{
+    width:44px;height:44px;
+  }
+}
+@media(max-width:639px){
+  .our-machinery .swiper-slide{
+    flex-basis:100%;
+    margin-right:16px;
+  }
+}
+
+  /* ============================================================
+     SERVICES STACK — STANDALONE / VANILLA CSS
+     ============================================================ */
+.card-swap-container{
+  position:relative;
+  width:400px;
+  height:300px;
+  perspective:1000px;
+  transform-style:preserve-3d;
+}
+.card-swap-container > .card{
+  --stack-x:0px;
+  --stack-y:0px;
+  --stack-z:0px;
+  --stack-rot:6deg;
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:500px;
+  height:380px;
+  padding:30px 24px;
+  box-sizing:border-box;
+  border-radius:16px;
+  color:#fff;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.28);
+  transform:
+    translate(-50%,-50%)
+    translate3d(var(--stack-x),var(--stack-y),var(--stack-z))
+    skewY(var(--stack-rot));
+  transition:
+    transform 1.7s cubic-bezier(.16,1,.3,1),
+    box-shadow .25s ease,
+    filter .25s ease;
+  will-change:transform;
+}
+.card-swap-container > .card h3,
+.card-swap-container > .card p{
+  transform:skewY(calc(var(--stack-rot) * -1));
+}
+.card-swap-container > .card h3{font-size:1.8rem;margin:0 0 12px}
+.card-swap-container > .card p{font-size:1.05rem;line-height:1.55;max-width:380px;margin:0}
+.card-swap-container > .card .spotlight{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(
+    circle at var(--mx,50%) var(--my,50%),
+    rgba(255,255,255,.25),
+    transparent 60%
+  );
+  opacity:0;
+  transition:opacity .25s;
+  pointer-events:none;
+}
+.card-swap-container > .card:hover .spotlight{opacity:1}
+.card-swap-container > .card:hover{
+  box-shadow:0 25px 60px rgba(0,0,0,.34);
+}
+
+/* Desktop stack positions */
+.card-swap-container > .card.stack-front{
+  --stack-x:0px; --stack-y:0px; --stack-z:0px; --stack-rot:0deg;
+  z-index:30;
+}
+.card-swap-container > .card.stack-middle{
+  --stack-x:60px; --stack-y:-70px; --stack-z:-90px; --stack-rot:6deg;
+  z-index:20;
+}
+.card-swap-container > .card.stack-back{
+  --stack-x:120px; --stack-y:-140px; --stack-z:-180px; --stack-rot:6deg;
+  z-index:10;
+}
+.card-swap-container > .card.stack-moving{
+  z-index:40;
+  pointer-events:none;
+}
+
+/* Mobile: preserve the stack but scale it down */
+@media(max-width:768px){
+  .card-swap-container{
+    transform:scale(.72);
+    transform-origin:center top;
+    height:300px;
+  }
+  .card-swap-container > .card{
+    width:92vw;
+    height:340px;
+  }
+}
+
+
+/* ============================================================
+   HERO PINNED VIDEO — SCROLL OVER EFFECT
+   Keeps the hero video visually stationary while the following
+   page content scrolls over it.
+   ============================================================ */
+.hero-video,
+.hero-overlay{
+  transition: none;
+}
+
+.hero-video.hero-video-pinned{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+.hero-overlay.hero-overlay-pinned{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+}
+
+.hero{
+  z-index: 0;
+}
+
+.customer-strip,
+.our-machinery,
+.services,
+.follow-us,
+.footer{
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 768px){
+  .hero-video.hero-video-pinned,
+  .hero-overlay.hero-overlay-pinned{
+    width: 100vw;
+    height: 100dvh;
+  }
+}
+
+</style>
+</head>
+
+<body>
+  <!-- ============================================================
+       SMT HOMEPAGE — HTML
+       Structure only. All styling is above; all interactions are below.
+       ============================================================ -->
+  <!--
+       HTML SECTION MAP
+       01. Header / Navigation
+       02. Main Content
+       03. Hero
+       04. Client / Customer Strip
+       05. Our Products / Machinery Slider
+       06. Our Services
+       07. Follow Us / Community CTA
+       08. Footer
+       -->
+<!-- ============================================================
+     HEADER / NAVIGATION
+     ============================================================ -->
+<header class="site-header" id="siteHeader">
+  <div class="nav-row">
+
+    <!-- Brand / Logo -->
+    <a href="index.html" class="brand">
+      <img src="assets/logo/SMT-logo.png" alt="Sehdev logo">
+      <div>
+        <span class="title">Sehdev Machine Tools (India)</span><br>
+        <small class="subtitle">Precision | Reliability</small>
+      </div>
+    </a>
+    <!-- Mobile Menu Toggle -->
+    <button class="nav-toggle" aria-label="Toggle menu">
+  ☰
+</button>
+
+    <!-- Primary Navigation -->
+    <nav class="primary-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+
+        <!-- Products Mega Menu -->
+        <li class="mega">
+          <a href="products.html" class="mega-btn">Products ▾</a>
+          <div class="mega-panel">
+            <div class="mega-col">
+              <h4>Machines</h4>
+              <a href="products/labelling-machine.html">Labelling Solutions & Spares</a>
+              <a href="products/sealing-machine.html">Sealing Solutions & Spares</a>
+              <a href="products/filling-machine.html">Filling Solutions & Spares</a>
+              <a href="products/ancillary-units.html">Ancillary Units & Spares</a>
+              <a href="products/washing-units.html">Washing Units & Spares</a>
+              <a href="products/conveyor-system.html">Conveying Solutions & Spares</a>
+            </div>
+            <div class="mega-col">
+              <h4>Components</h4>
+              <a href="products/change-parts.html">Change Parts</a>
+              <a href="products/nozzles-needles.html">Nozzles &amp; Needles</a>
+              <a href="products/mechanical-seals.html">Mechanical Seals</a>
+              <a href="products/rubber-components.html">Rubber Components</a>
+            </div>
+            <div class="mega-col">
+              <h4>Miscellaneous</h4>
+              <a href="products/miscellaneous.html">Miscellaneous Components</a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Services Mega Menu -->
+        <li class="mega">
+          <a href="../services.html" class="mega-btn">Services ▾</a>
+
+          <div class="mega-panel">
+
+            <div class="mega-col">
+              <a href="../services.html#design-customization" class="service">
+                <h4>Design Customization</h4>
+              </a>
+            </div>
+
+            <div class="mega-col">
+              <a href="../services.html#reverse-engineering" class="service">
+                <h4>Reverse Engineering</h4>
+              </a>
+            </div>
+
+            <div class="mega-col">
+              <a href="../services.html#product-refurbishment" class="service">
+                <h4>Product Refurbishment</h4>
+              </a>
+            </div>
+
+          </div>
+                </li>
+
+        <!-- Product Search -->
+        <li class="nav-search">
+          <div class="search-wrapper">
+            <input
+              type="search"
+              id="productSearch"
+              placeholder="Search products..."
+              autocomplete="off"
+              aria-label="Search products"
+            >
+            <span class="search-icon">⌕</span>
+
+            <div
+              id="searchResults"
+              class="search-results"
+              aria-live="polite"
+            ></div>
+          </div>
+        </li>
+
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <!-- ============================================================
+       HERO SECTION
+       Background video + headline + CTA
+       ============================================================ -->
+<section class="hero">
+
+  <!-- Background Video -->
+  <video
+  class="hero-video"
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="metadata"
+  poster="assets/images/hero-poster.jpg">
+  
+  <source src="assets/video/hero-video-enhanced.mp4" type="video/mp4">
+</video>
+
+
+  <!-- Contrast Overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Hero Content -->
+  <div class="hero-content--floating">
+    <h1 class="hero-title">
+      Precision Parts  Seamless Performance    </h1>
+
+    <p class="hero-desc">
+      Filling, Labelling, Sealing, Conveying Systems and custom-engineered change parts —
+      built for continuous, high-reliability production lines.
+    </p>
+
+    <a href="enquiry.html" class="hero-btn--primary">
+      Request a Quote
+    </a>
+  </div>
+
+</section>
+
+
+  <!-- ============================================================
+       CLIENT / CUSTOMER STRIP
+       ============================================================ -->
+
+<section class="customer-strip">
+  <div class="customer-track">
+
+    <!-- Client Names — first set -->
+    <span>Dr. Reddy’s Laboratories</span>
+    <span>Dabur</span>
+    <span>Fresenius Kabi Oncology</span>
+    <span>ITC</span>
+    <span>Diageo</span>
+    <span>Glenmark Pharmaceuticals</span>
+    <span>Ranbaxy Laboratories</span>
+    <span>Mankind Pharma</span>
+    <span>Brooks Laboratories</span>
+    <span>Sentiss Pharma</span>
+    <span>Ayurvet</span>
+    <span>Cipla</span>
+    <span>Zeiss Pharma</span>
+    <span>Ind-Swift</span>
+    <span>Ashoka Corp</span>
+    <span>Abbott</span>
+    <span>Piramal</span>
+    <span>Alembic</span>
+    <span>Tirupati</span>
+    <span>Jagatjit Industries</span>
+    <span>CDBL</span>
+    <span>Rana Sugars</span>
+    <span>Kwality Pharma</span>
+    <span>United Breweries</span>
+    <span>Pioneer Industries</span>
+    <span>Adie Broswon Group</span>
+    <span>ANG Lifesciences</span>
+    <span>Jackson Laboratories</span>
+    <span>Pernod Ricard</span>
+    <span>Associated Alcohols & Breweries</span>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Client Names — duplicated for seamless infinite scrolling -->
+    <span>Dr. Reddy’s Laboratories</span>
+    <span>Dabur</span>
+    <span>Fresenius Kabi Oncology</span>
+    <span>ITC</span>
+    <span>Diageo</span>
+    <span>Glenmark Pharmaceuticals</span>
+    <span>Ranbaxy Laboratories</span>
+    <span>Cadbury</span>
+    <span>Mankind Pharma</span>
+    <span>Brooks Laboratories</span>
+    <span>Sentiss Pharma</span>
+    <span>Ayurvet</span>
+    <span>Cipla</span>
+    <span>Zeiss Pharma</span>
+    <span>Ind-Swift</span>
+    <span>Ashoka Corp</span>
+    <span>Abbott</span>
+    <span>Piramal</span>
+    <span>Alembic</span>
+    <span>Tirupati</span>
+    <span>Jagatjit Industries</span>
+    <span>CDBL</span>
+    <span>Rana Sugars</span>
+    <span>Kwality Pharma</span>
+    <span>United Breweries</span>
+    <span>Pioneer Industries</span>
+    <span>Adie Broswon Group</span>
+    <span>ANG Lifesciences</span>
+    <span>Jackson Laboratories</span>
+    <span>Pernod Ricard</span>
+    <span>Associated Alcohols & Breweries</span>
+
+  </div>
+</section>
+
+
+  <!-- ============================================================
+       OUR PRODUCTS / MACHINERY SLIDER
+       ============================================================ -->
+  <section class="our-machinery">
+    <h2>Our Products</h2>
+    <p class="subtitle">Discover our wide range of machines engineered for performance and reliability</p>
+
+    <!-- Product Slider -->
+    <div class="swiper ourProductsSwiper">
+      <div class="swiper-wrapper">
+       
+        <div class="swiper-slide">
+          <a href="products/nozzles-needles.html" class="machinery-card">
+            <img src="assets/Filling Units/filling needles/Ampoule FILLING NEEDLE (Zero Dipping)-F3.png" alt="Nozzles & Needles">
+            <h3>Nozzles &amp; Needles</h3>
+            <ul><li>Accurate flow</li><li>Clean dispensing</li><li><strong>Consistency</strong></li></ul>
+          </a>
+        </div>
+        
+        <div class="swiper-slide">
+          <a href="products/mechanical-seals.html" class="machinery-card">
+            <img src="assets/Mechanical seals/Unbalanced Seal.jpg" alt="Mechanical Seals">
+            <h3>Mechanical Seals</h3>
+            <ul><li>Leak-proof design</li><li>Heavy-duty usage</li><li><strong>Durable</strong></li></ul>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="products/conveyor-system.html" class="machinery-card">
+            <img src="assets/conveyor system/Roller Conveyor.png" alt="Conveyor System">
+            <h3>Conveyor System</h3>
+            <ul><li>Smooth transfer</li><li>Modular layouts</li><li><strong>Safe & quick</strong></li></ul>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="products/rubber-components.html" class="machinery-card">
+            <img src="/assets/Rubber Components/Rubber_Bellows.png" alt="Rubber Components">
+            <h3>Rubber Components</h3>
+            <ul><li>Quality elastomers</li><li>Perfect fit</li><li><strong>Resilient</strong></li></ul>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="products/change-parts.html" class="machinery-card">
+            <img src="assets/change parts/Change Parts- Complete Set.png" alt="Change Parts">
+            <h3>Change Parts</h3>
+            <ul>
+              <li>Custom Precision</li>
+              <li>Quick Changeover</li>
+              <li><strong>OEM Compatible</strong></li>
+            </ul>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="products/miscellaneous.html" class="machinery-card">
+            <img src="assets/Miscellaneous/Worm Crushers.png" alt="Miscellaneous">
+            <h3>Miscellaneous</h3>
+            <ul>
+                <li>Specialized parts</li>
+                <li>Custom solutions</li>
+                <li><strong>High Precision</strong></li>
+            </ul>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="products/sealing-machine.html" class="machinery-card">
+            <img src="assets/Sealing Unit/Sealing-Hero.jpeg" alt="Sealing Machine">
+            <h3>Sealing Unit</h3>
+            <ul><li>Secure sealing solutions</li><li>Reliable packaging</li><li><strong>Precision</strong></li></ul>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="products/labelling-machine.html" class="machinery-card">
+            <img src="assets/Labelling Unit/Labelling-hero.jpeg" alt="Labelling Machine">
+            <h3>Labelling Unit</h3>
+            <ul><li>Fast & precise</li><li>All container types</li><li><strong>Durability</strong></li></ul>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="products/filling-machine.html" class="machinery-card">
+            <img src="assets/Filling Units/Volumetric_Filling_Unit.png" alt="Filling Machine">
+            <h3>Filling Unit</h3>
+            <ul><li>Efficient systems</li><li>Liquids, powders & more</li><li><strong>High Output</strong></li></ul>
+          </a>
+        </div>
+      </div>
+
+      <!-- Slider Controls -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+    <!-- ============================================================
+       OUR SERVICES
+       ============================================================ -->
+<section class="services">
+  <!-- Services Text / Copy -->
+  <div class="services-copy">
+    <h2>Other Services</h2>
+    <p class="subtitle">End-to-end engineering — from concept to production.</p>
+
+    <ul class="services-points">
+      <li><strong>Design & Customization</strong> – CAD/CAM driven, application-tuned architectures.</li>
+      <li><strong>Reverse Engineering</strong> – 3D scan → parametric model → drop-in replacement.</li>
+      <li><strong>Product Refurbishment</strong> – Precision overhaul, zero-hour restoration, and structural life-cycle extension.</li>
+    </ul>
+
+    <a href="services.html" class="svc-cta">Discuss your project</a>
+  </div>
+
+  <!-- Services Animated Card Stack -->
+  <div class="services-stack">
+    <div class="card-swap-container" id="serviceSwap">
+      <div class="card c1">
+        <div class="spotlight"></div>
+        <h3>Design & Customization</h3>
+        <p>Tailor-made machine architectures using advanced CAD/CAM, optimized for your line and KPIs.</p>
+      </div>
+      <div class="card c2">
+        <div class="spotlight"></div>
+        <h3>Reverse Engineering</h3>
+        <p>Digitize legacy parts or assemblies with precision 3D scanning and parametric modeling.</p>
+      </div>
+      <div class="card c3">
+        <div class="spotlight"></div>
+        <h3>Product Refurbishment</h3>
+        <p>Restore legacy equipment to zero-hour standards with structural overhauls and performance-enhancing retrofits.</p>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- ============================================================
+       FOLLOW US / COMMUNITY CTA
+       ============================================================ -->
+  <section class="follow-us" aria-labelledby="follow-heading">
+  <div class="follow-content">
+
+    <h4>Connect with Us</h4>
+
+    <h2 id="follow-heading">
+      Follow <br> Us
+    </h2>
+
+    <p>
+      Stay up-to-date with the latest news, product updates, and industry
+      insights from Sehdev Machine Tools.
+    </p>
+
+    <div class="social-links">
+
+      <!-- LinkedIn -->
+      <a 
+        href="https://www.linkedin.com/company/sehdev-machine-tools-india/" 
+        class="social-link linkedin"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Follow Sehdev Machine Tools on LinkedIn"
+      >
+        <i class="fab fa-linkedin-in"></i>
+        <span>LinkedIn</span>
+      </a>
+
+      <!-- WhatsApp -->
+      <a 
+        href="https://wa.me/919872894141"
+        class="social-link whatsapp"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contact Sehdev Machine Tools on WhatsApp"
+      >
+        <i class="fab fa-whatsapp"></i>
+        <span>WhatsApp</span>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <p>©️ 2026 Sehdev Machine Tools. All rights reserved.</p>
+  </footer>
+</main>
+
+
+  <!-- ============================================================
+       SMT HOMEPAGE — JAVASCRIPT
+       ============================================================ -->
+<script>
+/* ============================================================
+   SMT HOMEPAGE — JAVASCRIPT
+   No Swiper / GSAP dependency.
+   All homepage interactions are organized inside one DOM-ready block.
+   ============================================================ */
+/*
+   JAVASCRIPT SECTION MAP
+   1. Products Slider
+   2. Services Stack Animation
+   3. Machinery Card Tilt
+   4. Mobile Navigation
+   5. Header Scroll State
+   6. Mobile Mega Menu
+*/
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  /* ==========================================================
+     1. PRODUCTS SLIDER
+     ========================================================== */
+  const slider = document.querySelector(".ourProductsSwiper");
+
+  if (slider) {
+    const wrapper = slider.querySelector(".swiper-wrapper");
+    const slides = Array.from(slider.querySelectorAll(".swiper-slide"));
+    const prev = slider.querySelector(".swiper-button-prev");
+    const next = slider.querySelector(".swiper-button-next");
+    const pagination = slider.querySelector(".swiper-pagination");
+
+    let current = 0;
+    let perView = 4;
+    let gap = 30;
+    let timer = null;
+
+    function getSettings() {
+      const w = window.innerWidth;
+      if (w >= 1280) return { perView: 4, gap: 30 };
+      if (w >= 980) return { perView: 3, gap: 24 };
+      if (w >= 640) return { perView: 2, gap: 20 };
+      return { perView: 1, gap: 16 };
+    }
+
+    function pageCount() {
+      return Math.max(1, Math.ceil(slides.length / perView));
+    }
+
+    function maxIndex() {
+      return Math.max(0, slides.length - perView);
+    }
+
+    function renderPagination() {
+      if (!pagination) return;
+      pagination.innerHTML = "";
+
+      const pages = pageCount();
+
+      for (let i = 0; i < pages; i++) {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "swiper-pagination-bullet" + (i === Math.floor(current / perView) ? " swiper-pagination-bullet-active" : "");
+        dot.setAttribute("aria-label", "Go to product slide " + (i + 1));
+
+        dot.addEventListener("click", function () {
+          current = Math.min(i * perView, maxIndex());
+          updateSlider();
+          restartAuto();
+        });
+
+        pagination.appendChild(dot);
+      }
+    }
+
+    function updateSlider() {
+      const settings = getSettings();
+      perView = settings.perView;
+      gap = settings.gap;
+
+      const slideWidth = slides.length
+        ? (slider.clientWidth - (perView - 1) * gap) / perView
+        : 0;
+
+      slides.forEach(function (slide) {
+        slide.style.flexBasis = slideWidth + "px";
+        slide.style.marginRight = gap + "px";
+      });
+
+      current = Math.min(current, maxIndex());
+
+      const offset = current * (slideWidth + gap);
+      wrapper.style.transform = "translate3d(-" + offset + "px,0,0)";
+
+      renderPagination();
+    }
+
+    function goNext() {
+      current += 1;
+
+      if (current > maxIndex()) {
+        current = 0;
+      }
+
+      updateSlider();
+    }
+
+    function goPrev() {
+      current -= 1;
+
+      if (current < 0) {
+        current = maxIndex();
+      }
+
+      updateSlider();
+    }
+
+    if (next) next.addEventListener("click", function () {
+      goNext();
+      restartAuto();
+    });
+
+    if (prev) prev.addEventListener("click", function () {
+      goPrev();
+      restartAuto();
+    });
+
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(goNext, 5000);
+    }
+
+    function restartAuto() {
+      startAuto();
+    }
+
+    slider.addEventListener("mouseenter", function () {
+      clearInterval(timer);
+    });
+
+    slider.addEventListener("mouseleave", function () {
+      startAuto();
+    });
+
+    window.addEventListener("resize", function () {
+      updateSlider();
+    });
+
+    /* Basic touch/swipe support */
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    slider.addEventListener("touchstart", function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+      clearInterval(timer);
+    }, { passive: true });
+
+    slider.addEventListener("touchend", function (e) {
+      touchEndX = e.changedTouches[0].screenX;
+      const distance = touchEndX - touchStartX;
+
+      if (Math.abs(distance) > 50) {
+        if (distance < 0) goNext();
+        else goPrev();
+      }
+
+      startAuto();
+    }, { passive: true });
+
+    updateSlider();
+    startAuto();
+  }
+
+
+  /* ==========================================================
+     2. SERVICES STACK ANIMATION
+     ========================================================== */
+  const serviceContainer = document.getElementById("serviceSwap");
+
+  if (serviceContainer) {
+    const serviceCards = Array.from(serviceContainer.querySelectorAll(".card"));
+
+    /*
+      Desired visible order:
+      FRONT  -> Product Refurbishment
+      MIDDLE -> Reverse Engineering
+      BACK   -> Design & Customization
+
+      The front card moves back into the queue.
+      The other two cards simultaneously move one position forward.
+      Then the cycle repeats forever.
+    */
+    let order = [2, 1, 0];
+    let serviceTimer = null;
+    let serviceAnimating = false;
+
+    const FRONT = {
+      x: 0,
+      y: 0,
+      z: 0,
+      rot: 0
+    };
+
+    const MIDDLE = {
+      x: 60,
+      y: -70,
+      z: -90,
+      rot: 6
+    };
+
+    const BACK = {
+      x: 120,
+      y: -140,
+      z: -180,
+      rot: 6
+    };
+
+    function applyPosition(card, pos, animate = true) {
+      const transition = animate
+        ? "transform 1s cubic-bezier(.16,1,.3,1), box-shadow .25s ease, filter .25s ease"
+        : "none";
+
+      card.style.transition = transition;
+
+      card.style.setProperty("--stack-x", pos.x + "px");
+      card.style.setProperty("--stack-y", pos.y + "px");
+      card.style.setProperty("--stack-z", pos.z + "px");
+      card.style.setProperty("--stack-rot", pos.rot + "deg");
+    }
+
+    function setServicePositions(animate = true) {
+      order.forEach(function (cardIndex, position) {
+        const card = serviceCards[cardIndex];
+
+        card.classList.remove(
+          "stack-front",
+          "stack-middle",
+          "stack-back",
+          "stack-moving"
+        );
+
+        if (position === 0) {
+          card.classList.add("stack-front");
+          applyPosition(card, FRONT, animate);
+        } else if (position === 1) {
+          card.classList.add("stack-middle");
+          applyPosition(card, MIDDLE, animate);
+        } else {
+          card.classList.add("stack-back");
+          applyPosition(card, BACK, animate);
+        }
+      });
+    }
+
+    function swapServiceCards() {
+      if (serviceCards.length < 2 || serviceAnimating) return;
+
+      serviceAnimating = true;
+
+      const oldFrontIndex = order[0];
+      const oldMiddleIndex = order[1];
+      const oldBackIndex = order[2];
+
+      const oldFront = serviceCards[oldFrontIndex];
+      const oldMiddle = serviceCards[oldMiddleIndex];
+      const oldBack = serviceCards[oldBackIndex];
+
+      /*
+        STEP 1:
+        Current front card travels BACK into the queue.
+        It does NOT travel downward toward the footer.
+      */
+      oldFront.classList.remove("stack-front");
+      oldFront.classList.add("stack-moving");
+      oldFront.style.zIndex = "5";
+
+      applyPosition(oldFront, BACK, true);
+
+      /*
+        STEP 2:
+        Middle card becomes FRONT.
+        Back card becomes MIDDLE.
+      */
+      oldMiddle.classList.remove("stack-middle");
+      oldMiddle.classList.add("stack-front");
+      oldMiddle.style.zIndex = "30";
+      applyPosition(oldMiddle, FRONT, true);
+
+      oldBack.classList.remove("stack-back");
+      oldBack.classList.add("stack-middle");
+      oldBack.style.zIndex = "20";
+      applyPosition(oldBack, MIDDLE, true);
+
+      /*
+        STEP 3:
+        After the motion finishes, update the queue:
+        [A, B, C] -> [B, C, A]
+      */
+      setTimeout(function () {
+        order = [oldMiddleIndex, oldBackIndex, oldFrontIndex];
+
+        oldFront.classList.remove("stack-moving");
+        oldFront.style.zIndex = "10";
+
+        setServicePositions(true);
+
+        setTimeout(function () {
+          serviceAnimating = false;
+        }, 130);
+
+      }, 1750);
+    }
+
+    function startServiceAuto() {
+      clearInterval(serviceTimer);
+      serviceTimer = setInterval(swapServiceCards, 5000);
+    }
+
+    function pauseServiceAuto() {
+      clearInterval(serviceTimer);
+    }
+
+    /*
+      Initial state:
+      Product Refurbishment = front
+      Reverse Engineering  = middle
+      Design & Customization = back
+    */
+    setServicePositions(false);
+
+    /*
+      Start the first loop after 5 seconds.
+      This keeps the first card visible long enough to read.
+    */
+    startServiceAuto();
+
+    serviceContainer.addEventListener("mouseenter", pauseServiceAuto);
+    serviceContainer.addEventListener("mouseleave", startServiceAuto);
+
+    /* Spotlight follows mouse */
+    serviceCards.forEach(function (card) {
+      card.addEventListener("mousemove", function (e) {
+        const rect = card.getBoundingClientRect();
+
+        card.style.setProperty(
+          "--mx",
+          ((e.clientX - rect.left) / rect.width * 100) + "%"
+        );
+
+        card.style.setProperty(
+          "--my",
+          ((e.clientY - rect.top) / rect.height * 100) + "%"
+        );
+      });
+    });
+  }
+
+
+  /* ==========================================================
+     3. MACHINERY CARD TILT
+     ========================================================== */
+  document.querySelectorAll(".machinery-card").forEach(function (card) {
+    card.style.willChange = "transform";
+
+    card.addEventListener("mousemove", function (e) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const rx = ((y - rect.height / 2) / (rect.height / 2)) * 10;
+      const ry = ((x - rect.width / 2) / (rect.width / 2)) * -10;
+
+      card.style.transform =
+        "rotateX(" + rx + "deg) rotateY(" + ry + "deg) scale(1.05)";
+
+      card.style.boxShadow =
+        (-ry) + "px " + rx + "px 20px rgba(0,0,0,0.2)";
+    });
+
+    card.addEventListener("mouseleave", function () {
+      card.style.transform = "rotateX(0) rotateY(0) scale(1)";
+      card.style.boxShadow = "0 10px 25px rgba(0,0,0,0.1)";
+    });
+  });
+
+
+  /* ==========================================================
+     4. MOBILE NAVIGATION
+     ========================================================== */
+  const navToggle = document.querySelector(".nav-toggle");
+  const primaryNav = document.querySelector("nav.primary-nav");
+
+  if (navToggle && primaryNav) {
+    navToggle.addEventListener("click", function () {
+      primaryNav.classList.toggle("open");
+    });
+
+    primaryNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        primaryNav.classList.remove("open");
+      });
+    });
+  }
+
+
+  /* ==========================================================
+     5. HEADER SCROLL STATE
+     ========================================================== */
+  const siteHeader = document.getElementById("siteHeader");
+
+  function updateHeader() {
+    if (!siteHeader) return;
+
+    if (window.scrollY > 30) {
+      siteHeader.classList.add("scrolled");
+    } else {
+      siteHeader.classList.remove("scrolled");
+    }
+  }
+
+  window.addEventListener("scroll", updateHeader, { passive: true });
+  updateHeader();
+
+  /* ==========================================================
+     6. PIN HERO VIDEO WHILE FOLLOWING CONTENT SCROLLS OVER IT
+     ========================================================== */
+  const heroSection = document.querySelector(".hero");
+  const heroVideo = document.querySelector(".hero-video");
+  const heroOverlay = document.querySelector(".hero-overlay");
+  const customerStrip = document.querySelector(".customer-strip");
+
+  function updateHeroVideoPin(){
+    if (!heroSection || !heroVideo || !heroOverlay || !customerStrip) return;
+
+    const scrollY = window.scrollY || window.pageYOffset;
+    const heroTop = heroSection.getBoundingClientRect().top + scrollY;
+    const customerBottom = customerStrip.getBoundingClientRect().bottom + scrollY;
+
+    const pinStart = heroTop + 1;
+    const pinEnd = customerBottom - 1;
+    const shouldPin = scrollY >= pinStart && scrollY < pinEnd;
+
+    heroVideo.classList.toggle("hero-video-pinned", shouldPin);
+    heroOverlay.classList.toggle("hero-overlay-pinned", shouldPin);
+  }
+
+  window.addEventListener("scroll", updateHeroVideoPin, { passive: true });
+  window.addEventListener("resize", updateHeroVideoPin);
+  updateHeroVideoPin();
+
+  /* ==========================================================
+     7. MOBILE MEGA MENU TOGGLES
+     ========================================================== */
+
+  document.querySelectorAll(".mega-btn").forEach(function (button) {
+    button.addEventListener("click", function (event) {
+      if (window.innerWidth <= 900) {
+        event.preventDefault();
+        button.parentElement.classList.toggle("open");
+      }
+    });
+  });
+
+});
+</script>
+
+ <script src="js/product-search.js"></script>
+</body>
+</html>

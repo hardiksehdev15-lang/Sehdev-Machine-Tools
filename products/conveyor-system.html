@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conveyor Systems | Sehdev Machine Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+
+:root{
+  --navy:#0f172a;
+  --text:#334155;
+  --muted:#64748b;
+  --border:#e6ebf2;
+  --bg:#ffffff;
+  --bg-soft:#f7f9fc;
+  --cta:#020617;
+  --primary:#0a66c2;
+  --nav-height:112px;
+  --dark:#0d1b2a;
+}
+body{ margin:0; font-family:"Inter",sans-serif; background:var(--bg); color:var(--text); }
+
+header.site-header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1400;
+  backdrop-filter:blur(12px) saturate(160%);
+  -webkit-backdrop-filter:blur(12px) saturate(160%);
+  background:rgba(255,255,255,0.8);
+  border-bottom:1px solid rgba(13,27,42,0.06);
+  transition:background .25s ease,box-shadow .25s ease;
+}
+header.site-header.scrolled{
+  background:rgba(255,255,255,0.8);
+  color:#000;
+  box-shadow:0 6px 22px rgba(0,0,0,0.08);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+}
+.nav-row{
+  height:var(--nav-height);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 4%;
+  gap:20px;
+  overflow:visible;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:420px;
+  flex-shrink:0;
+  text-decoration:none;
+}
+.brand img{
+  width: 155px;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.title{
+  font-family:'Inter',sans-serif;
+  font-size:26px;
+  font-weight:600;
+  letter-spacing:.2px;
+  line-height:1.05;
+  text-transform:uppercase;
+  color:#000;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.brand .subtitle{
+  font-size:13px;
+  font-weight:550;
+  color:#000;
+}
+header.site-header.scrolled .brand .title{ color:#000; }
+
+nav.primary-nav ul{
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:2px;
+  margin:0;
+  padding:0;
+}
+nav.primary-nav a,
+nav.primary-nav .mega-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 13px;
+  border-radius:8px;
+  font-size:15px;
+  font-weight:500;
+  line-height:1;
+  color:var(--dark);
+  text-decoration:none;
+  white-space:nowrap;
+  transition:background .25s ease,color .25s ease;
+}
+header.site-header.scrolled nav.primary-nav a,
+header.site-header.scrolled nav.primary-nav .mega-btn{ color:#000; }
+nav.primary-nav a:hover,
+nav.primary-nav .mega-btn:hover{
+  background:rgba(10,102,194,.08);
+  color:var(--primary);
+}
+header.site-header,
+.nav-row,
+nav.primary-nav{ overflow:visible; }
+
+@media (min-width:901px){
+  nav.primary-nav{ position:relative; }
+  nav.primary-nav li.mega{ position:static; }
+  .mega-panel{
+    position:absolute;
+    top:100%;
+    right:0;
+    left:auto;
+    transform:none;
+    width:900px;
+    max-width:calc(100vw - 40px);
+    background:#fff;
+    border:1px solid rgba(0,0,0,.05);
+    border-radius:8px;
+    padding:30px;
+    box-shadow:0 15px 40px rgba(0,0,0,.1);
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:40px;
+    z-index:2500;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .2s ease-in-out,visibility .2s ease-in-out;
+  }
+  nav.primary-nav li.mega:hover > .mega-panel{
+    opacity:1;
+    visibility:visible;
+  }
+  .mega-col h4{
+    margin:0 0 15px 0 !important;
+    font-size:13px !important;
+    font-weight:700 !important;
+    color:#6c757d !important;
+    text-transform:uppercase !important;
+    letter-spacing:.5px !important;
+    padding-bottom:10px !important;
+    border-bottom:1px solid #eee !important;
+    width:100%;
+  }
+  .mega-col a{
+    display:block !important;
+    padding:8px 0 !important;
+    margin:0 !important;
+    font-size:15px !important;
+    font-weight:500 !important;
+    color:#333 !important;
+    text-decoration:none !important;
+    line-height:1.4 !important;
+    text-align:left !important;
+    transition:color .2s ease !important;
+  }
+  .mega-col a:hover{
+    color:var(--primary) !important;
+    background:transparent !important;
+  }
+}
+@media (max-width:900px){
+  .mega-panel{
+    position:static;
+    width:100%;
+    max-width:none;
+    transform:none;
+    display:none;
+    padding:10px 0;
+    border:none;
+    border-radius:0;
+    box-shadow:none;
+    grid-template-columns:1fr;
+  }
+  nav.primary-nav li.mega:hover .mega-panel{ display:none; }
+  nav.primary-nav li.mega.open > .mega-panel{ display:block; }
+  .mega-col h4{
+    margin:6px 10px 12px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+    color:#6c757d;
+  }
+  .mega-col a{
+    display:flex;
+    align-items:center;
+    padding:12px 16px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    line-height:1.2;
+    color:var(--dark);
+    text-decoration:none;
+    transition:background .2s ease,color .2s ease;
+  }
+  .mega-col a:hover{
+    background:rgba(10,102,194,.08);
+    color:var(--primary);
+  }
+}
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  font-size:28px;
+  cursor:pointer;
+}
+@media (max-width:900px){
+  :root{ --nav-height:76px; }
+  html,body{ overflow-x:hidden; }
+  .nav-toggle{
+    display:block;
+    color:var(--dark);
+  }
+  nav.primary-nav{
+    position:absolute;
+    top:var(--nav-height);
+    left:0;
+    width:100%;
+    background:#fff;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+    border-bottom:1px solid rgba(13,27,42,.08);
+  }
+  nav.primary-nav.open{ max-height:90vh; }
+  nav.primary-nav ul{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:12px 6%;
+  }
+  nav.primary-nav a,
+  nav.primary-nav .mega-btn{
+    width:100%;
+    justify-content:flex-start;
+  }
+  nav.primary-nav li.mega .mega-panel{ display:none !important; }
+  .brand img{ height:40px; }
+  .title{ font-size:18px; line-height:1.1; }
+  .brand .subtitle{ font-size:11px; }
+}
+
+/* ============================================================
+   PRODUCT SEARCH — NAVBAR
+   ============================================================ */
+
+.nav-search {
+  position: relative;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 210px;
+}
+
+#productSearch {
+  width: 100%;
+  height: 40px;
+  padding: 0 38px 0 14px;
+
+  border: 1px solid rgba(13, 27, 42, 0.15);
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--dark);
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  outline: none;
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+#productSearch::placeholder {
+  color: #6c757d;
+}
+
+#productSearch:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.10);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+
+  transform: translateY(-50%);
+
+  font-size: 20px;
+  line-height: 1;
+
+  color: var(--dark);
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   SEARCH RESULTS DROPDOWN
+   ============================================================ */
+
+.search-results {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  left: 0;
+
+  width: 320px;
+  max-height: 380px;
+
+  overflow-y: auto;
+
+  background: #fff;
+  border: 1px solid rgba(13, 27, 42, 0.08);
+  border-radius: 10px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-5px);
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease,
+    visibility .2s ease;
+
+  z-index: 3000;
+}
+
+.search-results.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   SEARCH RESULT ITEM
+   ============================================================ */
+
+.search-result-item {
+  display: block;
+
+  padding: 12px 15px;
+
+  color: var(--dark);
+  text-decoration: none;
+
+  border-bottom: 1px solid rgba(13, 27, 42, 0.06);
+
+  transition:
+    background .2s ease,
+    color .2s ease;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: rgba(10, 102, 194, 0.07);
+  color: var(--primary);
+}
+
+.search-result-name {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.search-result-category {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+  color: #6c757d;
+}
+
+
+/* ============================================================
+   SEARCH — MOBILE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  .nav-search {
+    width: 100%;
+    padding: 6px 0;
+  }
+
+  .search-wrapper {
+    width: 100%;
+  }
+
+  #productSearch {
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .search-results {
+    position: static;
+
+    width: 100%;
+    max-height: 300px;
+
+    margin-top: 6px;
+
+    box-shadow: none;
+  }
+}
+
+.hero{
+  background:var(--bg);
+  padding:140px 2rem 70px;
+  border-bottom:1px solid var(--border);
+}
+.hero .container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:60px;
+  align-items:center;
+}
+.hero h1{ font-size:2.8rem; color:var(--navy); margin:0 0 14px; font-weight:700; }
+.hero p{ max-width:520px; line-height:1.7; color:var(--muted); }
+.hero-actions{ margin-top:26px; }
+.hero-actions a{ display:inline-block; padding:14px 22px; border-radius:6px; font-weight:600; text-decoration:none; }
+.hero-primary{ background:var(--cta); color:#fff; }
+.hero-secondary{ margin-left:12px; border:1px solid var(--border); color:var(--navy); }
+
+main#machines{ max-width:1200px; margin:auto; padding:70px 2rem; }
+.machine-block{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  padding:50px 0;
+  border-bottom:1px solid var(--border);
+}
+.machine-block:last-child{ border-bottom:none; }
+.machine-block h3{ color:var(--navy); font-size:2rem; margin:0 0 10px; }
+.machine-block p{ color:var(--muted); line-height:1.7; }
+.machine-meta{ margin:18px 0; font-size:.9rem; color:#475569; }
+.machine-block img{
+  width:100%;
+  height:400px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid var(--border);
+}
+.machine-actions a.primary{
+  background:var(--cta);
+  color:#fff;
+  padding:12px 18px;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.components-showcase{
+  padding:60px 2rem;
+  background:#f8fafc;
+}
+.section-header{ text-align:center; margin-bottom:50px; }
+.section-header h2{ font-size:2.2rem; color:var(--navy); }
+.components-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:30px;
+  max-width:1200px;
+  margin:auto;
+}
+.component-card{
+  background:#fff;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  overflow:hidden;
+  transition:all .3s ease;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+.component-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 25px -5px rgba(0,0,0,.1);
+  border-color:var(--primary);
+}
+.component-img-container{
+  width:100%;
+  height:220px;
+  padding:20px;
+  box-sizing:border-box;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:1px solid var(--border);
+}
+.component-img-container img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  margin:0 auto;
+}
+.component-info{
+  padding:20px;
+  text-align:center;
+  flex-grow:1;
+  display:flex;
+  flex-direction:column;
+}
+.component-info h3{
+  font-size:1.25rem;
+  color:var(--navy);
+  margin:0 0 10px;
+}
+.component-info p{
+  font-size:.9rem;
+  color:var(--muted);
+  margin:0 0 15px;
+  line-height:1.5;
+}
+.spare-enquiry-btn{
+  margin-top:auto;
+  display:inline-block;
+  padding:10px 20px;
+  background:transparent;
+  border:2px solid var(--navy);
+  color:var(--navy);
+  text-decoration:none;
+  border-radius:6px;
+  font-weight:600;
+  transition:.3s;
+  text-align:center;
+}
+.spare-enquiry-btn:hover{ background:var(--navy); color:#fff; }
+
+.final-cta{ text-align:center; padding:90px 2rem; background:#fff; }
+.final-cta a{
+  margin-top:20px;
+  display:inline-block;
+  background:var(--cta);
+  color:#fff;
+  padding:14px 28px;
+  border-radius:6px;
+  text-decoration:none;
+}
+
+/* ================= CONVEYOR PAGE MOBILE OVERRIDES ================= */
+@media (max-width:900px){
+
+  :root{
+    --nav-height:76px;
+  }
+
+  html,
+  body{
+    overflow-x:hidden;
+  }
+
+  /* HEADER */
+  header.site-header{
+    height:var(--nav-height);
+  }
+
+  .nav-row{
+    height:var(--nav-height);
+    padding:0 16px;
+    gap:10px;
+  }
+
+  .brand{
+    min-width:0;
+    width:auto;
+    max-width:calc(100% - 52px);
+    flex:1;
+    gap:9px;
+    overflow:hidden;
+  }
+
+  .brand img{
+    width:58px;
+    height:58px;
+    object-fit:contain;
+    flex-shrink:0;
+  }
+
+  .brand > div{
+    min-width:0;
+    overflow:hidden;
+  }
+
+  .title{
+    display:block;
+    font-size:17px;
+    line-height:1.15;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .brand .subtitle{
+    display:block;
+    font-size:10px;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+
+  /* HAMBURGER */
+  .nav-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:42px;
+    padding:0;
+    margin:0;
+    background:none;
+    border:none;
+    font-size:27px;
+    color:var(--dark);
+    cursor:pointer;
+    flex-shrink:0;
+  }
+
+  header.site-header.scrolled .nav-toggle{
+    color:var(--dark);
+  }
+
+  /* MOBILE NAV */
+  nav.primary-nav{
+    position:absolute;
+    top:var(--nav-height);
+    left:0;
+    width:100%;
+    background:#fff;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+    border-bottom:1px solid rgba(13,27,42,.08);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+  }
+
+  nav.primary-nav.open{
+    max-height:90vh;
+    overflow-y:auto;
+  }
+
+  nav.primary-nav ul{
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    margin:0;
+    padding:10px 16px 18px;
+  }
+
+  nav.primary-nav li{
+    width:100%;
+  }
+
+  nav.primary-nav a,
+  nav.primary-nav .mega-btn{
+    width:100%;
+    min-height:44px;
+    justify-content:flex-start;
+    padding:11px 8px;
+    font-size:15px;
+  }
+
+  /* MOBILE MEGA MENU */
+  .mega-panel{
+    position:static;
+    width:100%;
+    max-width:none;
+    display:none;
+    padding:10px 0;
+    border:none;
+    border-radius:0;
+    box-shadow:none;
+    grid-template-columns:1fr;
+  }
+
+  nav.primary-nav li.mega:hover .mega-panel{
+    display:none;
+  }
+
+  nav.primary-nav li.mega.open > .mega-panel{
+    display:block;
+  }
+
+  .mega-col h4{
+    margin:6px 10px 12px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+    color:#6c757d;
+  }
+
+  .mega-col a{
+    display:flex;
+    align-items:center;
+    padding:12px 16px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    line-height:1.2;
+    color:var(--dark);
+    text-decoration:none;
+    transition:background .2s ease,color .2s ease;
+  }
+
+  .mega-col a:hover{
+    background:rgba(10,102,194,.08);
+    color:var(--primary);
+  }
+
+  /* SEARCH */
+  .nav-search{
+    width:100%;
+    padding:8px 0;
+  }
+
+  .search-wrapper{
+    width:100%;
+  }
+
+  #productSearch{
+    width:100%;
+    height:44px;
+    font-size:14px;
+  }
+
+  .search-results{
+    position:static;
+    width:100%;
+    max-height:300px;
+    margin-top:6px;
+    box-shadow:none;
+  }
+
+  /* HERO */
+  .hero{
+    padding:calc(var(--nav-height) + 24px) 6% 40px;
+  }
+
+  .hero .container{
+    grid-template-columns:1fr;
+    gap:30px;
+  }
+
+  .hero h1{
+    font-size:2.1rem;
+    line-height:1.2;
+  }
+
+  .hero p{
+    font-size:1rem;
+    line-height:1.6;
+  }
+
+  .hero-actions a{
+    display:block;
+    width:100%;
+    text-align:center;
+    margin-bottom:12px;
+    box-sizing:border-box;
+  }
+
+  .hero-secondary{
+    margin-left:0;
+  }
+
+  .hero > .container > div:last-child img{
+    width:100%;
+    height:auto;
+    object-fit:contain;
+  }
+
+  /* MACHINE BLOCKS */
+  main#machines{
+    padding:40px 6%;
+  }
+
+  .machine-block{
+    grid-template-columns:1fr;
+    text-align:center;
+    gap:26px;
+    padding:40px 0;
+  }
+
+  .machine-block h3{
+    font-size:1.6rem;
+  }
+
+  .machine-block p{
+    font-size:.95rem;
+    line-height:1.6;
+  }
+
+  .machine-block img{
+    width:100%;
+    height:280px !important;
+    max-width:100% !important;
+    object-fit:contain !important;
+    margin-top:0;
+  }
+
+  .machine-actions a.primary{
+    display:inline-block;
+    width:100%;
+    box-sizing:border-box;
+    text-align:center;
+    margin-top:10px;
+  }
+
+  /* COMPONENT SECTIONS */
+  .components-showcase{
+    padding:48px 6%;
+  }
+
+  .section-header{
+    margin-bottom:30px;
+  }
+
+  .section-header h2{
+    font-size:1.8rem;
+    line-height:1.2;
+  }
+
+  .section-header p{
+    font-size:.95rem;
+    line-height:1.5;
+  }
+
+  .components-grid{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+
+  .component-img-container{
+    height:210px;
+    padding:16px;
+  }
+
+  .component-img-container img{
+    max-width:100%;
+    max-height:170px;
+  }
+
+  .component-info{
+    padding:16px 14px 18px;
+  }
+
+  .component-info h3{
+    font-size:1.15rem;
+  }
+
+  .component-info p{
+    font-size:.9rem;
+  }
+
+  .spare-enquiry-btn{
+    width:100%;
+    box-sizing:border-box;
+    text-align:center;
+  }
+
+  /* FINAL CTA */
+  .final-cta{
+    padding:60px 6%;
+  }
+
+  .final-cta h2{
+    font-size:1.8rem;
+    line-height:1.25;
+  }
+
+  .final-cta a{
+    width:100%;
+    box-sizing:border-box;
+    text-align:center;
+  }
+}
+
+/* ================= END CONVEYOR PAGE MOBILE OVERRIDES ================= */
+
+.material-tag{
+  font-size:.75rem;
+  font-weight:700;
+  color:var(--primary);
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+@media (max-width:900px){
+  .hero > .container > div:last-child img{
+    width:100%;
+    height:auto;
+    object-fit:contain;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     CONVEYOR SYSTEMS — HTML
+     Structure only. All styling is above; all interactions are below.
+     ============================================================ -->
+<!--
+     HTML SECTION MAP
+     01. Header / Navigation
+     02. Hero Section
+     03. Conveyor Machine Blocks
+     04. Conveyor Belts & Chains
+     05. Conveyor Components & Spares
+     06. Wear Strips & Guides
+     07. Final CTA
+     ============================================================ -->
+
+<header class="site-header" id="siteHeader">
+  <div class="nav-row">
+    <a href="../index.html" class="brand">
+      <img src="../assets/logo/SMT-logo.png" alt="Sehdev logo">
+      <div>
+        <span class="title">Sehdev Machine Tools (India)</span><br>
+        <span class="subtitle">Precision | Reliability</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <nav class="primary-nav">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About Us</a></li>
+        <li class="mega">
+          <a href="../products.html" class="mega-btn">Products ▾</a>
+          <div class="mega-panel">
+            <div class="mega-col">
+              <h4>Machines</h4>
+              <a href="labelling-machine.html">Labelling solutions & spares</a>
+              <a href="sealing-machine.html">Sealing Solutions & spares</a>
+              <a href="filling-machine.html">Filling Solutions & spares</a>
+              <a href="ancillary-units.html">Ancillary Units & spares</a>
+              <a href="washing-units.html">Washing Units & spares</a>
+              <a href="conveyor-systems.html" class="active">Conveying Solutions & spares</a>
+            </div>
+            <div class="mega-col">
+              <h4>Components</h4>
+              <a href="change-parts.html">Change Parts</a>
+              <a href="nozzles-needles.html">Nozzles &amp; Needles</a>
+              <a href="mechanical-seals.html">Mechanical Seals</a>
+              <a href="rubber-components.html">Rubber Components</a>
+              
+            </div>
+            <div class="mega-col">
+              <h4>Miscellaneous</h4>
+              <a href="miscellaneous.html">Miscellaneous Components</a>
+            </div>
+          </div>
+        </li>
+            <li class="mega">
+              <a href="../services.html" class="mega-btn">Services ▾</a>
+
+              <div class="mega-panel">
+
+                <div class="mega-col">
+                  <a href="../services.html#design-customization" class="service">
+                    <h4>Design Customization</h4>
+                  </a>
+                </div>
+
+                <div class="mega-col">
+                  <a href="../services.html#reverse-engineering" class="service">
+                    <h4>Reverse Engineering</h4>
+                  </a>
+                </div>
+
+                <div class="mega-col">
+                  <a href="../services.html#product-refurbishment" class="service">
+                    <h4>Product Refurbishment</h4>
+                  </a>
+                </div>
+
+              </div>
+        </li>
+
+        <!-- Product Search -->
+        <li class="nav-search">
+          <div class="search-wrapper">
+            <input
+              type="search"
+              id="productSearch"
+              placeholder="Search products..."
+              autocomplete="off"
+              aria-label="Search products"
+            >
+            <span class="search-icon">⌕</span>
+
+            <div
+              id="searchResults"
+              class="search-results"
+              aria-live="polite"
+            ></div>
+          </div>
+        </li>
+
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero">
+  <div class="container">
+    <div>
+      <h1>Industrial Conveyor Systems for Material Handling</h1>
+      <p>
+        Robust, high-performance Conveying Solutions designed for seamless material
+        transfer across pharmaceutical, food, and industrial manufacturing lines.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONVEYOR MACHINE BLOCKS & COMPONENTS
+     ============================================================ -->
+<main id="machines">
+  <section class="machine-block">
+    <div>
+      <h3>Roller Conveyor</h3>
+      <p>Robust, high-performance conveyor solution designed for seamless material transfer across manufacturing lines.</p>
+      <div class="Machine-meta searchable-product">
+        Modular Design • Low Maintenance • High-Load Capacity
+      </div> <br>
+      <div class="machine-actions">
+        <a href="../enquiry.html?product=Roller%20Conveyor&amp;cat=Conveyor" class="primary">Enquire Now</a>
+      </div>
+    </div>
+    <div>
+      <img src="../assets/conveyor system/Roller Conveyor.png" alt="Conveyor System">
+    </div>
+
+    <div>
+      <h3>Chain Conveyor</h3>
+      <p>Robust, high-performance conveyor solution designed for seamless material transfer across manufacturing lines.</p>
+      <div class="Machine-meta searchable-product">
+        Modular Design • Low Maintenance • High-Load Capacity
+      </div> <br>
+      <div class="machine-actions">
+        <a href="../enquiry.html?product=Chain%20Conveyor&amp;cat=Conveyor" class="primary">Enquire Now</a>
+      </div>
+    </div>
+    <div>
+      <img src="../assets/conveyor system/Chain_Conveyor.png" alt="Conveyor System">
+    </div>
+
+    <div>
+      <h3>Incline/Decline Conveyor</h3>
+      <p>Robust, high-performance conveyor solution designed for seamless material transfer across manufacturing lines.</p>
+      <div class="Machine-meta searchable-product">
+        Modular Design • Low Maintenance • High-Load Capacity
+      </div> <br>
+      <div class="machine-actions">
+        <a href="../enquiry.html?product=Incline/Decline%20Conveyor&amp;cat=Conveyor" class="primary">Enquire Now</a>
+      </div>
+    </div>
+    <div>
+      <img src="../assets/conveyor system/Incline_Decline Conveyor.png" alt="Conveyor System">
+    </div>
+
+    <div>
+      <h3>Packing Conveyor</h3>
+      <p>Robust, high-performance conveyor solution designed for seamless material transfer across manufacturing lines.</p>
+      <div class="Machine-meta searchable-product">
+        Modular Design • Low Maintenance • High-Load Capacity
+      </div> <br>
+      <div class="machine-actions">
+        <a href="../enquiry.html?product=Packing%20Conveyor&amp;cat=Conveyor" class="primary">Enquire Now</a>
+      </div>
+    </div>
+    <div>
+      <img src="../assets/conveyor system/Packing Conveyor.png" alt="Conveyor System">
+    </div>
+
+    <div>
+      <h3>Screw Conveyor</h3>
+      <p>Robust, high-performance conveyor solution designed for seamless material transfer across manufacturing lines.</p>
+      <div class="Machine-meta searchable-product">
+        Modular Design • Low Maintenance • High-Load Capacity
+      </div> <br>
+      <div class="machine-actions">
+        <a href="../enquiry.html?product=Screw%20Conveyor&amp;cat=Conveyor" class="primary">Enquire Now</a>
+      </div>
+    </div>
+    <div>
+      <img src="../assets/conveyor system/Screw Conveyor.png" alt="Conveyor System">
+    </div>
+  </section>
+
+<!-- ============================================================
+     CONVEYOR BELTS
+     ============================================================ -->
+<section class="components-showcase">
+  <div class="section-header">
+    <h2>Conveyor Belts</h2>
+    <p>Food-grade and industrial-grade belts tailored to your specific application.</p>
+  </div>
+
+  <div class="components-grid">
+
+   
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Modular_Chain_1-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <span class="material-tag">Food Grade</span>
+        <h3>Modular Chain Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Modular%20Chain%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Modular_Chain_2-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Modular Chain  Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Modular%20Chain%20(2)%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Modular_Chain_3-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Modular Chain  Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Modular%20Chain%20(3)%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Straight-Running-STC-101-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Straight-Running Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Straight-Running%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Straight-Running-wide-track-STC-102-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Straight-Running Wide Track Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Straight-Running%20Wide%20Track%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Side-Flexing-Tab-Safety-Finger-STC103-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Side-Flexing Tab Safety Finger Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Side-Flexing%20Tab%20Safety%20Finger%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Side-Flexing-Tab-STC-104-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Side-Flexing Tab Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Side-Flexing%20Tab%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Side-Flexing-Tab-Wide-Track-STC-105-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Side-Flexing Tab Wide Track Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Side-Flexing%20Tab%20Wide%20Track%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/magnetic Tab.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Magnetic Tab Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Magnetic%20Tab%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Side-Flexing-Tab-Safety-STC-107-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Side-Flexing Tab Safety Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Side-Flexing%20Tab%20Safety%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Straight-Running-Roller-STC108-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Straight-Running Roller Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Straight-Running%20Roller%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Side-Flexing-Uni-Crate-STC-109-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Side-Flexing Uni-Crate Conveyor Belt</h3>
+        <a href="../enquiry.html?product=Side-Flexing%20Uni-Crate%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Straight-Running-SS304-STC-110-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Straight-Running SS Conveyor Chain</h3>
+        <p>SS304/409/430 Construction</p>
+        <a href="../enquiry.html?product=Straight-Running%20SS304%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Straighty-Running-Wide-track-SS304-STC-111-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Straight-Running Wide-track SS Conveyor Chain</h3>
+        <p>SS304/409/430 Construction</p>
+        <a href="../enquiry.html?product=Straight-Running%20Wide-track%20SS304%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/conveyor belts/Straight-Running-Wide-SS4430-STC112-removebg-preview.png" alt="Food Grade Conveyor Belt">
+      </div>
+
+      <div class="component-info">
+        <h3>Side Flexing SS Conveyor Chain</h3>
+        <p>SS304/409/430 Construction</p>
+        <a href="../enquiry.html?product=Straight-Running%20Wide-SS4430%20Conveyor%20Belt&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CONVEYOR CHAINS
+     ============================================================ -->
+<section class="components-showcase">
+  <div class="section-header">
+    <h2>Conveyor Chains</h2>
+    <p>Reliable conveyor chain solutions engineered for efficient and continuous material handling.</p>
+  </div>
+
+  <div class="components-grid">
+
+    <!-- Food Grade Conveyor Chain -->
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/Conveyor Chains/Enrober(enhanced).png" alt="Food Grade Conveyor Chain">
+      </div>
+
+      <div class="component-info">
+        <h3>Enrober Conveyor Chain</h3>
+        <a href="../enquiry.html?product=Enrober%20Conveyor%20Chain&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/Conveyor Chains/Mesh-Both-Side(enhanced).png" alt="Industrial Conveyor Chain">
+      </div>
+
+      <div class="component-info">
+        <h3> Balanced-Weave Conveyor Chain</h3>
+        <a href="../enquiry.html?product=Balanced-Weave%20Conveyor%20Chain&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+    <div class="component-card searchable-product">
+      <div class="component-img-container">
+        <img src="../assets/conveyor system/Conveyor Chains/Honeycomb(enhanced).png" alt="Industrial Conveyor Chain">
+      </div>
+
+      <div class="component-info">
+        <h3> Honeycomb Conveyor Chain</h3>
+        <a href="../enquiry.html?product=Honeycomb%20Conveyor%20Chain&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+  <section class="components-showcase">
+    <div class="section-header">
+      <h2>Conveyor Components &amp; Spares</h2>
+      <p>Maintain peak efficiency with our genuine belts, motors, and roller components.</p>
+    </div>
+
+    <div class="components-grid">
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Holder-Connector(enhanced).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Holder-Connector</h3>
+          <a href="../enquiry.html?product=Holder-Connector&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/90-Connector(enhanced).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>90-Connector</h3>
+          <a href="../enquiry.html?product=90-Connector&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Adjustable-Side-Bracket-removebg-preview (1).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Adjustable Side Bracket</h3>
+          <a href="../enquiry.html?product=Adjustable%20Side%20Bracket&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Alligator_Lacing_Type_Belt_Fastener-removebg-preview.png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Alligator Lacing Type Belt Fastener</h3>
+          <a href="../enquiry.html?product=Alligator%20Lacing%20Type%20Belt%20Fastener&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Alligator_Staple_Type_Belt_Fastener-removebg-preview.png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Alligator Staple Type Belt Fastener</h3>
+          <a href="../enquiry.html?product=Alligator%20Staple%20Type%20Belt%20Fastener&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Base-Connector(enhanced).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Base-Connector</h3>
+          <a href="../enquiry.html?product=Base-Connector&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Cross-Clamps(enhanced).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Cross-Clamps</h3>
+          <a href="../enquiry.html?product=Cross-Clamps&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Guide_Rail_Clamp-removebg-preview.png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Guide Rail Clamp</h3>
+          <a href="../enquiry.html?product=Guide%20Rail%20Clamp&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Holder-Connector(enhanced).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Holder-Connector</h3>
+          <a href="../enquiry.html?product=Holder-Connector&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Leveling-Base-removebg-preview.png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Leveling-Base</h3>
+          <a href="../enquiry.html?product=Leveling-Base&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Lobed-Screw(Enhanced).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Lobed-Screw</h3>
+          <a href="../enquiry.html?product=Lobed-Screw&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Nylon-Roller(enhanced).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Nylon-Roller</h3>
+          <a href="../enquiry.html?product=Nylon-Roller&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Side-Brakcets(enhanced).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Side-Brakcets</h3>
+          <a href="../enquiry.html?product=Side-Brakcets&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/Side-Mounting(enhanced).png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>Side-Mounting</h3>
+          <a href="../enquiry.html?product=Side-Mounting&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/conveyor components/T_clamps-removebg-preview.png" alt="Conveyor Belt">
+        </div>
+        <div class="component-info">
+          <h3>T-Clamps</h3>
+          <a href="../enquiry.html?product=T-Clamps&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <section class="components-showcase">
+    <div class="section-header">
+      <h2>Wear Strips &amp; Guides</h2>
+      <p>Low-friction, high-wear resistance components for smooth chain movement.</p>
+    </div>
+
+    <div class="components-grid">
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/Z-Profile.png" alt="Z-Profile">
+        </div>
+        <div class="component-info">
+          <h3>Z-Profile</h3>
+          <a href="../enquiry.html?product=Z-Profile&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/B Profile.png" alt="B Profile">
+        </div>
+        <div class="component-info">
+          <h3>B Profile</h3>
+          <a href="../enquiry.html?product=B%20Profile&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/Box Profile.png" alt="Box Profile">
+        </div>
+        <div class="component-info">
+          <h3>Box Profile</h3>
+          <a href="../enquiry.html?product=Box%20Profile&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/Flat Coiled.png" alt="Flat Coiled">
+        </div>
+        <div class="component-info">
+          <h3>Flat Coiled</h3>
+          <a href="../enquiry.html?product=Flat%20Coiled&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/Half Round.png" alt="Half Round">
+        </div>
+        <div class="component-info">
+          <h3>Half Round</h3>
+          <a href="../enquiry.html?product=Half%20Round&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/L Profile.png" alt="L Profile">
+        </div>
+        <div class="component-info">
+          <h3>L Profile</h3>
+          <a href="../enquiry.html?product=L%20Profile&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/Metal Carriers.png" alt="Metal Carriers">
+        </div>
+        <div class="component-info">
+          <h3>Metal Carriers</h3>
+          <a href="../enquiry.html?product=Metal%20Carriers&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/round bar.png" alt="Round Bar">
+        </div>
+        <div class="component-info">
+          <h3>Round Bar</h3>
+          <a href="../enquiry.html?product=Round%20Bar&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/Slat Band Chain.png" alt="Slat Band Chain">
+        </div>
+        <div class="component-info">
+          <h3>Slat Band Chain</h3>
+          <a href="../enquiry.html?product=Slat%20Band%20Chain&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/Steel Backed.png" alt="Steel Backed">
+        </div>
+        <div class="component-info">
+          <h3>Steel Backed</h3>
+          <a href="../enquiry.html?product=Steel%20Backed&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/U Channel.png" alt="U Channel">
+        </div>
+        <div class="component-info">
+          <h3>U Channel</h3>
+          <a href="../enquiry.html?product=U%20Channel&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <div class="component-card searchable-product">
+        <div class="component-img-container">
+          <img src="../assets/conveyor system/Wear Strip/Miscellaneous.png" alt="Miscellaneous">
+        </div>
+        <div class="component-info">
+          <h3>Miscellaneous</h3>
+          <a href="../enquiry.html?product=Miscellaneous&amp;cat=Conveyor" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     FINAL CTA
+     ============================================================ -->
+<section class="final-cta">
+  <h2>Looking for a customized conveyor layout?</h2>
+  <a href="../enquiry.html">Talk to Our Engineering Team</a>
+</section>
+
+
+<!-- ============================================================
+     CONVEYOR SYSTEMS — JAVASCRIPT
+     ============================================================ -->
+<!--
+     JAVASCRIPT SECTION MAP
+     01. Header Scroll Behaviour
+     02. Mobile Navigation
+     ============================================================ -->
+<script>
+window.addEventListener('scroll', function() {
+  const header = document.querySelector('.site-header');
+  if (window.scrollY > 50) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+});
+
+const navToggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('.primary-nav');
+
+if (navToggle && nav) {
+  navToggle.addEventListener('click', function() {
+    nav.classList.toggle('open');
+  });
+}
+</script>
+
+ <script src="../js/product-search.js"></script>
+</body>
+</html>

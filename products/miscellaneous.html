@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Miscellaneous & Pharma Tools | Sehdev Machine Tools</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+/* ... (Aapka existing CSS same rahega) ... */
+:root{
+  --navy:#0f172a; --text:#334155; --muted:#64748b; --border:#e6ebf2;
+  --bg:#ffffff; --bg-soft:#f7f9fc; --cta:#020617; --primary: #0a66c2;
+  --nav-height: 112px; --dark: #0d1b2a;
+}
+body{ margin:0; font-family:"Inter","Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); }
+
+header.site-header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1400;
+  backdrop-filter:blur(12px) saturate(160%);
+  -webkit-backdrop-filter:blur(12px) saturate(160%);
+  background:rgba(255,255,255,0.8);
+  border-bottom:1px solid rgba(13,27,42,0.06);
+  transition:background .25s ease,box-shadow .25s ease;
+}
+header.site-header.scrolled{
+  background:rgba(255,255,255,0.8);
+  color:#000;
+  box-shadow:0 6px 22px rgba(0,0,0,0.08);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+}
+.nav-row{
+  height:var(--nav-height);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 4%;
+  gap:20px;
+  overflow:visible;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:420px;
+  flex-shrink:0;
+  text-decoration:none;
+}
+.brand img{
+  width: 155px;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.title{
+  font-family:'Inter',sans-serif;
+  font-size:26px;
+  font-weight:600;
+  letter-spacing:.2px;
+  line-height:1.05;
+  text-transform:uppercase;
+  color:#000;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.brand .subtitle{
+  font-size:13px;
+  font-weight:550;
+  color:#000;
+}
+header.site-header.scrolled .brand .title{ color:#000; }
+
+nav.primary-nav ul{
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:2px;
+  margin:0;
+  padding:0;
+}
+nav.primary-nav a,
+nav.primary-nav .mega-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 13px;
+  border-radius:8px;
+  font-size:15px;
+  font-weight:500;
+  line-height:1;
+  color:var(--dark);
+  text-decoration:none;
+  white-space:nowrap;
+  transition:background .25s ease,color .25s ease;
+}
+header.site-header.scrolled nav.primary-nav a,
+header.site-header.scrolled nav.primary-nav .mega-btn{ color:#000; }
+nav.primary-nav a:hover,
+nav.primary-nav .mega-btn:hover{
+  background:rgba(10,102,194,.08);
+  color:var(--primary);
+}
+header.site-header,
+.nav-row,
+nav.primary-nav{ overflow:visible; }
+
+@media (min-width:901px){
+  nav.primary-nav{ position:relative; }
+  nav.primary-nav li.mega{ position:static; }
+  .mega-panel{
+    position:absolute;
+    top:100%;
+    right:0;
+    left:auto;
+    transform:none;
+    width:900px;
+    max-width:calc(100vw - 40px);
+    background:#fff;
+    border:1px solid rgba(0,0,0,.05);
+    border-radius:8px;
+    padding:30px;
+    box-shadow:0 15px 40px rgba(0,0,0,.1);
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:40px;
+    z-index:2500;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .2s ease-in-out,visibility .2s ease-in-out;
+  }
+  nav.primary-nav li.mega:hover > .mega-panel{
+    opacity:1;
+    visibility:visible;
+  }
+  .mega-col h4{
+    margin:0 0 15px 0 !important;
+    font-size:13px !important;
+    font-weight:700 !important;
+    color:#6c757d !important;
+    text-transform:uppercase !important;
+    letter-spacing:.5px !important;
+    padding-bottom:10px !important;
+    border-bottom:1px solid #eee !important;
+    width:100%;
+  }
+  .mega-col a{
+    display:block !important;
+    padding:8px 0 !important;
+    margin:0 !important;
+    font-size:15px !important;
+    font-weight:500 !important;
+    color:#333 !important;
+    text-decoration:none !important;
+    line-height:1.4 !important;
+    text-align:left !important;
+    transition:color .2s ease !important;
+  }
+  .mega-col a:hover{
+    color:var(--primary) !important;
+    background:transparent !important;
+  }
+}
+@media (max-width:900px){
+  .mega-panel{
+    position:static;
+    width:100%;
+    max-width:none;
+    transform:none;
+    display:none;
+    padding:10px 0;
+    border:none;
+    border-radius:0;
+    box-shadow:none;
+    grid-template-columns:1fr;
+  }
+  nav.primary-nav li.mega:hover .mega-panel{ display:none; }
+  nav.primary-nav li.mega.open > .mega-panel{ display:block; }
+  .mega-col h4{
+    margin:6px 10px 12px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+    color:#6c757d;
+  }
+  .mega-col a{
+    display:flex;
+    align-items:center;
+    padding:12px 16px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    line-height:1.2;
+    color:var(--dark);
+    text-decoration:none;
+    transition:background .2s ease,color .2s ease;
+  }
+  .mega-col a:hover{
+    background:rgba(10,102,194,.08);
+    color:var(--primary);
+  }
+}
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  font-size:28px;
+  cursor:pointer;
+}
+@media (max-width:900px){
+  :root{ --nav-height:76px; }
+  html,body{ overflow-x:hidden; }
+  .nav-toggle{
+    display:block;
+    color:var(--dark);
+  }
+  nav.primary-nav{
+    position:absolute;
+    top:var(--nav-height);
+    left:0;
+    width:100%;
+    background:#fff;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+    border-bottom:1px solid rgba(13,27,42,.08);
+  }
+  nav.primary-nav.open{ max-height:90vh; }
+  nav.primary-nav ul{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:12px 6%;
+  }
+  nav.primary-nav a,
+  nav.primary-nav .mega-btn{
+    width:100%;
+    justify-content:flex-start;
+  }
+  nav.primary-nav li.mega .mega-panel{ display:none !important; }
+  .brand img{ height:40px; }
+  .title{ font-size:18px; line-height:1.1; }
+  .brand .subtitle{ font-size:11px; }
+}
+
+/* ============================================================
+   PRODUCT SEARCH — NAVBAR
+   ============================================================ */
+
+.nav-search {
+  position: relative;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 210px;
+}
+
+#productSearch {
+  width: 100%;
+  height: 40px;
+  padding: 0 38px 0 14px;
+
+  border: 1px solid rgba(13, 27, 42, 0.15);
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--dark);
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  outline: none;
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+#productSearch::placeholder {
+  color: #6c757d;
+}
+
+#productSearch:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.10);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+
+  transform: translateY(-50%);
+
+  font-size: 20px;
+  line-height: 1;
+
+  color: var(--dark);
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   SEARCH RESULTS DROPDOWN
+   ============================================================ */
+
+.search-results {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  left: 0;
+
+  width: 320px;
+  max-height: 380px;
+
+  overflow-y: auto;
+
+  background: #fff;
+  border: 1px solid rgba(13, 27, 42, 0.08);
+  border-radius: 10px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-5px);
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease,
+    visibility .2s ease;
+
+  z-index: 3000;
+}
+
+.search-results.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   SEARCH RESULT ITEM
+   ============================================================ */
+
+.search-result-item {
+  display: block;
+
+  padding: 12px 15px;
+
+  color: var(--dark);
+  text-decoration: none;
+
+  border-bottom: 1px solid rgba(13, 27, 42, 0.06);
+
+  transition:
+    background .2s ease,
+    color .2s ease;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: rgba(10, 102, 194, 0.07);
+  color: var(--primary);
+}
+
+.search-result-name {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.search-result-category {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+  color: #6c757d;
+}
+
+
+/* ============================================================
+   SEARCH — MOBILE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  .nav-search {
+    width: 100%;
+    padding: 6px 0;
+  }
+
+  .search-wrapper {
+    width: 100%;
+  }
+
+  #productSearch {
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .search-results {
+    position: static;
+
+    width: 100%;
+    max-height: 300px;
+
+    margin-top: 6px;
+
+    box-shadow: none;
+  }
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero{ background:var(--bg); padding:140px 2rem 70px; border-bottom:1px solid var(--border); }
+.hero .container{ max-width:1200px; margin:auto; display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:center; }
+.hero h1{ font-size:2.8rem; color:var(--navy); margin-bottom:14px; font-weight:700; }
+.hero p{ max-width:520px; line-height:1.7; color:var(--muted); }
+.hero-actions{ margin-top:26px; }
+.hero-actions a{ display:inline-block; padding:14px 22px; border-radius:6px; font-weight:600; text-decoration:none; }
+.hero-primary{ background:var(--cta); color:#fff; }
+.hero-secondary{ margin-left:12px; border:1px solid var(--border); color:var(--navy); }
+
+/* ============================================================
+   MISCELLANEOUS PRODUCT CARDS
+   ============================================================ */
+/* ===== MISC PRODUCT CARDS ===== */
+.components-showcase {
+  padding: 60px 2rem;
+  background: #f8fafc;
+}
+
+.components-grid,
+.misc-grid,
+.pharma-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.component-card,
+.misc-card,
+.pharma-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+}
+
+.component-card:hover,
+.misc-card:hover,
+.pharma-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.component-img-container,
+.misc-img-container,
+.pharma-img-container {
+  width: 100%;
+  height: 220px;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.component-img-container img,
+.misc-img-container img,
+.pharma-img-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.component-info,
+.misc-info,
+.pharma-info {
+  padding: 20px;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.component-info h3,
+.misc-info h3,
+.pharma-info h3,
+.misc-info h4,
+.pharma-info h4 {
+  font-size: 1.25rem;
+  color: var(--navy);
+  margin: 0 0 10px;
+}
+
+.component-info p,
+.misc-info p,
+.pharma-info p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0 15px;
+  line-height: 1.5;
+}
+
+.machine-meta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.spare-enquiry-btn,
+.misc-card .primary {
+  margin-top: auto;
+  display: inline-block;
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid var(--navy);
+  color: var(--navy);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.spare-enquiry-btn:hover,
+.misc-card .primary:hover {
+  background: var(--navy);
+  color: #fff;
+}
+
+/* ============================================================
+   PHARMA SPECIFIC TOOLS
+   ============================================================ */
+.pharma-section {
+  padding: 80px 2rem;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #e0f2fe;
+  color: #0369a1;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   FOOTER CTA
+   ============================================================ */
+/* ===== FOOTER CTA ===== */
+.final-cta{
+  text-align:center;
+  padding:90px 2rem;
+  background:#fff;
+}
+
+.final-cta h2{
+  color:var(--navy);
+}
+
+.final-cta a{
+  margin-top:20px;
+  display:inline-block;
+  background:var(--cta);
+  color:#fff;
+  padding:14px 28px;
+  border-radius:6px;
+  text-decoration:none;
+}
+
+/* ================= MISC PAGE MOBILE OVERRIDES ================= */
+@media (max-width:900px){
+  :root{ --nav-height:76px; }
+  html,body{ overflow-x:hidden; }
+
+  .nav-toggle{ display:block; color:var(--dark); }
+  .brand img{ height:40px; width:auto; }
+  .title{ font-size:18px; line-height:1.1; }
+  .brand .subtitle{ font-size:11px; }
+
+  nav.primary-nav{
+    position:absolute;
+    top:var(--nav-height);
+    left:0;
+    width:100%;
+    background:#fff;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+    border-bottom:1px solid rgba(13,27,42,.08);
+  }
+
+  nav.primary-nav.open{ max-height:90vh; }
+
+  nav.primary-nav ul{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:12px 6%;
+  }
+
+  nav.primary-nav a,
+  nav.primary-nav .mega-btn{
+    width:100%;
+    justify-content:flex-start;
+  }
+
+  nav.primary-nav li.mega .mega-panel{ display:none !important; }
+
+  .hero{
+    padding:calc(var(--nav-height) + 24px) 6% 40px;
+  }
+
+  .hero .container{
+    grid-template-columns:1fr;
+    gap:30px;
+  }
+
+  .hero h1{ font-size:2.1rem; }
+  .hero p{ font-size:1rem; line-height:1.6; }
+
+  .hero-actions a{
+    display:block;
+    width:100%;
+    text-align:center;
+    margin-bottom:12px;
+  }
+
+  .hero-secondary{ margin-left:0; }
+
+  .pharma-section{ padding:50px 6%; }
+
+  .misc-grid,
+  .pharma-grid{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+
+  #misc-items{ padding:40px 6% 70px !important; }
+
+  .component-img-container,
+  .misc-img-container,
+  .pharma-img-container{
+    height:200px;
+  }
+}
+
+</style>
+</head>
+
+<!-- ============================================================
+     MISCELLANEOUS & PHARMA TOOLS — HTML
+     Structure only. All styling is above; all interactions are below.
+     ============================================================ -->
+<!--
+     HTML SECTION MAP
+     01. Header / Navigation
+     02. Hero Section
+     03. Pharma Specific Tools
+     04. General Components
+     05. Final Engineering CTA
+     ============================================================
+-->
+
+<body>
+
+<!-- ============================================================
+     HEADER / NAVIGATION
+     ============================================================ -->
+<header class="site-header">
+  <div class="nav-row">
+    <a href="../index.html" class="brand">
+      <img src="../assets/logo/SMT-logo.png" alt="Sehdev logo">
+      <div>
+        <span class="title">Sehdev Machine Tools (India)</span><br>
+        <span class="subtitle">Precision | Reliability</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <nav class="primary-nav">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About Us</a></li>
+        <li class="mega">
+          <a href="../products.html" class="mega-btn">Products ▾</a>
+          <div class="mega-panel">
+            <div class="mega-col">
+              <h4>Machines</h4>
+              <a href="labelling-machine.html">Labelling solutions & spares</a>
+              <a href="sealing-machine.html">Sealing Solutions & spares</a>
+              <a href="filling-machine.html">Filling Solutions & spares</a>
+              <a href="ancillary-units.html">Ancillary Units & spares</a>
+              <a href="washing-units.html">Washing Units & spares</a>
+              <a href="conveyor-system.html">Conveying Solutions & spares</a>
+            </div>
+            <div class="mega-col">
+              <h4>Components</h4>
+               <a href="change-parts.html">Change Parts</a>
+              <a href="nozzles-needles.html">Nozzles &amp; Needles</a>
+              <a href="mechanical-seals.html">Mechanical Seals</a>
+              <a href="rubber-components.html">Rubber Components</a>
+             
+            </div>
+            <div class="mega-col">
+              <h4>Miscellaneous</h4>
+              <a href="misc.html">Miscellaneous Components</a>
+            </div>
+          </div>
+        </li>
+        <li class="mega">
+          <a href="../services.html" class="mega-btn">Services ▾</a>
+
+          <div class="mega-panel">
+
+            <div class="mega-col">
+              <a href="../services.html#design-customization" class="service">
+                <h4>Design Customization</h4>
+              </a>
+            </div>
+
+            <div class="mega-col">
+              <a href="../services.html#reverse-engineering" class="service">
+                <h4>Reverse Engineering</h4>
+              </a>
+            </div>
+
+            <div class="mega-col">
+              <a href="../services.html#product-refurbishment" class="service">
+                <h4>Product Refurbishment</h4>
+              </a>
+            </div>
+
+          </div>
+        </li>
+
+        <!-- Product Search -->
+        <li class="nav-search">
+          <div class="search-wrapper">
+            <input
+              type="search"
+              id="productSearch"
+              placeholder="Search products..."
+              autocomplete="off"
+              aria-label="Search products"
+            >
+            <span class="search-icon">⌕</span>
+
+            <div
+              id="searchResults"
+              class="search-results"
+              aria-live="polite"
+            ></div>
+          </div>
+        </li>
+
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<main class="hero">
+  <div class="container">
+    <div>
+      <h1>Miscellaneous & Pharma Specialized Tools</h1>
+      <p>A comprehensive range of high-precision auxiliary components and specialized tools designed specifically for the pharmaceutical and manufacturing industries.</p>
+    </div>
+  </div>
+</main>
+
+<!-- ============================================================
+     PHARMA SPECIFIC TOOLS
+     ============================================================ -->
+<section class="pharma-section" id="pharma">
+    <div class="section-header">
+        <span class="tag">Industry Focus</span>
+        <h2>Pharma Specific Tools</h2>
+        <p>Precision-engineered tools for cleanroom and laboratory environments.</p>
+    </div>
+    
+    <div class="pharma-grid">
+
+
+      <!-- Ampoule Tripartite -->
+      <div class="pharma-card searchable-product">
+        <div class="pharma-img-container">
+          <img src="../assets/Pharma Specific Tools/Ampoule Tripartite.jpg" alt="Pharma Specialized Tool">
+        </div>
+        <div class="pharma-info">
+          <h4>Ampoule Tripartite</h4>
+          <a href="../enquiry.html?product=Ampoule%20Tripartite&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Counting Shovel -->
+      <div class="pharma-card searchable-product">
+        <div class="pharma-img-container">
+          <img src="../assets/Pharma Specific Tools/Counting Shovel.png" alt="Pharma Specialized Tool">
+        </div>
+        <div class="pharma-info">
+          <h4>Counting Shovel</h4>
+          <a href="../enquiry.html?product=Counting%20Shovel&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Scoop -->
+      <div class="pharma-card searchable-product">
+        <div class="pharma-img-container">
+          <img src="../assets/Pharma Specific Tools/Scoop.jpg" alt="Pharma Specialized Tool">
+        </div>
+        <div class="pharma-info">
+          <h4>Scoop</h4>
+          <a href="../enquiry.html?product=Scoop&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Vial Gripper -->
+      <div class="pharma-card searchable-product">
+        <div class="pharma-img-container">
+          <img src="../assets/Pharma Specific Tools/Vial Gripper.png" alt="Pharma Specialized Tool">
+        </div>
+        <div class="pharma-info">
+          <h4>Vial Gripper</h4>
+          <a href="../enquiry.html?product=Vial%20Gripper&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+
+    </div>
+</section>
+
+<!-- ============================================================
+     GENERAL COMPONENTS
+     ============================================================ -->
+<main id="misc-items" style="max-width:1200px; margin:auto; padding:40px 2rem 70px;">
+    <div class="section-header">
+        <h2>General Components</h2>
+    </div>
+
+    <div class="misc-grid">
+
+
+      <!-- Annular Gear -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/annulur Gear.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Annular Gear</h3>
+          <a href="../enquiry.html?product=Annular%20Gear&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Bench Vise -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/bench vise.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Bench Vise</h3>
+          <a href="../enquiry.html?product=Bench%20Vise&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Bevel Gear -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/bevel.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Bevel Gear</h3>
+          <a href="../enquiry.html?product=Bevel%20Gear&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Cam Follower -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Cam Follower.png" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Cam Follower</h3>
+          <a href="../enquiry.html?product=Cam%20Follower&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Cast Iron Hypoid Gear -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/cast-iron-hypoid-gear-500x500.png" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Cast Iron Hypoid Gear</h3>
+          <a href="../enquiry.html?product=Cast%20Iron%20Hypoid%20Gear&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Fiber Vane (Blade) for Vacuum Pump -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Fiber Vane (Blade) for Vacuum Pump.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Fiber Vane (Blade) for Vacuum Pump</h3>
+          <a href="../enquiry.html?product=Fiber%20Vane%20(BLade)%20for%20Vacuum%20Pump&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Filter Cartridge -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Filter Cartridge.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Filter Cartridge</h3>
+          <a href="../enquiry.html?product=Filter%20Cartridge&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Flexible Coupling -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/flexible coupling.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Flexible Coupling</h3>
+          <a href="../enquiry.html?product=Flexible%20Coupling&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Hammer for Bansal Mill -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Hammer for bansal mill.png" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Hammer for Bansal Mill</h3>
+          <a href="../enquiry.html?product=Hammer%20for%20Bansal%20Mill&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Hammer for Buhler Mill -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Hammer for Buhler Mill.png" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Hammer for Buhler Mill</h3>
+          <a href="../enquiry.html?product=Hammer%20for%20Buhler%20Mill&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Hammer for Grain Mill -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Hammer for Grain Mill.png" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Hammer for Grain Mill</h3>
+          <a href="../enquiry.html?product=Hammer%20for%20Grain%20Mill&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+
+      <!-- Muff Coupling -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/muff coupling.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Muff Coupling</h3>
+          <a href="../enquiry.html?product=Muff%20Coupling&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Nylon Roller -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Nylon Roller.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Nylon Roller</h3>
+          <a href="../enquiry.html?product=Nylon%20Roller&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Oven Door Closer -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Oven Door Closer.png" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Oven Door Closer</h3>
+          <a href="../enquiry.html?product=Oven%20Door%20Closer&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Sprockets -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Sprockets.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Sprockets</h3>
+          <a href="../enquiry.html?product=Sprockets&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- SS Impeller for air blower -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/SS Impeller for air blower.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>SS Impeller for air blower</h3>
+          <a href="../enquiry.html?product=SS%20Impeller%20for%20air%20blower&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- SS Impeller -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/SS Impeller.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>SS Impeller</h3>
+          <a href="../enquiry.html?product=SS%20Impeller&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- TC Clamp -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/TC clamp.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>TC Clamp</h3>
+          <a href="../enquiry.html?product=TC%20Clamp&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Universal Joint -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Universal Joint.PNG" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Universal Joint</h3>
+          <a href="../enquiry.html?product=Universal%20Joint&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Variable Speed Pulley -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Variable Speed Pulley.jpg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Variable Speed Pulley</h3>
+          <a href="../enquiry.html?product=Variable%20Speed%20Pulley&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Worm Crushers -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Worm Crushers.png" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Worm Crushers</h3>
+          <a href="../enquiry.html?product=Worm%20 Crushers&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+      <!-- Worm Gear -->
+      <div class="misc-card searchable-product">
+        <div class="misc-img-container">
+          <img src="../assets/Miscellaneous/Worm-Gear.jpeg" alt="Miscellaneous Component">
+        </div>
+        <div class="misc-info">
+          <h3>Worm Gear</h3>
+          <a href="../enquiry.html?product=Worm%20Gear&amp;cat=Misc" class="spare-enquiry-btn">Get Quote</a>
+        </div>
+      </div>
+
+
+    </div>
+</main>
+
+<!-- ============================================================
+     FINAL ENGINEERING CTA
+     ============================================================ -->
+<section class="final-cta">
+  <h2>Need help selecting the right component or tool?</h2>
+  <a href="../enquiry.html">Talk to Our Engineering Team</a>
+</section>
+
+<!-- ============================================================
+     MISCELLANEOUS & PHARMA TOOLS — JAVASCRIPT
+     ============================================================ -->
+<script>
+/* ============================================================
+   MISCELLANEOUS & PHARMA TOOLS — JAVASCRIPT
+   Header scroll state and mobile navigation behavior.
+   ============================================================ */
+/*
+   JAVASCRIPT SECTION MAP
+   1. Header Scroll State
+   2. Mobile Navigation Toggle & Close Logic
+   ============================================================
+ */
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.site-header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
+<script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const primaryNav = document.querySelector('nav.primary-nav');
+
+  if(navToggle && primaryNav){
+    navToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      primaryNav.classList.toggle('open');
+    });
+
+    primaryNav.addEventListener('click', e => e.stopPropagation());
+
+    document.addEventListener('click', () => {
+      primaryNav.classList.remove('open');
+    });
+
+    primaryNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        primaryNav.classList.remove('open');
+      });
+    });
+  }
+</script>
+
+ <script src="../js/product-search.js"></script>
+</body>
+</html>
