@@ -1121,19 +1121,26 @@ cursor: pointer;
     grid-template-columns:1fr;
   }
 
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  textarea,
-  select{
-    width:100%;
-    max-width:100%;
-    font-size:14px;
-  }
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid rgba(13,27,42,0.06);
+  background:#fbfdff;
+  color:var(--dark);
+  font-size:14px;
+  font-family:"Poppins","Segoe UI",Arial,sans-serif;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);
+}
 
-  textarea{
-    min-height:110px;
-  }
+select {
+  min-height:44px;
+  cursor:pointer;
+}
 
   /* ---------- BUTTONS ---------- */
 
