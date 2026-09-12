@@ -69,6 +69,7 @@ $country        = cleanText($_POST['country'] ?? '');
 $projectDetails = cleanMultiline($_POST['project_details'] ?? '');
 $serviceType    = cleanText($_POST['service_type'] ?? '');
 $sourceService  = cleanText($_POST['source_service'] ?? '');
+$productName    = cleanText($_POST['product_name'] ?? '');
 $consent        = cleanText($_POST['consent'] ?? '');
 
 if ($fullName === '') {
@@ -132,8 +133,21 @@ $serviceFields = [
    05. BUILD EMAIL SUBJECT
    ================================================================ */
 
-$subjectService = $serviceType !== '' ? $serviceType : 'General Enquiry';
-$subject = 'New Website Enquiry - ' . $subjectService;
+$serviceLabels = [
+    'customization' => 'Design Customization',
+    'reverse'       => 'Reverse Engineering',
+    'refurbishment' => 'Product Refurbishment',
+];
+
+if ($productName !== '') {
+    $subject = 'New Enquiry - ' . $productName;
+} elseif ($serviceType !== '') {
+    $subject = 'New Enquiry - ' . ($serviceLabels[$serviceType] ?? $serviceType);
+} elseif (!empty($machinery)) {
+    $subject = 'New Enquiry - ' . implode(', ', $machinery);
+} else {
+    $subject = 'New Website Enquiry';
+}
 
 /* ================================================================
    06. BUILD PLAIN-TEXT EMAIL BODY
@@ -141,74 +155,113 @@ $subject = 'New Website Enquiry - ' . $subjectService;
 
 $bodyParts = [];
 
-$bodyParts[] = "SEHDEV MACHINE TOOLS — NEW WEBSITE ENQUIRY";
-$bodyParts[] = str_repeat('=', 56);
+$bodyParts[] = 'SEHDEV MACHINE TOOLS';
+$bodyParts[] = 'NEW ENQUIRY';
+$bodyParts[] = str_repeat('=', 48);
 $bodyParts[] = '';
-$bodyParts[] = 'CONTACT DETAILS';
+
+if ($productName !== '') {
+    $bodyParts[] = 'PRODUCT';
+    $bodyParts[] = '-------';
+    $bodyParts[] = $productName;
+    $bodyParts[] = '';
+} elseif (!empty($machinery)) {
+    $bodyParts[] = 'MACHINERY INTERESTED IN';
+    $bodyParts[] = '-----------------------';
+    $bodyParts[] = implode(', ', $machinery);
+    $bodyParts[] = '';
+}
+
+if ($serviceType !== '') {
+    $bodyParts[] = 'SERVICE';
+    $bodyParts[] = '-------';
+    $bodyParts[] = $serviceLabels[$serviceType] ?? $serviceType;
+    if ($sourceService !== '') {
+        $bodyParts[] = 'Source: ' . $sourceService;
+    }
+    $bodyParts[] = '';
+}
+
+$bodyParts[] = 'CUSTOMER DETAILS';
 $bodyParts[] = '----------------';
-$bodyParts[] = 'Full Name: ' . $fullName;
-$bodyParts[] = 'Company: ' . ($company !== '' ? $company : 'Not provided');
+$bodyParts[] = 'Name: ' . $fullName;
+if ($company !== '') $bodyParts[] = 'Company: ' . $company;
 $bodyParts[] = 'Email: ' . $email;
-$bodyParts[] = 'Phone: ' . ($phone !== '' ? $phone : 'Not provided');
-$bodyParts[] = 'City: ' . ($city !== '' ? $city : 'Not provided');
-$bodyParts[] = 'Country: ' . ($country !== '' ? $country : 'Not provided');
+if ($phone !== '') $bodyParts[] = 'Phone: ' . $phone;
+if ($city !== '') $bodyParts[] = 'City: ' . $city;
+if ($country !== '') $bodyParts[] = 'Country: ' . $country;
 $bodyParts[] = '';
 
-$bodyParts[] = 'MACHINERY INTERESTED IN';
-$bodyParts[] = '-----------------------';
-$bodyParts[] = $machinery ? implode(', ', $machinery) : 'Not specified';
-$bodyParts[] = '';
-
-$bodyParts[] = 'SERVICE';
-$bodyParts[] = '-------';
-$bodyParts[] = $serviceType !== '' ? $serviceType : 'Not specified';
-$bodyParts[] = 'Source Service: ' . ($sourceService !== '' ? $sourceService : 'Not specified');
-$bodyParts[] = '';
-
-$bodyParts[] = 'PROJECT DETAILS';
-$bodyParts[] = '---------------';
-$bodyParts[] = $projectDetails !== '' ? $projectDetails : 'Not provided';
-$bodyParts[] = '';
+if ($projectDetails !== '') {
+    $bodyParts[] = 'ENQUIRY DETAILS';
+    $bodyParts[] = '---------------';
+    $bodyParts[] = $projectDetails;
+    $bodyParts[] = '';
+}
 
 if ($serviceType === 'customization') {
-    $bodyParts[] = 'CUSTOMIZATION DETAILS';
-    $bodyParts[] = '---------------------';
-    $bodyParts[] = 'Machine/Line Type: ' . ($serviceFields['cust_line_type'] ?: 'Not provided');
-    $bodyParts[] = 'Target Throughput: ' . ($serviceFields['cust_throughput'] ?: 'Not provided');
-    $bodyParts[] = 'Container/Format: ' . ($serviceFields['cust_format'] ?: 'Not provided');
-    $bodyParts[] = 'Pain Points / Change Parts: ' . ($serviceFields['cust_pain_points'] ?: 'Not provided');
-    $bodyParts[] = 'PLC/HMI Brand: ' . ($serviceFields['cust_plc'] ?: 'Not provided');
-    $bodyParts[] = 'Integration Needed: ' . ($serviceFields['cust_integration'] ?: 'Not provided');
-    $bodyParts[] = 'Timeline / Deadline: ' . ($serviceFields['cust_deadline'] ?: 'Not provided');
-    $bodyParts[] = '';
+    $details = [];
+    $map = [
+        'cust_line_type' => 'Machine/Line Type',
+        'cust_throughput' => 'Target Throughput',
+        'cust_format' => 'Container/Format',
+        'cust_pain_points' => 'Pain Points / Change Parts',
+        'cust_plc' => 'PLC/HMI Brand',
+        'cust_integration' => 'Integration Needed',
+        'cust_deadline' => 'Timeline / Deadline'
+    ];
+    foreach ($map as $key => $label) {
+        if ($serviceFields[$key] !== '') $details[] = $label . ': ' . $serviceFields[$key];
+    }
+    if ($details) {
+        $bodyParts[] = 'CUSTOMIZATION DETAILS';
+        $bodyParts[] = '---------------------';
+        $bodyParts = array_merge($bodyParts, $details);
+        $bodyParts[] = '';
+    }
 }
 
 if ($serviceType === 'reverse') {
-    $bodyParts[] = 'REVERSE ENGINEERING DETAILS';
-    $bodyParts[] = '---------------------------';
-    $bodyParts[] = 'Part Name / Function: ' . ($serviceFields['rev_part'] ?: 'Not provided');
-    $bodyParts[] = 'Quantity Needed: ' . ($serviceFields['rev_qty'] ?: 'Not provided');
-    $bodyParts[] = 'Sample Available: ' . ($serviceFields['rev_sample'] ?: 'Not provided');
-    $bodyParts[] = 'Material: ' . ($serviceFields['rev_material'] ?: 'Not provided');
-    $bodyParts[] = 'Operating Conditions: ' . ($serviceFields['rev_conditions'] ?: 'Not provided');
-    $bodyParts[] = 'Drawings/Documents Available: ' . ($serviceFields['rev_docs'] ?: 'Not provided');
-    $bodyParts[] = 'Tolerance / Critical Fits: ' . ($serviceFields['rev_tolerance'] ?: 'Not provided');
-    $bodyParts[] = 'Urgency: ' . ($serviceFields['rev_urgency'] ?: 'Not provided');
-    $bodyParts[] = '';
+    $details = [];
+    $map = [
+        'rev_part' => 'Part Name / Function',
+        'rev_qty' => 'Quantity Needed',
+        'rev_sample' => 'Sample Available',
+        'rev_material' => 'Material',
+        'rev_conditions' => 'Operating Conditions',
+        'rev_docs' => 'Drawings/Documents Available',
+        'rev_tolerance' => 'Tolerance / Critical Fits',
+        'rev_urgency' => 'Urgency'
+    ];
+    foreach ($map as $key => $label) {
+        if ($serviceFields[$key] !== '') $details[] = $label . ': ' . $serviceFields[$key];
+    }
+    if ($details) {
+        $bodyParts[] = 'REVERSE ENGINEERING DETAILS';
+        $bodyParts[] = '---------------------------';
+        $bodyParts = array_merge($bodyParts, $details);
+        $bodyParts[] = '';
+    }
 }
 
 if ($serviceType === 'refurbishment') {
-    $bodyParts[] = 'PRODUCT REFURBISHMENT DETAILS';
-    $bodyParts[] = '-----------------------------';
-    $bodyParts[] = 'Machine: ' . ($serviceFields['refurb_machine_name'] ?: 'Not provided');
-    $bodyParts[] = 'Current Condition: ' . ($serviceFields['refurb_condition'] ?: 'Not provided');
-    $bodyParts[] = 'Year of Manufacture: ' . ($serviceFields['refurb_year'] ?: 'Not provided');
-    $bodyParts[] = 'Issues / Upgrades: ' . ($serviceFields['refurb_notes'] ?: 'Not provided');
-    $bodyParts[] = '';
+    $details = [];
+    $map = [
+        'refurb_machine_name' => 'Machine',
+        'refurb_condition' => 'Current Condition',
+        'refurb_year' => 'Year of Manufacture',
+        'refurb_notes' => 'Issues / Upgrades'
+    ];
+    foreach ($map as $key => $label) {
+        if ($serviceFields[$key] !== '') $details[] = $label . ': ' . $serviceFields[$key];
+    }
+    if ($details) {
+        $bodyParts[] = 'PRODUCT REFURBISHMENT DETAILS';
+        $bodyParts[] = '-----------------------------';
+        $bodyParts = array_merge($bodyParts, $details);
+        $bodyParts[] = '';
+    }
 }
-
-$bodyParts[] = 'Submitted From: ' . ($_SERVER['HTTP_HOST'] ?? 'Website');
-$bodyParts[] = 'IP Address: ' . ($_SERVER['REMOTE_ADDR'] ?? 'Unknown');
 
 $body = implode("\r\n", $bodyParts);
 
@@ -220,6 +273,9 @@ $boundary = '=_Part_' . md5(uniqid((string)mt_rand(), true));
 
 $headers = [];
 $headers[] = 'MIME-Version: 1.0';
+$encodedSubject = function_exists('mb_encode_mimeheader')
+    ? mb_encode_mimeheader($subject, 'UTF-8', 'B')
+    : $subject;
 $headers[] = 'From: ' . $fromName . ' <' . $fromEmail . '>';
 $headers[] = 'Reply-To: ' . $email;
 $headers[] = 'Content-Type: multipart/mixed; boundary="' . $boundary . '"';
@@ -305,7 +361,7 @@ $message .= '--' . $boundary . "--\r\n";
 
 $sent = mail(
     $recipientEmail,
-    $subject,
+    $encodedSubject,
     $message,
     implode("\r\n", $headers)
 );

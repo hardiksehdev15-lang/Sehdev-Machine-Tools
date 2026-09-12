@@ -1561,6 +1561,7 @@ background: transparent !important;
 
                 <label for="serviceType">Service type</label>
                 <select id="serviceType" name="service_type" >
+                  <input type="hidden" id="productName" name="product_name" value="">
                   <option value="">Select…</option>
                   <option value="customization">Design Customization</option>
                   <option value="reverse">Reverse Engineering</option>
@@ -1615,7 +1616,7 @@ background: transparent !important;
                 </fieldset>
                 <!-- Common attachments -->
                 <label style="margin-top:12px">Attach files (photos/drawings/video)
-                  <input type="file" name="attachments" multiple>
+                  <input type="file" name="attachments[]" multiple>
                 </label>
 
                 <div class="btn-row">
@@ -1746,6 +1747,11 @@ urlParams.getAll('machinery');
 
 const productName =
 urlParams.get('product');
+const productNameField = document.getElementById('productName');
+
+if (productName && productNameField) {
+    productNameField.value = productName;
+}
 
 const categoryName =
 urlParams.get('cat');
