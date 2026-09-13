@@ -244,7 +244,8 @@ nav.primary-nav{ overflow:visible; }
     width:100%;
     justify-content:flex-start;
   }
-  nav.primary-nav li.mega .mega-panel{ display:none !important; }
+  nav.primary-nav li.mega .mega-panel{ display:none; }
+  nav.primary-nav li.mega.open > .mega-panel{ display:block; }
   .brand img{ height:40px; }
   .title{ font-size:18px; line-height:1.1; }
   .brand .subtitle{ font-size:11px; }
@@ -651,7 +652,8 @@ nav.primary-nav{ overflow:visible; }
     justify-content:flex-start;
   }
 
-  nav.primary-nav li.mega .mega-panel{ display:none !important; }
+  nav.primary-nav li.mega .mega-panel{ display:none; }
+  nav.primary-nav li.mega.open > .mega-panel{ display:block; }
 
   .hero{
     padding:calc(var(--nav-height) + 24px) 6% 40px;
@@ -691,7 +693,19 @@ nav.primary-nav{ overflow:visible; }
   }
 }
 
-</style>
+  @media (max-width:900px){
+    .nav-row{padding:0 16px;gap:10px;}
+    .brand{min-width:0;width:auto;max-width:calc(100% - 52px);flex:1;gap:9px;overflow:hidden;}
+    .brand img{width:58px;height:58px;object-fit:contain;flex-shrink:0;}
+    .brand > div{min-width:0;overflow:hidden;}
+    .title{display:block;font-size:17px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .brand .subtitle{display:block;font-size:10px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .hero,.pharma-section,#misc-items,.final-cta,.pharma-card,.misc-card,.pharma-info,.misc-info{min-width:0;}
+    .hero h1,.section-header h2,.pharma-info h4,.misc-info h3,.final-cta h2{overflow-wrap:anywhere;}
+    .hero p,.section-header p,.pharma-info,.misc-info{overflow-wrap:anywhere;}
+    .spare-enquiry-btn,.final-cta a,.hero-actions a{box-sizing:border-box;max-width:100%;}
+  }
+  </style>
 </head>
 
 <!-- ============================================================
@@ -1171,20 +1185,46 @@ nav.primary-nav{ overflow:visible; }
   const primaryNav = document.querySelector('nav.primary-nav');
 
   if(navToggle && primaryNav){
-    navToggle.addEventListener('click', e => {
+    navToggle.addEventListener('click', function(e){
       e.stopPropagation();
-      primaryNav.classList.toggle('open');
+      const isOpen = primaryNav.classList.toggle('open');
+      if(!isOpen){
+        primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+          mega.classList.remove('open');
+        });
+      }
     });
 
-    primaryNav.addEventListener('click', e => e.stopPropagation());
+    primaryNav.addEventListener('click', function(e){ e.stopPropagation(); });
 
-    document.addEventListener('click', () => {
+    primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function(link){
+      link.addEventListener('click', function(){
+        if(window.innerWidth <= 900){
+          primaryNav.classList.remove('open');
+          primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+            mega.classList.remove('open');
+          });
+        }
+      });
+    });
+
+    primaryNav.querySelectorAll('.mega-btn').forEach(function(button){
+      button.addEventListener('click', function(event){
+        if(window.innerWidth <= 900){
+          event.preventDefault();
+          const currentMega = button.closest('li.mega');
+          primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+            if(mega !== currentMega) mega.classList.remove('open');
+          });
+          currentMega.classList.toggle('open');
+        }
+      });
+    });
+
+    document.addEventListener('click', function(){
       primaryNav.classList.remove('open');
-    });
-
-    primaryNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        primaryNav.classList.remove('open');
+      primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+        mega.classList.remove('open');
       });
     });
   }

@@ -612,6 +612,40 @@ nav.primary-nav{
 
 }
 
+@media (max-width:900px){
+  .hero,
+  .machine-block,
+  .components-showcase,
+  .component-card,
+  .component-info,
+  .final-cta{
+    min-width:0;
+  }
+
+  .hero h1,
+  .machine-block h3,
+  .section-header h2,
+  .component-info h3,
+  .final-cta h2{
+    overflow-wrap:anywhere;
+  }
+
+  .hero p,
+  .machine-block p,
+  .machine-meta,
+  .section-header p,
+  .component-info p{
+    overflow-wrap:anywhere;
+  }
+
+  .machine-actions a.primary,
+  .spare-enquiry-btn,
+  .final-cta a{
+    box-sizing:border-box;
+    max-width:100%;
+  }
+}
+
 /* ================= END SEALING MACHINE PAGE MOBILE OVERRIDES ================= */
 
 /* ============================================================
@@ -2204,27 +2238,55 @@ main#machines{
   if(navToggle && primaryNav){
 
     navToggle.addEventListener('click', function(e){
-
       e.stopPropagation();
 
-      primaryNav.classList.toggle('open');
+      const isOpen = primaryNav.classList.toggle('open');
 
+      if(!isOpen){
+        primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+          mega.classList.remove('open');
+        });
+      }
     });
-
 
     primaryNav.addEventListener('click', function(e){
-
       e.stopPropagation();
-
     });
+
+    primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function(link){
+      link.addEventListener('click', function(){
+        if(window.innerWidth <= 900){
+          primaryNav.classList.remove('open');
+          primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+            mega.classList.remove('open');
+          });
+        }
+      });
+    });
+
+    primaryNav.querySelectorAll('.mega-btn').forEach(function(button){
+      button.addEventListener('click', function(event){
+        if(window.innerWidth <= 900){
+          event.preventDefault();
+
+          const currentMega = button.closest('li.mega');
+
+          primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+            if(mega !== currentMega){
+              mega.classList.remove('open');
+            }
+          });
+
+          currentMega.classList.toggle('open');
+        }
+      });
+    });
+
     document.addEventListener('click', function(){
       primaryNav.classList.remove('open');
-    });
-    primaryNav.querySelectorAll('a').forEach(function(link){
-      link.addEventListener('click', function(){
-        primaryNav.classList.remove('open');
+      primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+        mega.classList.remove('open');
       });
-
     });
 
   }

@@ -1035,6 +1035,31 @@ cursor: pointer;
 
 }
 
+
+
+/* ================= CONTACT PAGE MOBILE SAFETY ================= */
+@media (max-width: 900px){
+  .contact-section,
+  .contact-info,
+  .feedback-form{
+    min-width: 0;
+  }
+
+  .info-item{
+    overflow-wrap: anywhere;
+  }
+
+  .feedback-form textarea{
+    min-height: 140px;
+    resize: vertical;
+  }
+
+  .map-wrapper{
+    margin-top: 24px;
+  }
+}
+/* ================= END CONTACT PAGE MOBILE SAFETY ================= */
+
 /* ================= END CONTACT PAGE MOBILE OVERRIDES ================= */
 </style>
 </head>
@@ -1222,23 +1247,51 @@ e.target.reset();
 }
 
 if (navToggle && primaryNav) {
-navToggle.addEventListener('click', e => {
-e.stopPropagation();
-primaryNav.classList.toggle('open');
-});
+  navToggle.addEventListener('click', function () {
+    const isOpen = primaryNav.classList.toggle('open');
 
-primaryNav.querySelectorAll('.mega-btn').forEach(btn => {
-btn.addEventListener('click', e => {
-if (window.innerWidth <= 900) {
-e.preventDefault();
-btn.parentElement.classList.toggle('open');
-}
-});
-});
+    if (!isOpen) {
+      primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+        mega.classList.remove('open');
+      });
+    }
+  });
 
-document.addEventListener('click', () => {
-primaryNav.classList.remove('open');
-});
+  primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function (link) {
+    link.addEventListener('click', function () {
+      primaryNav.classList.remove('open');
+      primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+        mega.classList.remove('open');
+      });
+    });
+  });
+
+  primaryNav.querySelectorAll('.mega-btn').forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      if (window.innerWidth <= 900) {
+        event.preventDefault();
+
+        const currentMega = button.closest('li.mega');
+
+        primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+          if (mega !== currentMega) {
+            mega.classList.remove('open');
+          }
+        });
+
+        currentMega.classList.toggle('open');
+      }
+    });
+  });
+
+  document.addEventListener('click', function (event) {
+    if (!primaryNav.contains(event.target) && !navToggle.contains(event.target)) {
+      primaryNav.classList.remove('open');
+      primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+        mega.classList.remove('open');
+      });
+    }
+  });
 }
 
 </script>

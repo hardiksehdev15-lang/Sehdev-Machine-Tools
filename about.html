@@ -1110,6 +1110,38 @@ nav.primary-nav .mega-btn span{
     font-size: 1.3rem;
   }
 
+  /* ==========================================================
+     MOBILE TYPOGRAPHY & CONTENT SAFETY
+     ========================================================== */
+
+  .philosophy-section h3{
+    font-size: 1.35rem;
+    line-height: 1.3;
+    margin-top: 0;
+  }
+
+  .philosophy-section p{
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .director-content{
+    width: 100%;
+  }
+
+  .director-content .label{
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .signature-section{
+    margin-top: 30px !important;
+  }
+
+  footer{
+    padding: 40px 6% !important;
+  }
+
 
   /* ==========================================================
      DISABLE HEAVY INTERACTION ON MOBILE
@@ -1373,31 +1405,43 @@ nav.primary-nav .mega-btn span{
   const primaryNav = document.querySelector('nav.primary-nav');
 
   if (navToggle && primaryNav) {
+    navToggle.addEventListener('click', function () {
+      const isOpen = primaryNav.classList.toggle('open');
 
-    // Toggle on hamburger click
-    navToggle.addEventListener('click', (e) => {
-      e.stopPropagation(); // prevent document click
-      primaryNav.classList.toggle('open');
+      if (!isOpen) {
+        primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+          mega.classList.remove('open');
+        });
+      }
     });
 
-    // Prevent clicks inside nav from closing it
-    primaryNav.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-
-    // Close when clicking anywhere outside
-    document.addEventListener('click', () => {
-      primaryNav.classList.remove('open');
-    });
-
-    // Close menu when any link is clicked
-    primaryNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
+    primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function (link) {
+      link.addEventListener('click', function () {
         primaryNav.classList.remove('open');
+        primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+          mega.classList.remove('open');
+        });
       });
     });
-
   }
+
+  document.querySelectorAll('.mega-btn').forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      if (window.innerWidth <= 900) {
+        event.preventDefault();
+
+        const currentMega = button.closest('li.mega');
+
+        document.querySelectorAll('nav.primary-nav li.mega.open').forEach(function (mega) {
+          if (mega !== currentMega) {
+            mega.classList.remove('open');
+          }
+        });
+
+        currentMega.classList.toggle('open');
+      }
+    });
+  });
 </script>
 
 

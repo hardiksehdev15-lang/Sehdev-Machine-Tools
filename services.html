@@ -921,9 +921,55 @@ nav.primary-nav .mega-btn span{
     justify-content: flex-start;
   }
 
-  /* Hide mega dropdowns on mobile (SERVICES PAGE) */
+  /* Mobile mega menus open by click */
   nav.primary-nav li.mega .mega-panel{
-    display: none !important;
+    display: none;
+  }
+
+  nav.primary-nav li.mega.open > .mega-panel{
+    display: block;
+  }
+
+  .nav-row{
+    padding: 0 16px;
+    gap: 10px;
+  }
+
+  .brand{
+    min-width: 0;
+    width: auto;
+    max-width: calc(100% - 52px);
+    flex: 1;
+    gap: 9px;
+    overflow: hidden;
+  }
+
+  .brand img{
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .brand > div{
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .title{
+    display: block;
+    font-size: 17px;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .brand .subtitle{
+    display: block;
+    font-size: 10px;
+    line-height: 1.2;
+    white-space: nowrap;
   }
 
   /* ---------- BRAND SCALE ---------- */
@@ -1024,6 +1070,30 @@ nav.primary-nav .mega-btn span{
     flex-direction: column;
     text-align: center;
     margin: 40px 6%;
+  }
+  .svc-copy,
+  .svc-visual,
+  .glass-card{
+    min-width: 0;
+  }
+
+  .svc-copy h2{
+    line-height: 1.25;
+  }
+
+  .svc-copy p,
+  .svc-bullets li,
+  .glass-card p{
+    overflow-wrap: anywhere;
+  }
+
+  .svc-cta{
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .cta-strip{
+    padding: 22px 18px;
   }
 
 }
@@ -1341,42 +1411,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (navToggle && primaryNav) {
 
-    /* Open / close mobile menu */
     navToggle.addEventListener('click', function (e) {
       e.stopPropagation();
 
-      primaryNav.classList.toggle('open');
+      const isOpen = primaryNav.classList.toggle('open');
+
+      if (!isOpen) {
+        primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+          mega.classList.remove('open');
+        });
+      }
     });
 
-
-    /* Prevent clicks inside nav from immediately closing it */
     primaryNav.addEventListener('click', function (e) {
       e.stopPropagation();
     });
 
-
-    /* Close menu when clicking outside */
-    document.addEventListener('click', function () {
-      primaryNav.classList.remove('open');
-
-      document
-        .querySelectorAll('nav.primary-nav li.mega.open')
-        .forEach(function (item) {
-          item.classList.remove('open');
-        });
-    });
-
-
-    /* Close mobile menu after clicking a normal link */
-    primaryNav.querySelectorAll('a').forEach(function (link) {
-
+    primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function (link) {
       link.addEventListener('click', function () {
         if (window.innerWidth <= 900) {
           primaryNav.classList.remove('open');
+          primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+            mega.classList.remove('open');
+          });
         }
       });
-
     });
+
   }
 
 
@@ -1384,38 +1445,33 @@ document.addEventListener('DOMContentLoaded', function () {
      03. MOBILE MEGA MENU
      ========================================================== */
 
-  document
-    .querySelectorAll('nav.primary-nav li.mega > .mega-btn')
-    .forEach(function (btn) {
+  primaryNav && primaryNav.querySelectorAll('.mega-btn').forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      if (window.innerWidth <= 900) {
+        event.preventDefault();
 
-      btn.addEventListener('click', function (e) {
+        const currentMega = button.closest('li.mega');
 
-        /* Mega menus open by click only on mobile */
-        if (window.innerWidth <= 900) {
+        primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+          if (mega !== currentMega) {
+            mega.classList.remove('open');
+          }
+        });
 
-          e.preventDefault();
-          e.stopPropagation();
-
-          const parent = btn.parentElement;
-
-          /* Close other open mega menus */
-          document
-            .querySelectorAll('nav.primary-nav li.mega.open')
-            .forEach(function (item) {
-
-              if (item !== parent) {
-                item.classList.remove('open');
-              }
-
-            });
-
-          /* Toggle current mega menu */
-          parent.classList.toggle('open');
-        }
-
-      });
-
+        currentMega.classList.toggle('open');
+      }
     });
+  });
+
+  document.addEventListener('click', function () {
+    if (!primaryNav) return;
+
+    primaryNav.classList.remove('open');
+
+    primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+      mega.classList.remove('open');
+    });
+  });
 
 
   /* ==========================================================

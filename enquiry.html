@@ -1328,6 +1328,9 @@ background: transparent !important;
 }
 }
 
+@media (max-width:900px){
+  :root{ --nav-height:76px; }
+}
 </style>
 </head>
 <!-- ============================================================
@@ -1961,22 +1964,57 @@ if (badge) badge.style.display = "none";
 // 5. Mobile Nav Toggle
 const navToggle = document.querySelector('.nav-toggle');
 const primaryNav = document.querySelector('nav.primary-nav');
+
 if (navToggle && primaryNav) {
-navToggle.addEventListener('click', e => {
-e.stopPropagation();
-primaryNav.classList.toggle('open');
-});
+  navToggle.addEventListener('click', function (e) {
+    e.stopPropagation();
 
-primaryNav.querySelectorAll('.mega-btn').forEach(btn => {
-btn.addEventListener('click', e => {
-if (window.innerWidth <= 900) {
-e.preventDefault();
-btn.parentElement.classList.toggle('open');
-}
-});
-});
+    const isOpen = primaryNav.classList.toggle('open');
 
-document.addEventListener('click', () => primaryNav.classList.remove('open'));
+    if (!isOpen) {
+      primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+        mega.classList.remove('open');
+      });
+    }
+  });
+
+  primaryNav.addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
+
+  primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function (link) {
+    link.addEventListener('click', function () {
+      primaryNav.classList.remove('open');
+      primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+        mega.classList.remove('open');
+      });
+    });
+  });
+
+  primaryNav.querySelectorAll('.mega-btn').forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      if (window.innerWidth <= 900) {
+        event.preventDefault();
+
+        const currentMega = button.closest('li.mega');
+
+        primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+          if (mega !== currentMega) {
+            mega.classList.remove('open');
+          }
+        });
+
+        currentMega.classList.toggle('open');
+      }
+    });
+  });
+
+  document.addEventListener('click', function () {
+    primaryNav.classList.remove('open');
+    primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+      mega.classList.remove('open');
+    });
+  });
 }
 });
 </script>

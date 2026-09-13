@@ -933,6 +933,43 @@ main#machines{ max-width:1200px; margin:auto; padding:70px 2rem; }
   .spare-enquiry-btn{ width:100%; box-sizing:border-box; text-align:center; }
   .final-cta{ padding:60px 6%; }
   .final-cta h2{ font-size:1.8rem; }
+
+  /* ===== MOBILE SAFETY ===== */
+  .hero,
+  .machine-block,
+  .components-showcase,
+  .component-card,
+  .component-info,
+  .final-cta{
+    min-width:0;
+  }
+
+  .hero h1,
+  .machine-block h3,
+  .section-header h2,
+  .component-info h3,
+  .final-cta h2{
+    overflow-wrap:anywhere;
+  }
+
+  .hero p,
+  .machine-block p,
+  .machine-meta,
+  .section-header p,
+  .component-info p{
+    overflow-wrap:anywhere;
+  }
+
+  .machine-actions a.primary,
+  .spare-enquiry-btn,
+  .final-cta a{
+    box-sizing:border-box;
+    max-width:100%;
+  }
+
+  .site-footer{
+    padding:45px 6% 20px;
+  }
 }
 
 </style>
@@ -1159,10 +1196,61 @@ main#machines{ max-width:1200px; margin:auto; padding:70px 2rem; }
   });
 
   const navToggle = document.querySelector('.nav-toggle');
-  const nav = document.querySelector('.primary-nav');
-  navToggle.addEventListener('click', function() {
-    nav.classList.toggle('open');
-  });
+  const primaryNav = document.querySelector('nav.primary-nav');
+
+  if(navToggle && primaryNav){
+    navToggle.addEventListener('click', function(e){
+      e.stopPropagation();
+
+      const isOpen = primaryNav.classList.toggle('open');
+
+      if(!isOpen){
+        primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+          mega.classList.remove('open');
+        });
+      }
+    });
+
+    primaryNav.addEventListener('click', function(e){
+      e.stopPropagation();
+    });
+
+    primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function(link){
+      link.addEventListener('click', function(){
+        if(window.innerWidth <= 900){
+          primaryNav.classList.remove('open');
+          primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+            mega.classList.remove('open');
+          });
+        }
+      });
+    });
+
+    primaryNav.querySelectorAll('.mega-btn').forEach(function(button){
+      button.addEventListener('click', function(event){
+        if(window.innerWidth <= 900){
+          event.preventDefault();
+
+          const currentMega = button.closest('li.mega');
+
+          primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+            if(mega !== currentMega){
+              mega.classList.remove('open');
+            }
+          });
+
+          currentMega.classList.toggle('open');
+        }
+      });
+    });
+
+    document.addEventListener('click', function(){
+      primaryNav.classList.remove('open');
+      primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+        mega.classList.remove('open');
+      });
+    });
+  }
 </script>
 
  <script src="../js/product-search.js"></script>

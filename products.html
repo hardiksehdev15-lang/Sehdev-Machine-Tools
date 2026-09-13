@@ -1352,6 +1352,20 @@ nav.primary-nav .mega-btn span{
 
 }
 
+  /* Prevent long product names/descriptions from causing horizontal overflow */
+  .subcategory-card h3,
+  .subcategory-card p{
+    overflow-wrap: anywhere;
+  }
+
+  .group-title{
+    min-width: 0;
+  }
+
+  .page-header p{
+    max-width: 100%;
+  }
+
 /* ================= END PRODUCTS PAGE MOBILE OVERRIDES ================= */
 
       /* Static-hosting fallback */
@@ -1659,21 +1673,50 @@ nav.primary-nav .mega-btn span{
     const navToggle = document.querySelector('.nav-toggle');
     const primaryNav = document.querySelector('nav.primary-nav');
 
-    if(navToggle && primaryNav){
-      navToggle.addEventListener('click', e => {
+    if (navToggle && primaryNav) {
+      navToggle.addEventListener('click', function (e) {
         e.stopPropagation();
-        primaryNav.classList.toggle('open');
+        const isOpen = primaryNav.classList.toggle('open');
+
+        if (!isOpen) {
+          primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+            mega.classList.remove('open');
+          });
+        }
       });
 
-      primaryNav.addEventListener('click', e => e.stopPropagation());
-
-      document.addEventListener('click', () => {
-        primaryNav.classList.remove('open');
+      primaryNav.addEventListener('click', function (e) {
+        e.stopPropagation();
       });
 
-      primaryNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
+      primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function (link) {
+        link.addEventListener('click', function () {
           primaryNav.classList.remove('open');
+          primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+            mega.classList.remove('open');
+          });
+        });
+      });
+
+      primaryNav.querySelectorAll('.mega-btn').forEach(function (button) {
+        button.addEventListener('click', function (event) {
+          if (window.innerWidth <= 900) {
+            event.preventDefault();
+            const currentMega = button.closest('li.mega');
+
+            primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+              if (mega !== currentMega) mega.classList.remove('open');
+            });
+
+            currentMega.classList.toggle('open');
+          }
+        });
+      });
+
+      document.addEventListener('click', function () {
+        primaryNav.classList.remove('open');
+        primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+          mega.classList.remove('open');
         });
       });
     }

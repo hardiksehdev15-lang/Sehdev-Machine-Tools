@@ -941,6 +941,53 @@ cursor:pointer;
 
 }
 
+
+/* ================= SHARED MOBILE SAFETY ================= */
+@media (max-width: 900px){
+  .brand img{
+    width:58px;
+    height:58px;
+    object-fit:contain;
+    flex-shrink:0;
+  }
+
+  .brand{
+    min-width:0;
+    max-width:calc(100% - 52px);
+    flex:1;
+    gap:9px;
+    overflow:hidden;
+  }
+
+  .brand > div{
+    min-width:0;
+    overflow:hidden;
+  }
+
+  .title{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .brand .subtitle{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .hero p,
+  .machine-block p,
+  .machine-meta,
+  .final-cta p{
+    overflow-wrap:anywhere;
+  }
+
+  .machine-actions a.primary{
+    box-sizing:border-box;
+  }
+}
+
 /* ================= END ANCILLARY PAGE MOBILE OVERRIDES ================= */
 </style>
 </head>
@@ -1220,22 +1267,57 @@ const navToggle = document.querySelector('.nav-toggle');
 const primaryNav = document.querySelector('nav.primary-nav');
 
 if(navToggle && primaryNav){
-navToggle.addEventListener('click', e => {
-e.stopPropagation();
-primaryNav.classList.toggle('open');
-});
+  navToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
 
-primaryNav.addEventListener('click', e => e.stopPropagation());
+    const isOpen = primaryNav.classList.toggle('open');
 
-document.addEventListener('click', () => {
-primaryNav.classList.remove('open');
-});
+    if(!isOpen){
+      primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+        mega.classList.remove('open');
+      });
+    }
+  });
 
-primaryNav.querySelectorAll('a').forEach(link => {
-link.addEventListener('click', () => {
-primaryNav.classList.remove('open');
-});
-});
+  primaryNav.addEventListener('click', function(e){
+    e.stopPropagation();
+  });
+
+  primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function(link){
+    link.addEventListener('click', function(){
+      if(window.innerWidth <= 900){
+        primaryNav.classList.remove('open');
+        primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+          mega.classList.remove('open');
+        });
+      }
+    });
+  });
+
+  primaryNav.querySelectorAll('.mega-btn').forEach(function(button){
+    button.addEventListener('click', function(event){
+      if(window.innerWidth <= 900){
+        event.preventDefault();
+
+        const currentMega = button.closest('li.mega');
+
+        primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+          if(mega !== currentMega){
+            mega.classList.remove('open');
+          }
+        });
+
+        currentMega.classList.toggle('open');
+      }
+    });
+  });
+
+  document.addEventListener('click', function(){
+    primaryNav.classList.remove('open');
+    primaryNav.querySelectorAll('li.mega.open').forEach(function(mega){
+      mega.classList.remove('open');
+    });
+  });
 }
 </script>
  <script src="../js/product-search.js"></script>
