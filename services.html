@@ -1099,6 +1099,161 @@ nav.primary-nav .mega-btn span{
 }
 /* ================= END SERVICES PAGE MOBILE OVERRIDES ================= */
 
+  
+/* ===== FINAL SHARED MOBILE NAV FIX ===== */
+@media (max-width:900px){
+  :root{--nav-height:76px !important;}
+
+  header.site-header{
+    height:76px !important;
+  }
+
+  .nav-row{
+    height:76px !important;
+    padding:0 16px !important;
+    gap:10px !important;
+    overflow:visible !important;
+  }
+
+  .brand{
+    min-width:0 !important;
+    width:auto !important;
+    max-width:calc(100% - 52px) !important;
+    flex:1 !important;
+    flex-shrink:1 !important;
+    gap:9px !important;
+    overflow:hidden !important;
+  }
+
+  .brand img{
+    width:58px !important;
+    height:58px !important;
+    object-fit:contain !important;
+    flex-shrink:0 !important;
+  }
+
+  .brand > div{
+    min-width:0 !important;
+    overflow:hidden !important;
+  }
+
+  .title{
+    display:block !important;
+    font-size:17px !important;
+    line-height:1.15 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  .brand .subtitle{
+    display:block !important;
+    font-size:10px !important;
+    line-height:1.2 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  .nav-toggle{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:42px !important;
+    height:42px !important;
+    padding:0 !important;
+    margin:0 !important;
+    flex-shrink:0 !important;
+    font-size:27px !important;
+  }
+
+  nav.primary-nav{
+    position:absolute !important;
+    top:76px !important;
+    left:0 !important;
+    width:100% !important;
+    max-height:0 !important;
+    overflow:hidden !important;
+    background:#fff !important;
+    border-bottom:1px solid rgba(13,27,42,.08) !important;
+    transition:max-height .3s ease !important;
+    z-index:2000 !important;
+  }
+
+  nav.primary-nav.open{
+    max-height:90vh !important;
+    overflow-y:auto !important;
+  }
+
+  nav.primary-nav ul{
+    width:100% !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    gap:0 !important;
+    padding:10px 16px 18px !important;
+    margin:0 !important;
+  }
+
+  nav.primary-nav li{
+    width:100% !important;
+  }
+
+  nav.primary-nav a,
+  nav.primary-nav .mega-btn{
+    width:100% !important;
+    min-height:44px !important;
+    justify-content:flex-start !important;
+    padding:11px 8px !important;
+    box-sizing:border-box !important;
+    font-size:15px !important;
+  }
+
+  nav.primary-nav li.mega .mega-panel{
+    position:static !important;
+    width:100% !important;
+    max-width:none !important;
+    display:none !important;
+    padding:10px 0 !important;
+    border:none !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    grid-template-columns:1fr !important;
+    transform:none !important;
+    opacity:1 !important;
+    visibility:visible !important;
+  }
+
+  nav.primary-nav li.mega:hover .mega-panel{
+    display:none !important;
+  }
+
+  nav.primary-nav li.mega.open > .mega-panel{
+    display:block !important;
+  }
+
+  .mega-col a{
+    display:flex !important;
+    align-items:center !important;
+    padding:12px 16px !important;
+    font-size:15px !important;
+    font-weight:600 !important;
+  }
+
+  .nav-search{
+    width:100% !important;
+    padding:8px 0 !important;
+  }
+
+  .search-wrapper,
+  #productSearch{
+    width:100% !important;
+  }
+
+  main{
+    padding-top:76px !important;
+  }
+}
+
   </style>
   </head>
   <body>
@@ -1403,7 +1558,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   /* ==========================================================
-     02. MOBILE NAVIGATION
+     02. MOBILE NAVIGATION + MEGA MENUS
      ========================================================== */
 
   const navToggle = document.querySelector('.nav-toggle');
@@ -1411,7 +1566,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (navToggle && primaryNav) {
 
+    function closeMobileNav() {
+      primaryNav.classList.remove('open');
+
+      primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
+        mega.classList.remove('open');
+      });
+    }
+
     navToggle.addEventListener('click', function (e) {
+      e.preventDefault();
       e.stopPropagation();
 
       const isOpen = primaryNav.classList.toggle('open');
@@ -1427,51 +1591,39 @@ document.addEventListener('DOMContentLoaded', function () {
       e.stopPropagation();
     });
 
-    primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function (link) {
-      link.addEventListener('click', function () {
+    primaryNav.querySelectorAll('.mega-btn').forEach(function (button) {
+      button.addEventListener('click', function (e) {
         if (window.innerWidth <= 900) {
-          primaryNav.classList.remove('open');
+          e.preventDefault();
+          e.stopPropagation();
+
+          const currentMega = button.closest('li.mega');
+
           primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
-            mega.classList.remove('open');
+            if (mega !== currentMega) {
+              mega.classList.remove('open');
+            }
           });
+
+          currentMega.classList.toggle('open');
         }
       });
     });
 
-  }
+    primaryNav.querySelectorAll('a:not(.mega-btn)').forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (window.innerWidth <= 900) {
+          closeMobileNav();
+        }
+      });
+    });
 
-
-  /* ==========================================================
-     03. MOBILE MEGA MENU
-     ========================================================== */
-
-  primaryNav && primaryNav.querySelectorAll('.mega-btn').forEach(function (button) {
-    button.addEventListener('click', function (event) {
+    document.addEventListener('click', function () {
       if (window.innerWidth <= 900) {
-        event.preventDefault();
-
-        const currentMega = button.closest('li.mega');
-
-        primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
-          if (mega !== currentMega) {
-            mega.classList.remove('open');
-          }
-        });
-
-        currentMega.classList.toggle('open');
+        closeMobileNav();
       }
     });
-  });
-
-  document.addEventListener('click', function () {
-    if (!primaryNav) return;
-
-    primaryNav.classList.remove('open');
-
-    primaryNav.querySelectorAll('li.mega.open').forEach(function (mega) {
-      mega.classList.remove('open');
-    });
-  });
+  }
 
 
   /* ==========================================================
