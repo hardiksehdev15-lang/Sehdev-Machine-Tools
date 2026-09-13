@@ -859,8 +859,12 @@ cursor: pointer;
     width:100% !important;
     max-height:0 !important;
     overflow:hidden !important;
+    background:#fff !important;
+    border-bottom:1px solid rgba(13,27,42,.08) !important;
+    box-shadow:0 8px 20px rgba(0,0,0,.08) !important;
     transition:max-height .3s ease !important;
     box-sizing:border-box !important;
+    z-index:2000 !important;
   }
 
   nav.primary-nav.open{
@@ -868,6 +872,10 @@ cursor: pointer;
     overflow-y:auto !important;
     overflow-x:hidden !important;
     -webkit-overflow-scrolling:touch !important;
+  }
+
+  main{
+    padding-top:76px !important;
   }
 
   nav.primary-nav > ul{
