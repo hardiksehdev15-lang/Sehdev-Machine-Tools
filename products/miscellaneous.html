@@ -233,7 +233,12 @@ nav.primary-nav{ overflow:visible; }
     transition:max-height .3s ease;
     border-bottom:1px solid rgba(13,27,42,.08);
   }
-  nav.primary-nav.open{ max-height:90vh; }
+  nav.primary-nav.open{
+    max-height:calc(100vh - var(--nav-height));
+    overflow-y:auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+  }
   nav.primary-nav ul{
     flex-direction:column;
     align-items:flex-start;
@@ -705,7 +710,27 @@ nav.primary-nav{ overflow:visible; }
     .hero p,.section-header p,.pharma-info,.misc-info{overflow-wrap:anywhere;}
     .spare-enquiry-btn,.final-cta a,.hero-actions a{box-sizing:border-box;max-width:100%;}
   }
-  </style>
+  
+
+/* ===== FINAL MOBILE NAV SCROLL FIX ===== */
+@media (max-width:900px){
+  nav.primary-nav{
+    box-sizing:border-box;
+  }
+
+  nav.primary-nav.open{
+    max-height:calc(100vh - var(--nav-height)) !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  nav.primary-nav ul{
+    min-height:0;
+  }
+}
+
+</style>
 </head>
 
 <!-- ============================================================
