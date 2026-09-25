@@ -85,7 +85,7 @@ file_put_contents(
    TURNSTILE BOT PROTECTION
    ================================================================ */
 
-$turnstileSecret = '0x4AAAAAAFDHb_Z2IxsB0Gv-IF0-h_MgUEY';
+$turnstileSecret = '0x4AAAAAAFDHb9Ppze8gDTRukPLTJc0M4eQ';
 $turnstileToken  = $_POST['cf-turnstile-response'] ?? '';
 
 if ($turnstileToken === '') {
