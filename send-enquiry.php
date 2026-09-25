@@ -128,9 +128,15 @@ if (
     !is_array($turnstileResult) ||
     empty($turnstileResult['success'])
 ) {
+    $errorCodes = $turnstileResult['error-codes'] ?? [];
+
+    $errorMessage = !empty($errorCodes)
+        ? implode(', ', $errorCodes)
+        : 'No error code returned';
+
     redirectBack(
         'error',
-        'Security verification failed. Please try again.'
+        'Turnstile error: ' . $errorMessage
     );
 }
 
