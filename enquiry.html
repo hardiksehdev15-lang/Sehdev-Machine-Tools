@@ -829,6 +829,43 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
 textarea{min-height:120px;resize:vertical}
 input::placeholder, textarea::placeholder{color:#9aa3b2}
 
+/* ============================================================
+   EMAIL VALIDATION
+   ============================================================ */
+
+#email.email-invalid {
+  border: 2px solid #dc3545 !important;
+  background: #fff5f5 !important;
+}
+
+#email.email-valid {
+  border: 2px solid #28a745 !important;
+  background: #f5fff7 !important;
+}
+
+#email.email-checking {
+  border: 2px solid #f0ad4e !important;
+}
+
+.email-validation-message {
+  min-height: 20px;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.email-validation-message.error {
+  color: #dc3545;
+}
+
+.email-validation-message.success {
+  color: #28a745;
+}
+
+.email-validation-message.checking {
+  color: #b7791f;
+}
+
 /* Checkbox group (styled cards) */
 .checkbox-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px}
 .checkbox-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid rgba(13,27,42,0.04);background:#fbfdff;cursor:pointer}
@@ -1687,7 +1724,20 @@ background: transparent !important;
 
                 <div>
                   <label for="email">Email *</label>
-                  <input id="email" name="email" type="email" placeholder="name@email.com" required>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="name@email.com"
+                    required
+                    autocomplete="email"
+                  >
+
+                  <div
+                    id="emailValidationMessage"
+                    class="email-validation-message"
+                    aria-live="polite">
+                  </div>
                 </div>
 
                 <div>
@@ -2229,6 +2279,371 @@ if (navToggle && primaryNav) {
   document.addEventListener('click', function () {
     if (window.innerWidth <= 900) closeMobileNav();
   });
+}
+/* ============================================================
+   EMAIL VALIDATION — ZEROBOUNCE
+   ============================================================ */
+
+const emailField = document.getElementById('email');
+const emailMessage = document.getElementById('emailValidationMessage');
+const enquiryForm = emailField ? emailField.closest('form') : null;
+
+let validatedEmail = '';
+let emailValidationState = '';
+let emailValidationRunning = false;
+let allowFormSubmit = false;
+
+
+/* ------------------------------------------------------------
+   Update Email UI
+------------------------------------------------------------ */
+
+function setEmailValidationState(state, message) {
+
+    if (!emailField || !emailMessage) return;
+
+    emailField.classList.remove(
+        'email-invalid',
+        'email-valid',
+        'email-checking'
+    );
+
+    emailMessage.classList.remove(
+        'error',
+        'success',
+        'checking'
+    );
+
+    emailMessage.textContent = message || '';
+
+    if (state === 'invalid') {
+
+        emailField.classList.add('email-invalid');
+        emailMessage.classList.add('error');
+
+        emailField.setAttribute('aria-invalid', 'true');
+
+    } else if (state === 'valid') {
+
+        emailField.classList.add('email-valid');
+        emailMessage.classList.add('success');
+
+        emailField.setAttribute('aria-invalid', 'false');
+
+    } else if (state === 'checking') {
+
+        emailField.classList.add('email-checking');
+        emailMessage.classList.add('checking');
+
+    } else {
+
+        emailField.removeAttribute('aria-invalid');
+    }
+
+    emailValidationState = state;
+}
+
+
+/* ------------------------------------------------------------
+   Validate Email Through ZeroBounce
+------------------------------------------------------------ */
+
+async function validateEmail() {
+
+    if (!emailField) return false;
+
+    const email = emailField.value.trim();
+
+    if (!email) {
+
+        setEmailValidationState(
+            'invalid',
+            'Please enter your email address.'
+        );
+
+        return false;
+    }
+
+
+    /* Basic browser-side email check */
+
+    if (!emailField.checkValidity()) {
+
+        setEmailValidationState(
+            'invalid',
+            'Please enter a valid email address.'
+        );
+
+        return false;
+    }
+
+
+    /* Already validated this exact email */
+
+    if (
+        validatedEmail === email &&
+        emailValidationState === 'valid'
+    ) {
+        return true;
+    }
+
+
+    if (emailValidationRunning) {
+        return false;
+    }
+
+
+    emailValidationRunning = true;
+
+    setEmailValidationState(
+        'checking',
+        'Checking email address...'
+    );
+
+
+    try {
+
+        const response = await fetch('validate-email.php', {
+
+            method: 'POST',
+
+            headers: {
+                'Content-Type':
+                    'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+
+            body: new URLSearchParams({
+                email: email
+            })
+
+        });
+
+
+        const data = await response.json();
+
+
+        if (!response.ok || !data.success) {
+
+            setEmailValidationState(
+                'invalid',
+                'Unable to verify this email address. Please try again.'
+            );
+
+            validatedEmail = '';
+
+            return false;
+        }
+
+
+        const status = (data.status || '').toLowerCase();
+        const subStatus = (data.sub_status || '').toLowerCase();
+
+
+        /* ----------------------------------------------------
+           DEFINITELY INVALID
+        ---------------------------------------------------- */
+
+        if (
+            status === 'invalid' ||
+            subStatus === 'mailbox_not_found'
+        ) {
+
+            setEmailValidationState(
+                'invalid',
+                'This email address does not appear to exist. Please check it.'
+            );
+
+            validatedEmail = '';
+
+            return false;
+        }
+
+
+        /* ----------------------------------------------------
+           VALID
+        ---------------------------------------------------- */
+
+        if (status === 'valid') {
+
+            validatedEmail = email;
+
+            setEmailValidationState(
+                'valid',
+                'Email address verified.'
+            );
+
+            return true;
+        }
+
+
+        /* ----------------------------------------------------
+           OTHER / UNCERTAIN RESULT
+        ---------------------------------------------------- */
+
+        setEmailValidationState(
+            'invalid',
+            'We could not verify this email address. Please use another email address.'
+        );
+
+        validatedEmail = '';
+
+        return false;
+
+
+    } catch (error) {
+
+        console.error(
+            'Email validation error:',
+            error
+        );
+
+        setEmailValidationState(
+            'invalid',
+            'Unable to verify this email address. Please try again.'
+        );
+
+        validatedEmail = '';
+
+        return false;
+
+    } finally {
+
+        emailValidationRunning = false;
+    }
+}
+
+
+/* ------------------------------------------------------------
+   When User Changes Email
+------------------------------------------------------------ */
+
+if (emailField) {
+
+    emailField.addEventListener('input', function () {
+
+        const currentEmail =
+            emailField.value.trim();
+
+        if (currentEmail !== validatedEmail) {
+
+            validatedEmail = '';
+
+            setEmailValidationState(
+                '',
+                ''
+            );
+        }
+
+    });
+
+
+    /* Validate when user leaves email field */
+
+    emailField.addEventListener('blur', function () {
+
+        if (emailField.value.trim() !== '') {
+            validateEmail();
+        }
+
+    });
+
+}
+
+
+/* ------------------------------------------------------------
+   Protect Form Submission
+------------------------------------------------------------ */
+
+if (enquiryForm) {
+
+    enquiryForm.addEventListener(
+        'submit',
+        async function (event) {
+
+            /* Allow the second submission after successful validation */
+
+            if (allowFormSubmit) {
+                return;
+            }
+
+
+            /* Stop normal submission temporarily */
+
+            event.preventDefault();
+
+
+            const isValid =
+                await validateEmail();
+
+
+            if (!isValid) {
+
+                emailField.focus();
+
+                return;
+            }
+
+
+            /*
+               Email is verified.
+               Submit the form normally.
+            */
+
+            allowFormSubmit = true;
+
+            enquiryForm.requestSubmit();
+
+        }
+    );
+
+}
+
+
+/* ------------------------------------------------------------
+   Reset Email Validation
+------------------------------------------------------------ */
+
+if (enquiryForm) {
+
+    enquiryForm.addEventListener(
+        'reset',
+        function () {
+
+            setTimeout(function () {
+
+                validatedEmail = '';
+                emailValidationState = '';
+                allowFormSubmit = false;
+
+                if (emailField) {
+
+                    emailField.classList.remove(
+                        'email-invalid',
+                        'email-valid',
+                        'email-checking'
+                    );
+
+                    emailField.removeAttribute(
+                        'aria-invalid'
+                    );
+                }
+
+                if (emailMessage) {
+
+                    emailMessage.textContent = '';
+
+                    emailMessage.classList.remove(
+                        'error',
+                        'success',
+                        'checking'
+                    );
+                }
+
+            }, 0);
+
+        }
+    );
+
 }
 
 });
