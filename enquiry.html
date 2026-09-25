@@ -7,7 +7,11 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        async
+        defer>
+      </script>
 <style>
 
 
@@ -832,6 +836,14 @@ input::placeholder, textarea::placeholder{color:#9aa3b2}
 
 /* Consent checkbox */
 .consent{display:flex;align-items:center;gap:10px;color:var(--muted);margin-top:10px}
+
+.hp-field {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+}
 
 /* Buttons */
 .btn-row{display:flex;gap:12px;margin-top:16px}
@@ -1722,6 +1734,12 @@ background: transparent !important;
                 <input type="checkbox" id="consent" name="consent" value="yes" required>
                 <span>I agree to be contacted about my enquiry.</span>
               </label>
+
+              <div class="hp-field" aria-hidden="true">
+                <label for="website_url">Website</label>
+                <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off"> </div>
+
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAAFDHb7W0r3-BcoXK"></div>
 
               <!-- Show detected intent -->
               <div id="serviceBadge" style="display:none;margin:0 0 10px 0;

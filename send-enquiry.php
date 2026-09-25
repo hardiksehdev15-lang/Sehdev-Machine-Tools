@@ -23,6 +23,118 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 /* ================================================================
+   RATE LIMITING — MAX 3 REQUESTS PER IP / 30 MINUTES
+   ================================================================ */
+
+$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+
+$rateLimitDir = __DIR__ . '/rate-limit';
+
+if (!is_dir($rateLimitDir)) {
+    mkdir($rateLimitDir, 0755, true);
+}
+
+$ipKey = hash('sha256', $ip);
+$rateFile = $rateLimitDir . '/' . $ipKey . '.json';
+
+$now = time();
+$window = 30 * 60; // 30 minutes
+$maxRequests = 3;
+
+$requests = [];
+
+if (is_file($rateFile)) {
+    $stored = json_decode(
+        file_get_contents($rateFile),
+        true
+    );
+
+    if (is_array($stored)) {
+        $requests = $stored;
+    }
+}
+
+/* Remove requests older than 30 minutes */
+$requests = array_values(
+    array_filter(
+        $requests,
+        static fn($timestamp) =>
+            is_int($timestamp) &&
+            ($now - $timestamp) < $window
+    )
+);
+
+/* Block if limit reached */
+if (count($requests) >= $maxRequests) {
+    redirectBack(
+        'error',
+        'Too many enquiries from this connection. Please try again later.'
+    );
+}
+
+/* Record this request */
+$requests[] = $now;
+
+file_put_contents(
+    $rateFile,
+    json_encode($requests),
+    LOCK_EX
+);
+
+/* ================================================================
+   TURNSTILE BOT PROTECTION
+   ================================================================ */
+
+$turnstileSecret = '0x4AAAAAAFDHb7W0r3-BcoXK';
+$turnstileToken  = $_POST['cf-turnstile-response'] ?? '';
+
+if ($turnstileToken === '') {
+    redirectBack('error', 'Please complete the security verification.');
+}
+
+$turnstileData = [
+    'secret'   => $turnstileSecret,
+    'response' => $turnstileToken,
+    'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''
+];
+
+$ch = curl_init('https://challenges.cloudflare.com/turnstile/v0/siteverify');
+
+curl_setopt_array($ch, [
+    CURLOPT_POST           => true,
+    CURLOPT_POSTFIELDS     => http_build_query($turnstileData),
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_TIMEOUT        => 10,
+    CURLOPT_HTTPHEADER     => [
+        'Content-Type: application/x-www-form-urlencoded'
+    ]
+]);
+
+$turnstileResponse = curl_exec($ch);
+$curlError = curl_error($ch);
+
+curl_close($ch);
+
+if ($turnstileResponse === false || $curlError !== '') {
+    redirectBack(
+        'error',
+        'Security verification failed. Please try again.'
+    );
+}
+
+$turnstileResult = json_decode($turnstileResponse, true);
+
+if (
+    !is_array($turnstileResult) ||
+    empty($turnstileResult['success'])
+) {
+    redirectBack(
+        'error',
+        'Security verification failed. Please try again.'
+    );
+}
+
+/* ================================================================
    01. HELPER FUNCTIONS
    ================================================================ */
 
@@ -72,12 +184,43 @@ $sourceService  = cleanText($_POST['source_service'] ?? '');
 $productName    = cleanText($_POST['product_name'] ?? '');
 $consent        = cleanText($_POST['consent'] ?? '');
 
+/* ================================================================
+   HONEYPOT ANTI-SPAM
+   ================================================================ */
+
+$websiteUrl = trim($_POST['website_url'] ?? '');
+
+if ($websiteUrl !== '') {
+    redirectBack(
+        'error',
+        'Unable to process this enquiry.'
+    );
+}
+
 if ($fullName === '') {
     redirectBack('error', 'Please enter your full name.');
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     redirectBack('error', 'Please enter a valid email address.');
+}
+
+/* ================================================================
+   EMAIL DOMAIN / MX CHECK
+   ================================================================ */
+
+$emailDomain = strtolower(
+    substr(strrchr($email, "@"), 1)
+);
+
+if (
+    $emailDomain === '' ||
+    !checkdnsrr($emailDomain, 'MX')
+) {
+    redirectBack(
+        'error',
+        'Please enter a valid email address.'
+    );
 }
 
 if ($consent !== 'yes') {
