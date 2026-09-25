@@ -229,6 +229,119 @@ if (
     );
 }
 
+/* ================================================================
+   ZEROBOUNCE EMAIL VALIDATION
+   ================================================================ */
+
+$config = require __DIR__ . '/../zerobounce-config.php';
+
+$zeroBounceApiKey = $config['api_key'] ?? '';
+
+if ($zeroBounceApiKey === '') {
+    redirectBack(
+        'error',
+        'Email validation service is not configured.'
+    );
+}
+
+$zeroBounceUrl = 'https://api.zerobounce.net/v2/validate?' . http_build_query([
+    'api_key'    => $zeroBounceApiKey,
+    'email'      => $email,
+    'ip_address' => $_SERVER['REMOTE_ADDR'] ?? ''
+]);
+
+$ch = curl_init($zeroBounceUrl);
+
+curl_setopt_array($ch, [
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_TIMEOUT        => 15,
+    CURLOPT_CONNECTTIMEOUT => 10,
+    CURLOPT_SSL_VERIFYPEER => true,
+]);
+
+$zeroBounceResponse = curl_exec($ch);
+
+$zeroBounceCurlError = curl_error($ch);
+
+curl_close($ch);
+
+
+/* ZeroBounce connection error */
+
+if (
+    $zeroBounceResponse === false ||
+    $zeroBounceCurlError !== ''
+) {
+    redirectBack(
+        'error',
+        'Unable to verify the email address right now. Please try again.'
+    );
+}
+
+
+/* Decode ZeroBounce response */
+
+$zeroBounceData = json_decode(
+    $zeroBounceResponse,
+    true
+);
+
+
+/* Invalid API response */
+
+if (!is_array($zeroBounceData)) {
+    redirectBack(
+        'error',
+        'Unable to verify the email address right now. Please try again.'
+    );
+}
+
+
+/* ZeroBounce API error */
+
+if (isset($zeroBounceData['error'])) {
+    redirectBack(
+        'error',
+        'Unable to verify the email address right now. Please try again.'
+    );
+}
+
+
+$zeroBounceStatus = strtolower(
+    $zeroBounceData['status'] ?? ''
+);
+
+$zeroBounceSubStatus = strtolower(
+    $zeroBounceData['sub_status'] ?? ''
+);
+
+
+/* ---------------------------------------------------------------
+   REJECT DEFINITELY INVALID EMAILS
+   --------------------------------------------------------------- */
+
+if (
+    $zeroBounceStatus === 'invalid' ||
+    $zeroBounceSubStatus === 'mailbox_not_found'
+) {
+    redirectBack(
+        'error',
+        'This email address does not appear to exist. Please check it.'
+    );
+}
+
+
+/* ---------------------------------------------------------------
+   ONLY VALID EMAILS CONTINUE
+   --------------------------------------------------------------- */
+
+if ($zeroBounceStatus !== 'valid') {
+    redirectBack(
+        'error',
+        'We could not verify this email address. Please use another email address.'
+    );
+}
+
 if ($consent !== 'yes') {
     redirectBack('error', 'Please accept the contact consent checkbox.');
 }
