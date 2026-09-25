@@ -1739,7 +1739,19 @@ background: transparent !important;
                 <label for="website_url">Website</label>
                 <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off"> </div>
 
-              <div class="cf-turnstile" data-sitekey="0x4AAAAAAFDHb7W0r3-BcoXK"></div>
+<div
+    class="cf-turnstile"
+    data-sitekey="0x4AAAAAAFDHb7W0r3-BcoXK"
+    data-response-field="false"
+    data-callback="onTurnstileSuccess"
+    data-expired-callback="onTurnstileExpired"
+    data-error-callback="onTurnstileError">
+</div>
+
+<input
+    type="hidden"
+    name="cf-turnstile-response"
+    id="turnstileToken">
 
               <!-- Show detected intent -->
               <div id="serviceBadge" style="display:none;margin:0 0 10px 0;
@@ -1841,6 +1853,30 @@ background: transparent !important;
    7. Manual Service Selection
    8. Mobile Navigation
 */
+
+function onTurnstileSuccess(token) {
+    const tokenField = document.getElementById("turnstileToken");
+
+    if (tokenField) {
+        tokenField.value = token;
+    }
+}
+
+function onTurnstileExpired() {
+    const tokenField = document.getElementById("turnstileToken");
+
+    if (tokenField) {
+        tokenField.value = "";
+    }
+}
+
+function onTurnstileError() {
+    const tokenField = document.getElementById("turnstileToken");
+
+    if (tokenField) {
+        tokenField.value = "";
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
 // Header scroll behavior
